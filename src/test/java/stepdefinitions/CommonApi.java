@@ -379,4 +379,16 @@ public class CommonApi extends ApiUtils {
     }
 
 
+    @When("The API user saves the request from the user plan endpoint with valid authorization information")
+    public void theAPIUserSavesTheRequestFromTheUserPlanEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("user"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+    }
 }
