@@ -413,8 +413,8 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
     }
 
-    @Then("The API user saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is Unauthorized")
-    public void theAPIUserSavesTheResponseFromTheUserTicketDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized(int arg0) {
+    @Then("The API user saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
+    public void theAPIUserSavesTheResponseFromTheUserTicketDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized() {
         try {
             response = given()
                     .spec(spec)
@@ -430,5 +430,18 @@ public class CommonApi extends ApiUtils {
         System.out.println("mesaj: " + mesaj);
 
         Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+    }
+
+    @And("The API adminuser saves the response from the admin withdraw methods details endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminWithdrawMethodsDetailsEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
     }
 }
