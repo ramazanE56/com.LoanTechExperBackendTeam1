@@ -31,6 +31,10 @@ public class CommonApi extends ApiUtils {
     public void the_apı_user_sets_path_parameters(String rawPaths) {
         fullPath = pathParameters(rawPaths);
     }
+    @Given("The API admin sets {string} path parameters")
+    public void the_apı_admin_sets_path_parameters(String rawPaths) {
+        fullPath = pathParameters(rawPaths);
+    }
 
     @And("The API user saves the response from the user ticket list endpoint with valid authorization information")
     public void theAPIUserSavesTheResponseFromTheUserTicketListEndpointWithValidAuthorizationInformation() {
@@ -38,6 +42,17 @@ public class CommonApi extends ApiUtils {
                 .spec(spec)
                 .header("Accept", "application/json")
                 .headers("Authorization", "Bearer " + generateToken("user"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API adminuser saves the response from the user ticket list endpoint with valid authorization information")
+    public void theAPIAdminUserSavesTheResponseFromTheUserTicketListEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
                 .when()
                 .get(fullPath);
 
@@ -431,4 +446,6 @@ public class CommonApi extends ApiUtils {
 
         Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
     }
+
+
 }
