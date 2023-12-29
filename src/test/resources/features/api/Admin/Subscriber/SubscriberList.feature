@@ -16,7 +16,16 @@ Scenario: TC01 : When a valid GET request is sent to the 'api/subscriber/list' e
     Given The API user sets "api/subscriber/list" path parameters
     Then The API user records the response with invalid authorization information, verifies that the status code is '401' and confirms that the error information is Unauthorized
 
+@ism12
+   Scenario Outline: TC03 : Verify the information returned in the request for the entity with id(x) (email, created_at, updated_at)
 
+     Given The API user sets "api/subscriber/list" path parameters
+     And The API adminuser saves the response from the admin subscriber list endpoint with valid authorization information
+     Then Verify information of the one with the id <dataIndex> in the API admin response body "<email>" "<created_at>" "<updated_at>".
+
+     Examples:
+       | dataIndex | email            | created_at                  | updated_at                  |
+       | 0         | megenc@gmail.com | 2023-12-28T00:08:43.000000Z | 2023-12-28T00:08:43.000000Z |
 
 
 

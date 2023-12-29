@@ -379,4 +379,25 @@ public class CommonApi extends ApiUtils {
     }
 
 
+    @Then("Verify information of the one with the id {int} in the API admin response body {string} {string} {string}.")
+    public void verifyInformationOfTheOneWithTheIdInTheAPIAdminResponseBody(int dataIndex, String email, String created_at, String updated_at) {
+        jsonPath = response.jsonPath();
+
+        Assert.assertEquals(email, jsonPath.getString("data[" + dataIndex + "].email"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+    }
+
+    @And("The API adminuser saves the response from the admin withdraw methods delete endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminWithdrawMethodsDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+    }
 }
