@@ -164,7 +164,7 @@ public class CommonApi extends ApiUtils {
 }
          */
         requestBody = new JSONObject();
-        requestBody.put("subject", "Test Ticket");
+        requestBody.put("name", "Test Ticket");
         requestBody.put("priority", "Medium");
         requestBody.put("message", "Test Ticket Message-");
 
@@ -643,6 +643,62 @@ public class CommonApi extends ApiUtils {
         }
 
 
+    @Then("Verify the user information of the one with the id {} in the API user response body: {int}, {string}, {string}, {string}, {string}, {int}, {int}, {string}, {string}, {string}")
+    public void verify_the_userinformation_of_the_one_with_the_id_in_the_apı_user_response_body(int dataIndex, int user_id, String name, String email, String ticket, String subject, int status, int priority, String last_reply, String created_at, String updated_at) {
+        jsonPath = response.jsonPath();
+
+        Assert.assertEquals(user_id, jsonPath.getInt("data[" + dataIndex + "].user_id"));
+        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+        Assert.assertEquals(email, jsonPath.getString("data[" + dataIndex + "].email"));
+        Assert.assertEquals(ticket, jsonPath.getString("data[" + dataIndex + "].ticket"));
+        Assert.assertEquals(subject, jsonPath.getString("data[" + dataIndex + "].subject"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+        Assert.assertEquals(priority, jsonPath.getInt("data[" + dataIndex + "].priority"));
+        Assert.assertEquals(last_reply, jsonPath.getString("data[" + dataIndex + "].last_reply"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
     }
+
+    @And("The API adminuser prepares a POST request containing the correct data to send to the user ticket add endpoint")
+    public void theAPIAdminuserPreparesAPOSTRequestContainingTheCorrectDataToSendToTheUserTicketAddEndpoint() {
+
+     /*
+{
+            "id": 191,
+            "form_id": 351,
+            "name": "Veruckt",
+            "min_limit": "100.00000000",
+            "max_limit": "500.00000000",
+            "fixed_charge": "20.00000000",
+            "rate": "5.00000000",
+            "percent_charge": "10.00",
+            "currency": "USD",
+            "description": "deneme",
+            "status": 1,
+            "created_at": "2023-12-29T11:20:15.000000Z",
+            "updated_at": "2023-12-29T11:20:15.000000Z"
+        }
+         */
+        requestBody = new JSONObject();
+        requestBody.put("name", "Veruckt");
+        requestBody.put("min_limit", "100.00000000");
+        requestBody.put("max_limit", "500.00000000");
+        requestBody.put("fixed_charge", "20.00000000");
+        requestBody.put("rate", "5.00000000");
+        requestBody.put("percent_charge", "10.00");
+        requestBody.put("currency", "USD");
+        requestBody.put("description", "deneme");
+        requestBody.put("message", "Withdraw method added successfully");
+    }
+
+
+    @Then("The API adminuser verifies that the id information in the response body is {int}")
+    public void theAPIAdminuserVerifiesThatTheIdInformationInTheResponseBodyIs( int id) {
+
+
+    }
+
+
+}
 
 
