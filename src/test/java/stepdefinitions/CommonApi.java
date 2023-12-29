@@ -690,6 +690,15 @@ public class CommonApi extends ApiUtils {
         requestBody.put("description", "deneme");
         requestBody.put("message", "Withdraw method added successfully");
     }
+
+
+    @Then("The API adminuser verifies that the id information in the response body is {int}")
+    public void theAPIAdminuserVerifiesThatTheIdInformationInTheResponseBodyIs( int id) {
+
+
+    }
+
+
 }
 
 
