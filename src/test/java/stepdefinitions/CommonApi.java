@@ -403,6 +403,19 @@ public class CommonApi extends ApiUtils {
     }
 
 
+    @When("The API user saves the request from the user plan endpoint with valid authorization information")
+    public void theAPIUserSavesTheRequestFromTheUserPlanEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accep","applications/json")
+                .headers("Authorization","Bearer "+ generateToken("user"))
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
+
+    }
+
     @Then("Verify information of the one with the id {int} in the API admin response body {string} {string} {string}.")
     public void verifyInformationOfTheOneWithTheIdInTheAPIAdminResponseBody(int dataIndex, String email, String created_at, String updated_at) {
         jsonPath = response.jsonPath();
@@ -432,10 +445,13 @@ public class CommonApi extends ApiUtils {
                 .header("Accept", "application/json")
                 .headers("Authorization", "Bearer " + generateToken("user"))
                 .when()
-                .delete(fullPath);
+
+                .get(fullPath);
 
         response.prettyPrint();
+
     }
+
 
     @Then("The API user saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
     public void theAPIUserSavesTheResponseFromTheUserTicketDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized() {
@@ -532,20 +548,29 @@ public class CommonApi extends ApiUtils {
     @And("The API adminuser saves the response from the admin withdraw methods details endpoint with valid authorization information")
     public void theAPIAdminuserSavesTheResponseFromTheAdminWithdrawMethodsDetailsEndpointWithValidAuthorizationInformation() {
 
-            response = given()
+
+
+
+
+        response = given()
+
                     .spec(spec)
                     .header("Accept", "application/json")
                     .headers("Authorization", "Bearer " + generateToken("admin"))
                     .when()
 
                     .get(fullPath);
+
+
+
+
             response.prettyPrint();
 
-        }
+    }
 
 
-        @And("The API user saves the response endpoint with invalid authorization information")
-        public void theAPIUserSavesTheResponseEndpointWithInvalidAuthorizationInformation () {
+    @And("The API user saves the response endpoint with invalid authorization information")
+    public void theAPIUserSavesTheResponseEndpointWithInvalidAuthorizationInformation () {
             try {
                 response = given()
                         .spec(spec)
@@ -562,10 +587,11 @@ public class CommonApi extends ApiUtils {
             System.out.println("mesaj: " + mesaj);
 
             Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
-        }
-        //GET isteği yaparak başlangıçtaki data[0].status değerini al
-        @And("The API adminuser saves the response from the categories add endpoint with get reguest for first status")
-        public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithGetReguestforfirststatus () {
+    }
+
+    //GET isteği yaparak başlangıçtaki data[0].status değerini al
+    @And("The API adminuser saves the response from the categories add endpoint with get reguest for first status")
+    public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithGetReguestforfirststatus () {
             response = given()
                     .spec(spec)
                     .contentType(ContentType.JSON)
@@ -781,6 +807,8 @@ public class CommonApi extends ApiUtils {
     }
 
 
+
+
     @When("The API adminuser saves the response from the api loanplans list endpoint with valid authorization information")
     public void theAPIAdminuserSavesTheResponseFromTheApiLoanplansListEndpointWithValidAuthorizationInformation() {
 
@@ -813,11 +841,38 @@ public class CommonApi extends ApiUtils {
     }
 
     @And("The API adminuser verifies that the remark information in the response body is {string}")
-    public void theAPIAdminuserVerifiesThatTheRemarkInformationInTheResponseBodyIs(String message) {
-        response.then()
-                .assertThat()
-                .body("message.error[0]", Matchers.equalTo(message));
+    public void theAPIAdminuserVerifiesThatTheRemarkInformationInTheResponseBodyIs(String message){
+            response.then()
+                    .assertThat()
+                    .body("message.error[0]", Matchers.equalTo(message));
+        }
 
+
+    @Given("The API user verifies that the content of the {int} field in the request body includes {int}, {string}, {string}, {string}, {int}, {string}, {string}")
+    public void the_apı_user_verifies_that_the_content_of_the_field_in_the_request_body_includes(int dataIndex, int id, String name, String image, String description, int status, String created_at, String updated_at) {
+
+        Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
+        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+        Assert.assertEquals(image, jsonPath.getString("data[" + dataIndex + "].image"));
+        Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+        /*
+        "remark": "success",
+        "status": 200,
+        "data": [
+        {
+            "id": 114,
+            "name": "Nidia Lind",
+            "image": null,
+            "description": "lonnie.kerluke",
+            "status": 1,
+            "created_at": "2023-12-22T18:39:41.000000Z",
+            "updated_at": "2023-12-22T18:39:41.000000Z",
+            "plans": [
+         */
 
 
 
