@@ -9,6 +9,11 @@ public class QueryManage {
 
   private String onlineExamQuery = "SELECT exam ,AVG(passing_percentage) FROM u168183796_qawonder.onlineexam group by exam";
 
+  private String supportMessagesQuery = "SELECT support_ticket_id FROM u168183796_qaloantec.support_messages WHERE message = 'Tickett'";
+
+
+
+
 
 
 
@@ -25,4 +30,9 @@ public class QueryManage {
     public String getOnlineExamQuery() {
         return onlineExamQuery;
     }
+
+    public String getSupportMessagesQuery() {
+        return supportMessagesQuery;
+    }
+
 }

@@ -55,4 +55,4 @@ Feature: US003 :As a user, I want to be able to create a new user ticket record 
 
     Examples:
       | id  | valueId |
-      | 180 | 180    |
+      | 237 | 237    |
