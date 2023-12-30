@@ -1,6 +1,7 @@
 package stepdefinitions;
 
 
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,6 +18,8 @@ import utilities.ConfigReader;
 import static hooks.api.HooksApi.spec;
 
 import static io.restassured.RestAssured.given;
+
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.name;
 
 public class CommonApi extends ApiUtils {
 
@@ -77,8 +80,9 @@ public class CommonApi extends ApiUtils {
     }
 
     @Then("Verify the information of the one with the id {int} in the API user response body: {int}, {string}, {string}, {string}, {string}, {int}, {int}, {string}, {string}, {string}")
-    public void verify_the_information_of_the_one_with_the_id_in_the_apı_user_response_body(int dataIndex, int user_id, String name, String email, String ticket, String subject, int status, int priority, String last_reply, String created_at, String updated_at) {
+    public void verify_the_information_of_the_one_with_the_id_in_the_apı_user_response_body (int dataIndex, int user_id, String name, String email, String ticket, String subject, int status, int priority, String last_reply, String created_at, String updated_at) {
         jsonPath = response.jsonPath();
+
 
         Assert.assertEquals(user_id, jsonPath.getInt("data[" + dataIndex + "].user_id"));
         Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
@@ -379,4 +383,108 @@ public class CommonApi extends ApiUtils {
     }
 
 
+
+
+
+    @When("The API user sends GET request with invalid authorization to {string} endpoint")
+    public void theAPIUserSendsGETRequestWithInvalidAuthorizationToEndpoint(String arg0) {
+
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .get(fullPath);
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("Mesaj: " + mesaj);
+
+    }
+
+    @Then("Verify the information of the one with the id {int} in the API user response body {int},{int},{string},{string},{string},{string},{string},{int},{int},{string},{string},{string},{int},{string},{string},{int},{int},{string},{string}")
+    public void verifyTheInformationOfTheOneWithTheIdDataIndexInTheAPIUserResponseBodyCategory_idForm_idInstallment_intervalTotal_installmentDelay_valueIs_featuredStatus(int dataIndex,int category_id, int form_id, String name, String title, String minimum_amount, String maximum_amount, String per_installment, int installment_interval, int total_installment, String application_fixed_charge, String application_percent_charge, String instruction, int delay_value, String fixed_charge,String percent_charge, int is_featured, int status,String created_at,String updated_at) {
+
+        jsonPath = response.jsonPath();
+
+        Assert.assertEquals(category_id, jsonPath.getInt("data[" + dataIndex + "].category_id"));
+        Assert.assertEquals(form_id, jsonPath.getInt("data[" + dataIndex + "].form_id"));
+        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+        Assert.assertEquals(title, jsonPath.getString("data[" + dataIndex + "].title"));
+        Assert.assertEquals(minimum_amount, jsonPath.getString("data[" + dataIndex + "].minimum_amount"));
+        Assert.assertEquals(maximum_amount, jsonPath.getString("data[" + dataIndex + "].maximum_amount"));
+        Assert.assertEquals(per_installment, jsonPath.getString("data[" + dataIndex + "].per_installment"));
+        Assert.assertEquals(installment_interval, jsonPath.getInt("data[" + dataIndex + "].installment_interval"));
+        Assert.assertEquals(total_installment, jsonPath.getInt("data[" + dataIndex + "].total_installment"));
+        Assert.assertEquals(application_fixed_charge, jsonPath.getString("data[" + dataIndex + "].application_fixed_charge"));
+        Assert.assertEquals(application_percent_charge, jsonPath.getString("data[" + dataIndex + "].application_percent_charge"));
+        Assert.assertEquals(instruction, jsonPath.getString("data[" + dataIndex + "].instruction"));
+        Assert.assertEquals(delay_value, jsonPath.getInt("data[" + dataIndex + "].delay_value"));
+        Assert.assertEquals(fixed_charge, jsonPath.getString("data[" + dataIndex + "].fixed_charge"));
+        Assert.assertEquals(percent_charge, jsonPath.getString("data[" + dataIndex + "].percent_charge"));
+        Assert.assertEquals(is_featured, jsonPath.getInt("data[" + dataIndex + "].is_featured"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+/*
+        "remark": "success",
+                "status": 200,
+                "data": [
+        {
+                 "id": 139,
+                "category_id": 1,
+                "form_id": 344,
+                "name": "King Loan 16",
+                "title": "King Loan 16",
+                "minimum_amount": "2000.00000000",
+                "maximum_amount": "5000.00000000",
+                "per_installment": "4.00",
+                "installment_interval": 20,
+                "total_installment": 20,
+                "application_fixed_charge": "20.00000000",
+                "application_percent_charge": "3.00000000",
+                "instruction": "King Loan Plan 16",
+                "delay_value": 25,
+                "fixed_charge": "100.00000000",
+                "percent_charge": "1.00000000",
+                "is_featured": 0,
+                "status": 1,
+                "created_at": "2023-12-29T08:44:29.000000Z",
+                "updated_at": "2023-12-29T08:44:29.000000Z",
+                "category": {
+*/
+    }
+
+    @When("The API user saves the response from the api loanplans list endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheApiLoanplansListEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
+
+    }
+
+
+    @When("The API user sends GET request to {string} endpoint")
+    public void theAPIUserSendsGETRequestToEndpoint(String arg0) {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+
+
+
 }
+
+
