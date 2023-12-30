@@ -29,9 +29,7 @@ Feature: As a user, I want to access the Ticket List through an API connection.
     #API kullanıcı response body icindeki <dataIndex> indexe sahip olanın bilgilerini doğrular: <user_id>, "<name>", "<email>", "<ticket>", "<subject>", <status>, <priority>, "<last_reply>", "<created_at>", "<updated_at>"
 
     Examples:
-      | dataIndex | user_id | name        | email                   | ticket | subject     | status | priority | last_reply          | created_at                  | updated_at                  |
-      | 0         | 11      | Mehmet Genç | aliulvigirgin@gmail.com | 688230 | Test Ticket | 3      | 0        | 2023-12-26 03:17:00 | 2023-12-26T08:17:00.000000Z | 2023-12-26T08:17:19.000000Z |
-
-
+      | dataIndex | user_id | name                 | email | ticket | subject     | status | priority | last_reply          | created_at                  | updated_at                  |
+      | 196       | 73      | suphi atilim celikoz | s@c   | 147867 | Test Ticket | 3      | 0        | 2023-12-28 08:53:34 | 2023-12-28T13:53:34.000000Z | 2023-12-28T14:13:33.000000Z |
 
 

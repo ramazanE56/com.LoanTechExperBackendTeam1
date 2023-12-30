@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
+import static utilities.DBUtils.*;
 
 
 public class JDBC_StepDefinition extends ApiUtils {
@@ -16,29 +17,32 @@ public class JDBC_StepDefinition extends ApiUtils {
     ResultSet resultSet;
 
     QueryManage queryManage = new QueryManage();
+    static String expectedData;
+    static String actualData;
+    String query;
 
     @Given("Database baglantisi kurulur.")
     public void database_baglantisi_kurulur() {
 
-        DBUtils.createConnection();
+        createConnection();
 
     }
     @Given("Query hazirlanir ve chat_users tablosuna execute edilir.")
     public void query_hazirlanir_ve_chat_users_tablosuna_execute_edilir() throws SQLException {
 
-        String query= queryManage.getChatUsersQuery();
+        query= queryManage.getChatUsersQuery();
 
-        resultSet= DBUtils.getStatement().executeQuery(query);
+        resultSet= getStatement().executeQuery(query);
 
     }
 
     @Given("Chat_users tablosundan donen resultSet dogrulanir.")
     public void chat_users_tablosundan_donen_result_set_dogrulanir() throws SQLException {
 
-       String expectedData= "11";
+       expectedData= "11";
 
        resultSet.next();
-       String actualData = resultSet.getString(1);
+      actualData = resultSet.getString(1);
 
         assertEquals(expectedData,actualData);
     }
@@ -46,7 +50,7 @@ public class JDBC_StepDefinition extends ApiUtils {
     @Given("Database baglantisi kapatilir.")
     public void database_baglantisi_kapatilir() {
 
-        DBUtils.closeConnection();
+        closeConnection();
     }
 
     //********** Query02 ***********
@@ -54,19 +58,19 @@ public class JDBC_StepDefinition extends ApiUtils {
     @Given("Query hazirlanir ve students tablosuna execute edilir.")
     public void query_hazirlanir_ve_students_tablosuna_execute_edilir() throws SQLException {
 
-            String query = queryManage.getStudentsQuery();
+             query = queryManage.getStudentsQuery();
 
-            resultSet =  DBUtils.getStatement().executeQuery(query);
+            resultSet =  getStatement().executeQuery(query);
 
     }
     @Given("Students tablosundan donen resultSet`teki email bilgisi dogrulanir.")
     public void students_tablosundan_donen_result_set_teki_email_bilgisi_dogrulanir() throws SQLException {
 
-        String expectedData= "brain@gmail.com";
+         expectedData= "brain@gmail.com";
 
         resultSet.next();
 
-        String actualData = resultSet.getString("email");
+         actualData = resultSet.getString("email");
 
         assertEquals(expectedData,actualData);
 
@@ -78,9 +82,9 @@ public class JDBC_StepDefinition extends ApiUtils {
     @Given("Query hazirlanir ve onlineexam tablosuna execute edilir.")
     public void query_hazirlanir_ve_onlineexam_tablosuna_execute_edilir() throws SQLException {
 
-        String query = queryManage.getOnlineExamQuery();
+        query = queryManage.getOnlineExamQuery();
 
-        resultSet =  DBUtils.getStatement().executeQuery(query);
+        resultSet =  getStatement().executeQuery(query);
 
     }
     @Given("Onlineexam tablosundan donen resultSet`teki bilgiler listelenir.")
