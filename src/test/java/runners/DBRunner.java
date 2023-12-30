@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features/db",
         glue = {"stepdefinitions", "hooks/db"},
-        tags = "@db1",
+        tags = "@q01",
         dryRun = false
 
 )
