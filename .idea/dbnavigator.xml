@@ -40,7 +40,6 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
       <object connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" object-ref="schemas/u168183796_qaloantec/tables/update_logs" />
-      <object connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" object-ref="consoles/Connection" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
