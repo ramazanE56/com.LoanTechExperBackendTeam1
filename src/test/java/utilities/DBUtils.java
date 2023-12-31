@@ -327,7 +327,7 @@ public class DBUtils {
     public static void exportToExcel(String query, String tableName) throws SQLException, IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(tableName);
-
+        resultSet = getStatement().executeQuery(query);
         ResultSetMetaData metaData = resultSet.getMetaData();
         int columnCount = metaData.getColumnCount();
 // Creating header row
@@ -355,7 +355,7 @@ public class DBUtils {
             }
         }
 
-        FileOutputStream fileOut = new FileOutputStream("C:\\Users\\asus\\IdeaProjects\\com.LoanTechExperBackendTeam1\\target\\"+tableName+".xlsx");
+        FileOutputStream fileOut = new FileOutputStream("C:\\Users\\asus\\IdeaProjects\\com.LoanTechExperBackendTeam1\\"+tableName+".xlsx");
         workbook.write(fileOut);
         fileOut.close();
         workbook.close();
