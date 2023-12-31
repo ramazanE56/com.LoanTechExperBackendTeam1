@@ -379,4 +379,28 @@ public class CommonApi extends ApiUtils {
     }
 
 
+    @Then("The API adminuser saves the response from the categories details endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheCategoriesDetailsEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @Then("The API adminuser verifies that the content of the data field in the response body includes {int},{string},{string},{string},{int},{string},{string}")
+    public void theAPIAdminuserVerifiesThatTheContentOfTheDataFieldInTheResponseBodyIncludesIdStatus(int id,String name,String image,String description,int status,String created_at,String updated_at) {
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(id,jsonPath.getInt("data.id"));
+        Assert.assertEquals(name,jsonPath.getString("data.name"));
+        Assert.assertEquals(image,jsonPath.getString("data.image"));
+        Assert.assertEquals(description,jsonPath.getString("data.description"));
+        Assert.assertEquals(status,jsonPath.getInt("data.status"));
+        Assert.assertEquals(created_at,jsonPath.getString("data.created_at"));
+        Assert.assertEquals(updated_at,jsonPath.getString("data.updated_at"));
+
+    }
 }
