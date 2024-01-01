@@ -1402,7 +1402,17 @@ public class CommonApi extends ApiUtils {
     }
 
 
+    @And("The API user saves the response endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
 
+        response.prettyPrint();
+    }
 }
 
 
