@@ -20,6 +20,7 @@ import static hooks.api.HooksApi.spec;
 
 import static io.restassured.RestAssured.given;
 
+import static java.nio.file.Paths.get;
 import static org.apache.hc.client5.http.async.methods.SimpleRequestBuilder.delete;
 import static org.bouncycastle.asn1.x500.style.RFC4519Style.name;
 
@@ -1128,9 +1129,10 @@ public class CommonApi extends ApiUtils {
     }
 
     @Given("The API user saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is {string}")
-    public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_invalid_authorization_information_and_confirms_that_the_status_code_is_and_the_error_message_is(String string, String string2) {
+    public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_invalid_authorization_information_and_confirms_that_the_status_code_is_and_the_error_message_is(String string, String string2)
+    {}
 
-    @When("The API adminuser prepares a POST request with valid authorization information and without data \\(category_id, name, title)")
+    @When("The API adminuser prepares a POST request with valid authorization information and without data (category_id, name, title)")
     public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndWithoutDataCategory_idNameTitle() {
         requestBody = new JSONObject();
     }
@@ -1142,7 +1144,7 @@ public class CommonApi extends ApiUtils {
                 .body("data.message", Matchers.equalTo(message));
     }
 
-    @When("The API adminuser prepares a POST request with invalid authorization information and correct data \\(category_id, name, title)")
+    @When("The API adminuser prepares a POST request with invalid authorization information and correct data (category_id, name, title)")
     public void theAPIAdminuserPreparesAPOSTRequestWithInvalidAuthorizationInformationAndCorrectDataCategory_idNameTitle() {
 
 
@@ -1157,7 +1159,7 @@ public class CommonApi extends ApiUtils {
 
             response.prettyPrint();
 
-                    .get(fullPath);
+                    get(fullPath);
 
         } catch (Exception e) {
             mesaj = e.getMessage();
@@ -1351,7 +1353,7 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
     }
 
-    }
+
 
     @Given("The API adminuser prepares a PATCH request with valid authorization information and correct data")
     public void the_apı_adminuser_prepares_a_patch_request_with_valid_authorization_information_and_correct_data() {
