@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static utilities.DBUtils.*;
 
 
-public class JDBC_StepDefinition extends ApiUtils {
+public class JDBC_StepDefinition extends DBUtils{
 
     ResultSet resultSet;
 
@@ -105,6 +105,21 @@ public class JDBC_StepDefinition extends ApiUtils {
 
 
 
+    }
+    @Given("The query is prepared and executed to the Support_messages table.")
+    public void query_hazirlanir_ve_support_messages_tablosuna_execute_edilir() throws SQLException {
+        query= queryManage.getSupportMessagesQuery();
+
+        resultSet= getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the support_messages table is validated.")
+    public void support_messages_tablosundan_donen_result_set_dogrulanir() throws SQLException {
+        expectedData= "2";
+
+        resultSet.next();
+        actualData = resultSet.getString("support_ticket_id");
+
+        assertEquals(expectedData,actualData);
     }
 
 

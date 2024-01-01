@@ -4,18 +4,18 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import utilities.DBUtils;
 
-public class HooksDb {
+public class HooksDb extends DBUtils {
     @Before
     public void dbHook() {
         System.out.println("creating database connection");
-        DBUtils.createConnection();
+        createConnection();
 
     }
 
     @After
     public void afterDbHook() {
         System.out.println("closing database connection");
-        DBUtils.closeConnection();
+        closeConnection();
 
     }
 }

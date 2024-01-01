@@ -930,39 +930,11 @@ public class CommonApi extends ApiUtils {
     @Given("The API user prepares a POST request containing the correct data to send to the api withdrawal reject endpoint with valid authorization information")
     public void the_api_user_prepares_a_post_request_containing_the_correct_data_to_send_to_the_api_withdrawal_reject_endpoint_with_valid_authorization_information() {
         /*
-        {
-            "id": 405,
-            "method_id": 168,
-            "user_id": 71,
-            "amount": "2000.00000000",
-            "currency": "USD",
-            "rate": "2.00000000",
-            "charge": "210.00000000",
-            "trx": "PNF2JVNQKF6S",
-            "final_amount": "3580.00000000",
-            "after_charge": "1790.00000000",
-            "status": 3,
-            "admin_feedback": "Something went wrong.",
-            "created_at": "2023-12-31T08:45:21.000000Z",
-            "updated_at": "2023-12-31T10:03:41.000000Z",
+    "details":"Something went wrong."
          */
 
         requestBody = new JSONObject();
-
-
-        requestBody.put("method_id", "168");
-        requestBody.put("user_id", "71");
-        requestBody.put("amount", "2000.00000000");
-        requestBody.put("currency", "USD");
-        requestBody.put("rate", "2.00000000");
-        requestBody.put("charge", "210.00000000");
-        requestBody.put("trx", "PNF2JVNQKF6S");
-        requestBody.put("final_amount", "3580.00000000");
-        requestBody.put("after_charge", "1790.00000000");
-        requestBody.put("status", "3");
-        requestBody.put("admin_feedback", "Something went wrong.");
-        requestBody.put("created_at", "2023-12-31T08:45:21.000000Z");
-        requestBody.put("updated_at", "2023-12-31T10:03:41.000000Z");
+        requestBody.put("details", "Something went wrong.");
 
     }
 
@@ -981,7 +953,148 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
 
     }
+    @Given("The API user prepares a POST request containing without including data to send to the api withdrawal reject endpoint with valid authorization information")
+    public void the_api_user_prepares_a_post_request_containing_without_including_data_to_send_to_the_api_withdrawal_reject_endpoint_with_valid_authorization_information() {
 
+        requestBody = new JSONObject();
+
+    }
+
+
+    @Given("The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal approve endpoint with valid authorization information")
+    public void  the_api_adminuser_prepares_a_patch_request_containing_the_the_correct_id_and_accurate_data_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
+
+        /*
+        {
+    "details":"Admin Not..."
+}
+         */
+        requestBody = new JSONObject();
+
+        jsonPath = response.jsonPath();
+        int id = jsonPath.getInt("data.data[0].id");
+        fullPath = pathParameters("api/withdrawal/approve/"+id+"");
+
+
+        requestBody = new JSONObject();
+        requestBody.put("details", "Admin Not...");
+
+
+
+    }
+    @Given("The API adminuser sends a PATCH request and saves the response with valid authorization information")
+    public void the_api_adminuser_sends_a_patch_request_and_saves_the_response_with_valid_authorization_information() {
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API adminuser prepares a GET request containing the the correct id and accurate data send to the api withdrawal pending endpoint with valid authorization information")
+    public void the_api_adminuser_prepares_a_get_request_containing_the_the_correct_id_and_accurate_data_send_to_the_api_withdrawal_pending_endpoint_with_valid_authorization_information() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+
+                .get(fullPath);
+
+        response.prettyPrint();
+
+
+    }
+
+    @Given("The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal approve id endpoint with valid authorization information")
+    public void the_api_adminuser_prepares_a_patch_request_containing_the_the_correct_id_and_accurate_data_send_to_the_api_withdrawal_approve_id_endpoint_with_valid_authorization_information() {
+
+        requestBody = new JSONObject();
+        requestBody.put("details", "Admin Not...");
+
+    }
+
+    @Given("The API user prepares a PATCH request containing without including data to send to the api withdrawal approve endpoint with valid authorization information")
+    public void the_api_user_prepares_a_patch_request_containing_without_including_data_to_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
+        requestBody = new JSONObject();
+
+    }
+    @Given("The API user prepares a PATCH request containing non-existent record to send to the api withdrawal approve endpoint with valid authorization information")
+    public void the_api_user_prepares_a_patch_request_containing_non_existent_record_to_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
+        requestBody = new JSONObject();
+        requestBody.put("details", "Admin Not...");
+
+    }
+
+    @Given("The API user prepares a PATCH request containing with the correct id and details to send to the api withdrawal approve endpoint with valid authorization information")
+    public void the_api_user_prepares_a_patch_request_containing_with_the_correct_id_and_details_to_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
+
+        try {
+            response = given()
+                    .spec(spec)
+                    .contentType(ContentType.JSON)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .patch(fullPath);
+
+            response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("mesaj: " + mesaj);
+
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized request"));
+
+    }
+
+    @Given("The API adminuser sends a PATCH request and saves the response with invalid authorization information")
+    public void the_api_adminuser_sends_a_patch_request_and_saves_the_response_with_invalid_authorization_information() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .patch(fullPath);
+
+            response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+
+
+    }
+
+    @Given("The API user prepares a PATCH request containing with the correct id with unauthorized authorization information send to the api withdrawal approve endpoint with valid authorization information")
+    public void the_api_user_prepares_a_patch_request_containing_with_the_correct_id_with_unauthorized_authorization_information_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
+
+        requestBody = new JSONObject();
+        requestBody.put("details", "Admin Not...");
+
+    }
+
+    @Given("The API user sends a POST request and saves the response with invalid authorization information")
+    public void the_api_user_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
 }
 
 
