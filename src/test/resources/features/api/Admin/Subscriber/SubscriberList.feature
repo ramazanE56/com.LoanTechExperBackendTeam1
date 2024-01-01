@@ -25,7 +25,7 @@ Scenario: TC01  When a valid GET request is sent to the 'api/subscriber/list' en
 
      Examples:
        | dataIndex | email            | created_at                  | updated_at                  |
-       | 0         | megenc@gmail.com | 2023-12-28T00:08:43.000000Z | 2023-12-28T00:08:43.000000Z |
+       | 0         | megenc@gmail.com | 2023-12-29T23:40:37.000000Z | 2023-12-29T23:40:37.000000Z |
 
 
 
