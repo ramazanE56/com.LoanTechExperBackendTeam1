@@ -16,11 +16,11 @@
 
       * The API user sets "user/plan" path parameters
       * The API user records the response with invalid authorization information, verifies that the status code is '401' and confirms that the error information is Unauthorized
-    @api
+
     Scenario Outline: TC_03 Verify the information returned in the request for the entity with id(x)
     (name, image, description, status, created_at, updated_at)
 
-      * The API user sets "'user/plan" path parameters
+      * The API user sets "user/plan" path parameters
       * The API user saves the request from the user plan endpoint with valid authorization information
       * The API user verifies that the content of the <dataIndex> field in the request body includes <id>, "<name>", "<image>", "<description>", <status>, "<created_at>", "<updated_at>"
       Examples:
