@@ -1,5 +1,5 @@
 Feature: US_12 As an administrator, I want to access the category details of a user with a specified ID via API connection.
-
+@umt
   Scenario Outline:TC_01:When a GET request with valid authorization information and correct data (id) is sent to the
   api/categories/details/{{id}} endpoint, the returned status code should be 200,
   and the request remark should be verified as "success"
@@ -47,8 +47,8 @@ Feature: US_12 As an administrator, I want to access the category details of a u
 
     Given The API user sets "api/categories/details/<id>" path parameters
     And The API adminuser saves the response from the categories details endpoint with valid authorization information
-    Then The API adminuser verifies that the content of the data field in the response body includes <id>,"<name>","<image>","<description>",<status>,"<created_at>","<updated_at>"
+    Given The API user verifies that the content of the data field in the response body includes <dataIndex>,<id>,"<name>","<image>","<description>",<status>,"<created_at>","<updated_at>"
 
     Examples:
-      | id  | name      |image|description|status |created_at                 |updated_at                 |
-      | 1   | Basic Loan|null |Basic Loan |1      |2023-10-16T09:29:44.000000Z|2023-10-16T09:29:44.000000Z|
+    |dataIndex  | id  | name|image|description                                      |status |created_at|updated_at|
+    |0          | 10  |loan |null |Distinctio ea qui dolorum minima voluptate iusto.|1      |null      |null      |
