@@ -38,9 +38,7 @@ SELECT * FROM u168183796_qaloantec.update_logs;</console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" />

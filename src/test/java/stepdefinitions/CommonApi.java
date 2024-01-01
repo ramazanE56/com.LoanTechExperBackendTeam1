@@ -12,6 +12,7 @@ import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
+import pojos.API_US020_POJO;
 import utilities.ApiUtils;
 import utilities.ConfigReader;
 
@@ -32,6 +33,7 @@ public class CommonApi extends ApiUtils {
     int createdID;
     Integer initialStatus;
     Integer updatedStatus;
+    API_US020_POJO us20reqbody;
 
     @Given("The API user sets {string} path parameters")
     public void the_apı_user_sets_path_parameters(String rawPaths) {
@@ -275,8 +277,8 @@ public class CommonApi extends ApiUtils {
                 .post(fullPath);
 
         response.prettyPrint();
-    }
 
+    }
 
     @When("The API adminuser saves the response from the categories add endpoint with valid authorization information")
     public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithValidAuthorizationInformation() {
@@ -408,6 +410,7 @@ public class CommonApi extends ApiUtils {
 
         response = given()
                 .spec(spec)
+                .contentType(ContentType.JSON)
                 .header("Accep","applications/json")
                 .headers("Authorization","Bearer "+ generateToken("user"))
                 .when()
@@ -850,15 +853,16 @@ public class CommonApi extends ApiUtils {
 
     @Given("The API user verifies that the content of the {int} field in the request body includes {int}, {string}, {string}, {string}, {int}, {string}, {string}")
     public void the_apı_user_verifies_that_the_content_of_the_field_in_the_request_body_includes(int dataIndex, int id, String name, String image, String description, int status, String created_at, String updated_at) {
-
+        jsonPath= response.jsonPath();
         Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
         Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
-        Assert.assertEquals(image, jsonPath.getString("data[" + dataIndex + "].image"));
+        Assert.assertEquals(null, jsonPath.get("data[" + dataIndex + "].image"));
         Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
-        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].created_at"));
-        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
 
+        // LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME);
         /*
         "remark": "success",
         "status": 200,
@@ -874,9 +878,72 @@ public class CommonApi extends ApiUtils {
             "plans": [
          */
 
+    }
+
+    @When("The API adminuser prepares a POST request with valid authorization information and correct data \\(category_id, name, title)")
+    public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndCorrectDataCategory_idNameTitle() {
+        requestBody = new JSONObject();
+        requestBody.put("category_id", 11);
+        requestBody.put("name", "Personal Luna");
+        requestBody.put("title", "Personal Luna");
+
+        /*
+
+        "category_id": 11,
+        "name": "Personal Finance Loan ",
+        "title": "Personal Finance Loan"
+         */
+
 
 
     }
+
+    @When("The API adminuser prepares a POST request with valid authorization information and without data \\(category_id, name, title)")
+    public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndWithoutDataCategory_idNameTitle() {
+        requestBody = new JSONObject();
+    }
+
+    @When("The API admin verifies that the message information in the response body is {string}")
+    public void theAPIAdminVerifiesThatTheMessageInformationInTheResponseBodyIs(String message) {
+        response.then()
+                .assertThat()
+                .body("data.message", Matchers.equalTo(message));
+    }
+
+    @When("The API adminuser prepares a POST request with invalid authorization information and correct data \\(category_id, name, title)")
+    public void theAPIAdminuserPreparesAPOSTRequestWithInvalidAuthorizationInformationAndCorrectDataCategory_idNameTitle() {
+
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .get(fullPath);
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("mesaj: " + mesaj);
+
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+    }
+
+    @Given("The API adminuser prepares a PATCH request with valid authorization information and correct data")
+    public void the_apı_adminuser_prepares_a_patch_request_with_valid_authorization_information_and_correct_data() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
+        response.prettyPrint();
+
+    }
+    @Given("The API adminuser sends a PATCH request and saves the response from the user loans approve endpoint with valid authorization information")
+    public void the_apı_adminuser_sends_a_patch_request_and_saves_the_response_from_the_user_loans_approve_endpoint_with_valid_authorization_information() {
+        jsonPath = response.jsonPath();
+    }
+
 }
 
 

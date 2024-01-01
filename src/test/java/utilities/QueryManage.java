@@ -45,6 +45,7 @@ public class QueryManage {
     }
 
     public String getCategoriesIdListQuery() {
+
         return categoriesIdListQuery;
     }
 
