@@ -71,3 +71,7 @@ Feature: As a user, I want to access the ticket details of a specified user thro
       | 124 | 11      | Mehmet Genç | aliulvigirgin@gmail.com | 688230 | Test Ticket | 3      | 0        | 2023-12-26 03:17:00 | 2023-12-26T08:17:00.000000Z | 2023-12-26T08:17:19.000000Z |
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
