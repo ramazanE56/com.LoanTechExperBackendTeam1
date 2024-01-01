@@ -1,22 +1,34 @@
 package utilities;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
+
 public class DBUtils {
 
     public static Connection connection;
     private static Statement statement;
     private static ResultSet resultSet;
+    public static PreparedStatement preparedStatement;
+    public static QueryManage queryManage;
 
 
-    public static void createConnection()  {
-        String url=ConfigReader.getProperty("urlDb");
-        String username=ConfigReader.getProperty("usernameDb");
-        String password=ConfigReader.getProperty("passwordDb");
+    public static void createConnection() {
+        String url = ConfigReader.getProperty("urlDb");
+        String username = ConfigReader.getProperty("usernameDb");
+        String password = ConfigReader.getProperty("passwordDb");
 
         try {
             connection = DriverManager.getConnection(url, username, password);
@@ -28,7 +40,7 @@ public class DBUtils {
 
     public static void updateQuery(String query) throws SQLException {
 
-        int st =  statement.executeUpdate(query);
+        int st = statement.executeUpdate(query);
 
         System.out.println(st);
     }
@@ -74,7 +86,6 @@ public class DBUtils {
     }
 
 
-
     //    used to close the connectivity
     public static void closeConnection() {
         try {
@@ -94,9 +105,9 @@ public class DBUtils {
 
 
     public static Connection getConnection() {
-        String url = "";
-        String username="";
-        String password="";
+        String url = ConfigReader.getProperty("urlDb");
+        String username = ConfigReader.getProperty("usernameDb");
+        String password = ConfigReader.getProperty("passwordDb");
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
@@ -105,7 +116,6 @@ public class DBUtils {
         }
         return connection;
     }
-
 
 
     //used to get statement
@@ -120,7 +130,6 @@ public class DBUtils {
     }
 
 
-
     //Use this to get the ResutSet object
     public static ResultSet getResultset() {
         try {
@@ -133,46 +142,46 @@ public class DBUtils {
     }
 
 
-
-
     // This method returns the number fo row in a table in the database
     public static int getRowCount() throws Exception {
         resultSet.last();
         int rowCount = resultSet.getRow();
         return rowCount;
     }
+
     /**
      * @return returns a single cell value. If the results in multiple rows and/or
-     *         columns of data, only first column of the first row will be returned.
-     *         The rest of the data will be ignored
+     * columns of data, only first column of the first row will be returned.
+     * The rest of the data will be ignored
      */
     public static Object getCellValue(String query) {
 
         return getQueryResultList(query).get(0).get(0);
     }
+
     /**
      * @return returns a list of Strings which represent a row of data. If the query
-     *         results in multiple rows and/or columns of data, only first row will
-     *         be returned. The rest of the data will be ignored
+     * results in multiple rows and/or columns of data, only first row will
+     * be returned. The rest of the data will be ignored
      */
     public static List<Object> getRowList(String query) {
 
         return getQueryResultList(query).get(0);
     }
+
     /**
      * @return returns a map which represent a row of data where key is the column
-     *         name. If the query results in multiple rows and/or columns of data,
-     *         only first row will be returned. The rest of the data will be ignored
+     * name. If the query results in multiple rows and/or columns of data,
+     * only first row will be returned. The rest of the data will be ignored
      */
     public static Map<String, Object> getRowMap(String query) {
         return getQueryResultMap(query).get(0);
     }
+
     /**
      * @return returns query result in a list of lists where outer list represents
-     *         collection of rows and inner lists represent a single row
+     * collection of rows and inner lists represent a single row
      */
-
-
 
 
     public static List<List<Object>> getQueryResultList(String query) {
@@ -194,11 +203,10 @@ public class DBUtils {
         }
         return rowList;
     }
+
     /**
      * @return list of values of a single column from the result set
      */
-
-
 
 
     public static List<Object> getColumnData(String query, String column) {
@@ -216,12 +224,12 @@ public class DBUtils {
         }
         return rowList;
     }
+
     /**
      * @return returns query result in a list of maps where the list represents
-     *         collection of rows and a map represents represent a single row with
-     *         key being the column name
+     * collection of rows and a map represents represent a single row with
+     * key being the column name
      */
-
 
 
     public static List<Map<String, Object>> getQueryResultMap(String query) {
@@ -280,4 +288,79 @@ public class DBUtils {
         }
     }
 
+    //@ismailTemiz
+    //Params : bir query bir sütün değeri ve bir update edilecek değer girildiğinde bunu gerçekleştiren method
+    public static int preparedUpdate(String query, Float updateAmount, String column) throws SQLException {
+
+
+        preparedStatement = getConnection().prepareStatement(query);
+
+        preparedStatement.setFloat(1, updateAmount);
+        preparedStatement.setString(2, column);
+
+        int rowCount = preparedStatement.executeUpdate();
+
+        System.out.println("Update islemi gerceklesti ve " + rowCount + " satir etkilendi.");
+
+        return rowCount;
+    }
+
+    //@ismailTemiz
+    //Params : bir query iki sütün değeri ve bir update edilecek değer girildiğinde bunu gerçekleştiren 2. method
+    public static int preparedUpdate(String query, String updateAmount, String column, int column2) throws SQLException {
+
+
+        preparedStatement = getConnection().prepareStatement(query);
+
+        preparedStatement.setString(1, updateAmount);
+        preparedStatement.setString(2, column);
+        preparedStatement.setInt(3, column2);
+
+        int rowCount = preparedStatement.executeUpdate();
+
+        assertTrue(rowCount == 1);
+
+        System.out.println("Update islemi gerceklesti ve " + rowCount + " satir etkilendi.");
+        return rowCount;
+    }
+
+    public static void exportToExcel(String query, String tableName) throws SQLException, IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet(tableName);
+        resultSet = getStatement().executeQuery(query);
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+// Creating header row
+        Row headerRow = sheet.createRow(0);
+        for (int i = 1; i <= columnCount; i++) {
+            Cell cell = headerRow.createCell(i - 1);
+            cell.setCellValue(metaData.getColumnName(i));
+        }
+
+        int rowNum = 1;
+        while (resultSet.next()) {
+            Row row = sheet.createRow(rowNum++);
+            for (int i = 1; i <= columnCount; i++) {
+                Cell cell = row.createCell(i - 1);
+                Object value = resultSet.getObject(i);
+                if (value != null) {
+                    if (value instanceof String) {
+                        cell.setCellValue((String) value);
+                    } else if (value instanceof Integer) {
+                        cell.setCellValue((Integer) value);
+                    } else if (value instanceof Double) {
+                        cell.setCellValue((Double) value);
+                    }
+                }
+            }
+        }
+
+        FileOutputStream fileOut = new FileOutputStream("C:\\Users\\asus\\IdeaProjects\\com.LoanTechExperBackendTeam1\\"+tableName+".xlsx");
+        workbook.write(fileOut);
+        fileOut.close();
+        workbook.close();
+
+        System.out.println("Excel file has been created successfully!");
+
+    }
 }
