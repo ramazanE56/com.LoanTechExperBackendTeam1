@@ -378,5 +378,219 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
     }
 
+    @Given("The API user prepares a POST request with correct data to send to the user changepassword add endpoint.")
+    public void the_apı_user_prepares_a_post_request_with_correct_data_to_send_to_the_user_changepassword_add_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("current_password", "Loan.741");
+        requestBody.put("password", "Loan.741");
+
+    }
+
+    @Given("The API user saves the response from the user changepassword detail endpoint with valid authorization information")
+    public void the_apı_user_saves_the_response_from_the_user_changepassword_detail_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("user"))
+                .when()
+                .body(requestBody.toString())
+                .patch(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @Given("The API user prepare a POST request with missing data to send to the user ticket add endpoint.")
+    public void the_apı_user_prepare_a_post_request_with_missing_data_to_send_to_the_user_ticket_add_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("current_password", "Loan.741");
+        requestBody.put("password", "1234567");
+    }
+
+    @Given("The API user prepares a post request consisting of uppercase and lowercase letters and numbers to be sent to the user ticket add endpoint.")
+    public void the_apı_user_prepares_a_post_request_consisting_of_uppercase_and_lowercase_letters_and_numbers_to_be_sent_to_the_user_ticket_add_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("current_password", "Loan.741");
+        requestBody.put("password", "Ab1123");
+    }
+
+    @Given("The API user recordss the response with invalid authorization information, verifies that the status code is {string} and confirms that the error information is Unauthorized")
+    public void the_apı_user_recordss_the_response_with_invalid_authorization_information_verifies_that_the_status_code_is_and_confirms_that_the_error_information_is_unauthorized(String string) {
+        try {
+            response = given()
+                    .spec(spec)
+                    .contentType(ContentType.JSON)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .patch(fullPath);
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("mesaj: " + mesaj);
+
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+
+    }
+
+    @Given("The API adminuser saves the response from the loanplans details endpoint with valid authorization information")
+    public void the_apı_adminuser_saves_the_response_from_the_loanplans_details_endpoint_with_valid_authorization_information_get() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @Given("The API adminuser verifies that the message information in the response body is {string}")
+    public void the_apı_adminuser_verifies_that_the_message_information_in_the_response_body_is(String message) {
+        response.then()
+                .assertThat()
+                .body("data.message", Matchers.equalTo(message));
+
+
+    }
+    @Given("The API user records the response with invalid authorization information,")
+    public void the_apı_user_records_the_response_with_invalid_authorization_information() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .get(fullPath);
+
+            response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("mesaj: " + mesaj);
+
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+
+
+    }
+
+
+    @Given("The API user prepares a PATCH request containing the correct data to send to the user changepassword add endpoint")
+    public void the_apı_user_prepares_a_patch_request_containing_the_correct_data_to_send_to_the_user_changepassword_add_endpoint() {
+
+        requestBody = new JSONObject();
+        requestBody.put("current_password", "Loan.741");
+        requestBody.put("password", "Ab1123");
+        /*
+        {
+    "current_password":"Abc409087.",
+    "password":"123123"
+}
+         */
+    }
+
+    @Given("The API adminuser saves the response from the blogs add  endpoint with valid authorization information")
+    public void the_apı_adminuser_saves_the_response_from_the_blogs_add_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+    @Given("The API adminuser saves the GET response from the blogs add  endpoint with valid authorization information")
+    public void the_apı_adminuser_saves_the_get_response_from_the_blogs_add_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API adminuser saves the response from the user ticket delete endpoint with valid authorization information")
+    public void the_apı_adminuser_saves_the_response_from_the_user_ticket_delete_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+    }
+    @Then("The API adminuser saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is Unauthorized")
+    public void the_apı_adminuser_saves_the_response_from_the_user_ticket_delete_endpoint_with_invalid_authorization_information_and_confirms_that_the_status_code_is_and_the_error_message_is_unauthorized(String string) {
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .delete(fullPath);
+
+            response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("mesaj: " + mesaj);
+
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+
+    }
+    @Given("The API adminuser saves the response from the user ticket detail endpoint with valid authorization information")
+    public void the_apı_adminuser_saves_the_response_from_the_user_ticket_detail_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @Given("The API user prepare a POST request containing the correct data to send to the user ticket add endpoint")
+    public void the_apı_user_prepare_a_post_request_containing_the_correct_data_to_send_to_the_user_ticket_add_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("title", "Test Blog 3");
+        requestBody.put("description", "Test açıklama 3");
+    }
+
+    @Given("The API user prepare a POST request containing the missing data to send to the user ticket add endpoint")
+    public void the_apı_user_prepare_a_post_request_containing_the_missing_data_to_send_to_the_user_ticket_add_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("title", "Test Blog 3");
+        requestBody.put("description", "");
+    }
+
+    @Given("The API user prepare a POST request containing the empty data to send to the user ticket add endpoint")
+    public void the_apı_user_prepare_a_post_request_containing_the_empty_data_to_send_to_the_user_ticket_add_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("", "");
+        requestBody.put("", "");
+    }
+
+    @Given("The API adminuser records the response with invalid authorization information,")
+    public void the_apı_adminuser_records_the_response_with_invalid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
 
 }
+
