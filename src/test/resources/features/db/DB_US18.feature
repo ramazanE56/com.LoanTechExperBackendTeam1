@@ -1,6 +1,6 @@
 Feature: DB_US18: Add only the data containing "id, name, discription" to the Catagories table.
 
-@q02
+@back
   Scenario: TC01: Add only the data containing "id, name, discription" to the Catagories table.
 
     * The query is prepared and executed to the Support_messages table.
