@@ -1112,32 +1112,32 @@ public class CommonApi extends ApiUtils {
     }
 
 
-    @And("The API adminuser prepares a POST request without data to send to the admin withdraw methods add endpoint")
-    public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminWithdrawMethodsAddEndpoint() {
-        /*
-{
-        "name": "Method 5",
-        "min_limit": "200.00000000",
-        "max_limit": "7000.00000000",
-        "fixed_charge": "150.00000000",
-        "rate": "2.00000000",
-        "percent_charge": "3.00",
-        "currency": "USD",
-        "description": "Test Method 5"
-}
-         */
-        requestBody = new JSONObject();
-        requestBody.put("name", "Method 5");
-        requestBody.put("min_limit", "200.00000000");
-        requestBody.put("max_limit", "7000.00000000");
-        requestBody.put("fixed_charge", "150.00000000");
-        requestBody.put("rate", "2.00000000");
-        requestBody.put("percent_charge", "3.00");
-        requestBody.put("currency", "USD");
-        requestBody.put("description", "Test Method 5");
+//   @And("The API adminuser prepares a POST request without data to send to the admin withdraw methods add endpoint")
+//   public void theAPIAdminuserPreparesWithoutDataToSendToTheAdminWithdrawMethodsAddEndpoint() {
+//       /*
+//
+//       "name": "Method 5",
+//       "min_limit": "200.00000000",
+//       "max_limit": "7000.00000000",
+//       "fixed_charge": "150.00000000",
+//       "rate": "2.00000000",
+//       "percent_charge": "3.00",
+//       "currency": "USD",
+//       "description": "Test Method 5"
+//
+//        */
+//       requestBody = new JSONObject();
+//       requestBody.put("name", "Method 5");
+//       requestBody.put("min_limit", "200.00000000");
+//       requestBody.put("max_limit", "7000.00000000");
+//       requestBody.put("fixed_charge", "150.00000000");
+//       requestBody.put("rate", "2.00000000");
+//       requestBody.put("percent_charge", "3.00");
+//       requestBody.put("currency", "USD");
+//       requestBody.put("description", "Test Method 5");
 
 
-    }
+//   }
     @Given("The API user saves the response from the user ticket delete endpoint with valid authorization information.")
     public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_valid_authorization_information() {
 
@@ -1412,6 +1412,47 @@ public class CommonApi extends ApiUtils {
                 .patch(fullPath);
 
         response.prettyPrint();
+    }
+
+    @And("The API adminuser prepares a POST request without data to send to the api admin withdrawmethods add endpoint")
+    public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheApiAdminWithdrawmethodsAddEndpoint() {
+              /*
+{
+        "name": "Method 5",
+        "min_limit": "200.00000000",
+        "max_limit": "7000.00000000",
+        "fixed_charge": "150.00000000",
+        "rate": "2.00000000",
+        "percent_charge": "3.00",
+        "currency": "USD",
+        "description": "Test Method 5"
+}
+         */
+        requestBody = new JSONObject();
+        requestBody.put("name", "Method 5");
+        requestBody.put("min_limit", "200.00000000");
+        requestBody.put("max_limit", "7000.00000000");
+        requestBody.put("fixed_charge", "150.00000000");
+        requestBody.put("rate", "2.00000000");
+        requestBody.put("percent_charge", "3.00");
+        requestBody.put("currency", "USD");
+        requestBody.put("description", "Test Method 5");
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+        jsonPath = response.jsonPath();
+        int id = jsonPath.getInt("data.Method.id");
+        fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
+
+
     }
 }
 
