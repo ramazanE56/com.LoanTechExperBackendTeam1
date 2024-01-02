@@ -1222,8 +1222,8 @@ public class CommonApi extends ApiUtils {
     "details":"Something went wrong."
          */
 
-        requestBody = new JSONObject();
-        requestBody.put("details", "Something went wrong.");
+       requestBody = new JSONObject();
+       requestBody.put("details", "Something went wrong.");
 
     }
 
@@ -1243,9 +1243,9 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
 
 
-        jsonPath = response.jsonPath();
-        int id = jsonPath.getInt("data.Method.id");
-        fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
+
+
+
 
 
     }
@@ -1382,17 +1382,23 @@ public class CommonApi extends ApiUtils {
 
     @Given("The API user sends a POST request and saves the response with invalid authorization information")
     public void the_api_user_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .header("Accept", "application/json")
-                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
-                .when()
-                .body(requestBody.toString())
-                .post(fullPath);
 
-        response.prettyPrint();
+            response = given()
+                    .spec(spec)
+                    .contentType(ContentType.JSON)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .post(fullPath);
+
+            response.prettyPrint();
+
     }
+
+
+
+
+
 
 
 
@@ -1424,6 +1430,90 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
+
+    @When("The API user sends GET request to api loanplans list endpoint")
+    public void the_api_user_sends_get_request_to_api_loanplans_list_endpoint() {
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+
+    }
+    @Given("The API adminuser verifies that the status_code is {int}")
+    public void the_api_adminuser_verifies_that_the_status_code_is(int status) {
+        response.then()
+                .assertThat()
+                .statusCode(status);
+
+
+    }
+    @Given("The API adminser verifies that the message information in the response body is {string}")
+    public void the_api_adminser_verifies_that_the_message_information_in_the_response_body_is(String message) {
+
+        response.then()
+                .assertThat()
+                .body("message.error[0]", Matchers.equalTo(message));
+
+    }
+    @Given("The API adminuser sends a POST request and saves the response with invalid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API adminuser sends a POST request and saves the response withdrawal reject with valid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_withdrawal_reject_with_valid_authorization_information() {
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API adminuser sends a POST request and saves the response no data withdrawal reject with valid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_no_data_withdrawal_reject_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+    @Given("The API adminuser verifies that the message in the response body is {string}")
+    public void the_api_adminuser_verifies_that_the_message_in_the_response_body_is(String message) {
+
+        response.then()
+                .assertThat()
+                .body("data.message", Matchers.equalTo(message));
+
+    }
+
+
 }
 
 
