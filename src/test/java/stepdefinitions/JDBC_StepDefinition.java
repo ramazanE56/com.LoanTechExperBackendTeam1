@@ -280,28 +280,19 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
             // ResultSet verilerini konsolda yazdırma
             if (resultSet.next()) {
                 do {
-                    int id = resultSet.getInt("id");
-                    int supportMessageId = resultSet.getInt("support_message_id");
-                    String attachment = resultSet.getString("attachment");
-                    String createdAt = resultSet.getString("created_at");
-                    String updatedAt = resultSet.getString("updated_at");
-
-                    System.out.println("ID: " + id);
-                    System.out.println("Support Message ID: " + supportMessageId);
-                    System.out.println("Attachment: " + attachment);
-                    System.out.println("Created At: " + createdAt);
-                    System.out.println("Updated At: " + updatedAt);
-                    System.out.println("--------------------");
-                    System.out.println("aradığınız "+"support message id"+" silinmemiştir");
+                    String id = String.valueOf(resultSet.getInt("id"));
+                    System.out.println(id +" sayılı support message_id henüz silinmedi.");
+                    Assert.assertNotNull(id);
 
                 } while (resultSet.next());
             } else {
 
-                System.out.println("Böyle bir "+"support message_id" +" yoktur.");
+                System.out.println(magic+ " sayılı support message_id silindiği içi bulunamamıştır.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
 
