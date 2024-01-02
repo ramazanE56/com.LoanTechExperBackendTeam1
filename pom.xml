@@ -43,13 +43,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.7.1</version>
-            <scope>test</scope>
-        </dependency>
 
 
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
@@ -139,6 +132,19 @@
             <artifactId>log4j-core</artifactId>
             <version>2.20.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.32</version>
+        </dependency>
+        <!-- Logback -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
+
 
     </dependencies>
     <build>
@@ -146,25 +152,21 @@
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>5.7.5</version>
+                <version>5.7.7</version>
                 <executions>
                     <execution>
                         <id>execution</id>
-                        <phase>verify</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>cucumber-jvm-example</projectName>
+                            <projectName>Cucumber HTML Reports</projectName>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <inputDirectory>${project.build.directory}</inputDirectory>
                             <jsonFiles>
-                                <param>**/json-reports/*.json</param>
-                            </jsonFiles><classificationFiles>->
-                            <param>sample.properties</param>
-                            <param>other.properties</param>
-                            <param>cucumber.properties</param>
-                        </classificationFiles>
+                                <param>**/cucumber*.json</param>
+                            </jsonFiles>
                         </configuration>
                     </execution>
                 </executions>
@@ -198,15 +200,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.testng</groupId>
-                        <artifactId>testng</artifactId>
-                        <version>7.4.0</version>
-                    </dependency>
-                </dependencies>
+
                 <configuration>
-                    <parallel>methods</parallel>
+                    <parallel>classes</parallel>
 
                     <threadCount>3</threadCount>
                     <reuseForks>false</reuseForks>
