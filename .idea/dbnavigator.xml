@@ -46,6 +46,9 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.update_logs" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.support_tickets" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.users" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.user_notifications" active-filter-id="" />
     <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.categories" active-filter-id="ceec9110-911d-49e7-bd21-01b6152e0863">
       <filter id="ceec9110-911d-49e7-bd21-01b6152e0863" name="1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="1" active="true" />
@@ -387,7 +390,6 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
-          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
