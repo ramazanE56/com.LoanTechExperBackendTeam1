@@ -2,7 +2,7 @@
   Feature: US_69 As an administrator, I want to be able to create a new blog record through the API connection.
 
 
-
+@back
     Scenario: TC_01 When a valid authorization information and correct data (title, description) are sent in a POST body
     to the 'api/blogs/add' endpoint, it should be verified that the returned status code is 200, and the remark information in the request body indicates "success"
 
