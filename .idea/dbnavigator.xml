@@ -38,7 +38,9 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" />
@@ -390,6 +392,7 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
+          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
