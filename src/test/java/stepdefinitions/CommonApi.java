@@ -1428,17 +1428,119 @@ public class CommonApi extends ApiUtils {
 
 
 
-    @Given("The API user verifies that the content of the data field in the response body includes {int},{int},{string},{string},{string},{int},{string},{string}")
-    public void theAPIUserVerifiesThatTheContentOfTheDataFieldInTheResponseBodyIncludesDataIndexIdStatus(int dataIndex,int id,String name,String image,String description,int status,String created_at,String updated_at) {
+  //@Given("The API user verifies that the content of the data field in the response body includes {int},{int},{string},{string},{string},{int},{string},{string}")
+  //public void theAPIUserVerifiesThatTheContentTheDataFieldInTheResponseBodyIncludesDataIndexIdStatus(int dataIndex,int id,String name,String image,String description,int status,String created_at,String updated_at) {
+  //    jsonPath = response.jsonPath();
+
+  //    Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
+  //    Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+  //    Assert.assertEquals(null, jsonPath.getString("data[" + dataIndex + "].image"));
+  //    Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
+  //    Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+  //    Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+  //    Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+   // }
+
+    @And("The API adminuser prepares a POST request without data to send to the admin subscriber add endpoint")
+    public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminSubscriberAddEndpoint() {
+        /*
+        "email":"umit62@gmail.com"
+         */
+        requestBody = new JSONObject();
+        requestBody.put("email", "umit62@gmail.com");
+
+    }
+
+    @And("The API adminuser saves the response from the admin subscriber delete endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+
+
+    }
+
+    @Then("The API user saves the response from the admin subscriber delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
+    public void theAPIUserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+
+                    .get(fullPath);
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("Mesaj: " + mesaj);
+
+    }
+
+    @Then("The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal uptaded endpoint with valid authorization information")
+    public void theAPIAdminuserPreparesAPATCHRequestContainingTheTheCorrectIdAndAccurateDataSendToTheApiWithdrawalUptadedEndpointWithValidAuthorizationInformation() {
+
+     /*
+
+    {
+        "name": "Method 115 Updated",
+        "min_limit": "1000",
+        "max_limit": "15000"
+         */
+        requestBody = new JSONObject();
+        int id = jsonPath.getInt("data.data[0].id");
+        fullPath = pathParameters("api/withdraw/methods/update/"+id+" ");
         jsonPath = response.jsonPath();
+        requestBody = new JSONObject();
+        requestBody.put("name", "Method 115 Updated");
+        requestBody.put("min limit", "1000");
+        requestBody.put("max limit", "15000");
+
+    }
+
+    @Given("The API user verifies that the content of the data field in the response body includes {int},{int},{string},{string},{string},{int},{string},{string}")
+    public void theAPIUserVerifiesThatTheContentOfTheDataFieldInTheResponseBodyIncludesDataIndexIdImageStatus(int id,int dataIndex,String name, String image, String description,int status,String created_at,String updated_at) {
+
+         jsonPath = new JsonPath(response.getBody().asString());
 
         Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
         Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
-        Assert.assertEquals(null, jsonPath.getString("data[" + dataIndex + "].image"));
+        Assert.assertEquals(null, jsonPath.get("data[" + dataIndex + "].image"));
         Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
         Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
         Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+    }
+
+
+    @And("The API adminuser prepares a POST request without data to send to the admin api subscriber add endpoint")
+    public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminApiSubscriberAddEndpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("email", "umit123@gmail.com");
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+        response.prettyPrint();
+
+        jsonPath = response.jsonPath();
+        int id=jsonPath.getInt("Added subscriber id");
+        fullPath = pathParameters("api/subscriber/delete/"+id+" ");
+
     }
 }
 
