@@ -11,12 +11,15 @@ import org.junit.runner.RunWith;
                 "html:target/cucumber-reportsApi.html",
                 "json:target/json-reports/cucumberApi.json",
                 "junit:target/xml-report/cucumberApi.xml",
-                "rerun:target/failedRerunApi.txt"
-        },
+                "rerun:target/failedRerunApi.txt"},
+        monochrome = true,// raporların konsolda okunaklı çıkması için
         features = "src/test/resources/features/api",
         glue = {"stepdefinitions", "hooks/api"},
-        tags = "@abc",
+        tags = "@ism13",
         dryRun = false
+
+
+
 )
 public class ApiRunner {
 
