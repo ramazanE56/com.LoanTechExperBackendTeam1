@@ -8,7 +8,7 @@ Feature: US17: As an administrator, I want to access the list of loan plans via 
     Then The API user verifies that the status code is 200
     And The API user verifies that the remark information in the response body is "success"
 
-  @smt
+
   Scenario: TC02: When a GET request with invalid authorization information is sent to the api/loanplans/list endpoint,
             the returned status code should be 401, and the error message in the request should be verified as "Unauthorized request"
 

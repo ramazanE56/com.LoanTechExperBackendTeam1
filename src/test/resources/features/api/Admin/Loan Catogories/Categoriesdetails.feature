@@ -43,7 +43,7 @@ Feature: US_12 As an administrator, I want to access the category details of a u
     Given The API user sets "api/categories/details/<id>" path parameters
     Then The API user records the response with invalid authorization information, verifies that the status code is '401' and confirms that the error information is Unauthorized
 
-  Scenario Outline: The contents of data (id, name, image, description, status, created_at, updated_at) in the request body should be verified
+  Scenario Outline: TC_05:The contents of data (id, name, image, description, status, created_at, updated_at) in the request body should be verified
 
     Given The API user sets "api/categories/details/<id>" path parameters
     And The API adminuser saves the response from the categories details endpoint with valid authorization information
