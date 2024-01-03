@@ -21,11 +21,11 @@ Feature: US58 : As an administrator, I want to be able to approve the withdrawal
       * The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal approve id endpoint with valid authorization information
       * The API adminuser sends a PATCH request and saves the response with valid authorization information
       * The API user verifies that the status code is 203
-      * The API user verifies that the remark information in the response body is "No withdraw or withdraw status is not pending."
+      * The API adminuser verifies that the message in the response body is "No withdraw or withdraw status is not pending."
 
       Examples:
         | id |
-        | 400|
+        | 415|
 
       Scenario: TC03: When a valid PATCH request is sent to the 'api/withdrawal/approve/{{id}}' endpoint with proper authorization information but without including the required (id) and with a PATCH body that lacks details,
                       the expected behavior is that the status code in the request is 203.
@@ -35,7 +35,7 @@ Feature: US58 : As an administrator, I want to be able to approve the withdrawal
         * The API user prepares a PATCH request containing without including data to send to the api withdrawal approve endpoint with valid authorization information
         * The API adminuser sends a PATCH request and saves the response with valid authorization information
         * The API user verifies that the status code is 203
-        * The API user verifies that the remark information in the response body is "No id"
+        * The API adminuser verifies that the message in the response body is "No id"
 
 
     Scenario Outline: TC04: When a valid PATCH request is sent to the 'api/withdrawal/approve/{{id}}' endpoint with proper authorization information and an (id) that corresponds to a non-existent record, along with a PATCH body (details),
@@ -46,7 +46,7 @@ Feature: US58 : As an administrator, I want to be able to approve the withdrawal
       * The API user prepares a PATCH request containing non-existent record to send to the api withdrawal approve endpoint with valid authorization information
       * The API adminuser sends a PATCH request and saves the response with valid authorization information
       * The API user verifies that the status code is 203
-      * The API user verifies that the remark information in the response body is "No withdraw."
+      * The API adminuser verifies that the message in the response body is "No withdraw."
 
       Examples:
         | id |
@@ -61,11 +61,11 @@ Feature: US58 : As an administrator, I want to be able to approve the withdrawal
         * The API user prepares a PATCH request containing with the correct id with unauthorized authorization information send to the api withdrawal approve endpoint with valid authorization information
         * The API adminuser sends a PATCH request and saves the response with invalid authorization information
         * The API user verifies that the status code is 401
-        * The API user verifies that the remark information in the response body is "Unauthorized request"
+        * The API adminser verifies that the message information in the response body is "Unauthorized request"
 
         Examples:
           | id |
-          | 395|
+          | 415|
 
 
 
