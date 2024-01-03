@@ -5,7 +5,7 @@ Feature: API_US066 : As an administrator, I should be able to delete the withdra
                     and the message information in the request body is "Withdraw Method deleted"
 
     Given The API user sets "api/withdraw/methods/add" path parameters
-    And The API adminuser prepares a POST request without data to send to the admin withdraw methods add endpoint
+    And The API adminuser prepares a POST request without data to send to the api admin withdrawmethods add endpoint
     And The API adminuser saves the response from the admin withdraw methods delete endpoint with valid authorization information
     Then The API user verifies that the status code is 200
     And The API User verifies that the message information in the response body is "Withdraw Method deleted"

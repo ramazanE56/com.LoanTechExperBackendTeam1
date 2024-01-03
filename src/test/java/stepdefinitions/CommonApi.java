@@ -20,6 +20,7 @@ import static hooks.api.HooksApi.spec;
 
 import static io.restassured.RestAssured.given;
 
+import static java.nio.file.Paths.get;
 import static org.apache.hc.client5.http.async.methods.SimpleRequestBuilder.delete;
 import static org.bouncycastle.asn1.x500.style.RFC4519Style.name;
 
@@ -1112,32 +1113,32 @@ public class CommonApi extends ApiUtils {
     }
 
 
-    @And("The API adminuser prepares a POST request without data to send to the admin withdraw methods add endpoint")
-    public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminWithdrawMethodsAddEndpoint() {
-        /*
-{
-        "name": "Method 5",
-        "min_limit": "200.00000000",
-        "max_limit": "7000.00000000",
-        "fixed_charge": "150.00000000",
-        "rate": "2.00000000",
-        "percent_charge": "3.00",
-        "currency": "USD",
-        "description": "Test Method 5"
-}
-         */
-        requestBody = new JSONObject();
-        requestBody.put("name", "Method 5");
-        requestBody.put("min_limit", "200.00000000");
-        requestBody.put("max_limit", "7000.00000000");
-        requestBody.put("fixed_charge", "150.00000000");
-        requestBody.put("rate", "2.00000000");
-        requestBody.put("percent_charge", "3.00");
-        requestBody.put("currency", "USD");
-        requestBody.put("description", "Test Method 5");
+//   @And("The API adminuser prepares a POST request without data to send to the admin withdraw methods add endpoint")
+//   public void theAPIAdminuserPreparesWithoutDataToSendToTheAdminWithdrawMethodsAddEndpoint() {
+//       /*
+//
+//       "name": "Method 5",
+//       "min_limit": "200.00000000",
+//       "max_limit": "7000.00000000",
+//       "fixed_charge": "150.00000000",
+//       "rate": "2.00000000",
+//       "percent_charge": "3.00",
+//       "currency": "USD",
+//       "description": "Test Method 5"
+//
+//        */
+//       requestBody = new JSONObject();
+//       requestBody.put("name", "Method 5");
+//       requestBody.put("min_limit", "200.00000000");
+//       requestBody.put("max_limit", "7000.00000000");
+//       requestBody.put("fixed_charge", "150.00000000");
+//       requestBody.put("rate", "2.00000000");
+//       requestBody.put("percent_charge", "3.00");
+//       requestBody.put("currency", "USD");
+//       requestBody.put("description", "Test Method 5");
 
 
-    }
+//   }
     @Given("The API user saves the response from the user ticket delete endpoint with valid authorization information.")
     public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_valid_authorization_information() {
 
@@ -1153,7 +1154,13 @@ public class CommonApi extends ApiUtils {
     }
 
 
-    @When("The API adminuser prepares a POST request with valid authorization information and without data \\(category_id, name, title)")
+    @Given("The API user saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is {string}")
+    public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_invalid_authorization_information_and_confirms_that_the_status_code_is_and_the_error_message_is(String string, String string2)
+    {}
+
+
+
+    @When("The API adminuser prepares a POST request with valid authorization information and without data (category_id, name, title)")
     public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndWithoutDataCategory_idNameTitle() {
         requestBody = new JSONObject();
     }
@@ -1165,7 +1172,7 @@ public class CommonApi extends ApiUtils {
                 .body("data.message", Matchers.equalTo(message));
     }
 
-    @When("The API adminuser prepares a POST request with invalid authorization information and correct data \\(category_id, name, title)")
+    @When("The API adminuser prepares a POST request with invalid authorization information and correct data (category_id, name, title)")
     public void theAPIAdminuserPreparesAPOSTRequestWithInvalidAuthorizationInformationAndCorrectDataCategory_idNameTitle() {
 
 
@@ -1179,6 +1186,10 @@ public class CommonApi extends ApiUtils {
                     .delete(fullPath);
 
             response.prettyPrint();
+
+
+                    get(fullPath);
+
 
 
 
@@ -1211,8 +1222,8 @@ public class CommonApi extends ApiUtils {
     "details":"Something went wrong."
          */
 
-        requestBody = new JSONObject();
-        requestBody.put("details", "Something went wrong.");
+       requestBody = new JSONObject();
+       requestBody.put("details", "Something went wrong.");
 
     }
 
@@ -1232,9 +1243,9 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
 
 
-        jsonPath = response.jsonPath();
-        int id = jsonPath.getInt("data.Method.id");
-        fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
+
+
+
 
 
     }
@@ -1371,17 +1382,23 @@ public class CommonApi extends ApiUtils {
 
     @Given("The API user sends a POST request and saves the response with invalid authorization information")
     public void the_api_user_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .header("Accept", "application/json")
-                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
-                .when()
-                .body(requestBody.toString())
-                .post(fullPath);
 
-        response.prettyPrint();
+            response = given()
+                    .spec(spec)
+                    .contentType(ContentType.JSON)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .post(fullPath);
+
+            response.prettyPrint();
+
     }
+
+
+
+
+
 
 
 
@@ -1414,17 +1431,123 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
     }
 
+
     @Then("The API adminuser saves the response from the categories details endpoint with valid authorization information")
     public void theAPIAdminuserSavesTheResponseFromTheCategoriesDetailsEndpointWithValidAuthorizationInformation() {
         response = given()
                 .spec(spec)
+
+
+    @When("The API user sends GET request to api loanplans list endpoint")
+    public void the_api_user_sends_get_request_to_api_loanplans_list_endpoint() {
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+
                 .header("Accept", "application/json")
                 .headers("Authorization", "Bearer " + generateToken("admin"))
                 .when()
                 .get(fullPath);
 
         response.prettyPrint();
+
+
     }
+    @Given("The API adminuser verifies that the status_code is {int}")
+    public void the_api_adminuser_verifies_that_the_status_code_is(int status) {
+        response.then()
+                .assertThat()
+                .statusCode(status);
+
+
+    }
+    @Given("The API adminser verifies that the message information in the response body is {string}")
+    public void the_api_adminser_verifies_that_the_message_information_in_the_response_body_is(String message) {
+
+        response.then()
+                .assertThat()
+                .body("message.error[0]", Matchers.equalTo(message));
+
+    }
+    @Given("The API adminuser sends a POST request and saves the response with invalid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API adminuser sends a POST request and saves the response withdrawal reject with valid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_withdrawal_reject_with_valid_authorization_information() {
+    }
+
+   //@And("The API adminuser prepares a POST request without data to send to the api admin withdrawmethods add endpoint")
+   //public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheApiAdminWithdrawmethodsAddEndpoint() {
+   //          /*
+   //    {
+   //    "name": "Method 5",
+   //    "min_limit": "200.00000000",
+   //    "max_limit": "7000.00000000",
+   //    "fixed_charge": "150.00000000",
+   //    "rate": "2.00000000",
+   //    "percent_charge": "3.00",
+   //    "currency": "USD",
+   //    "description": "Test Method 5"
+   //    }
+   //     */
+   //    requestBody = new JSONObject();
+   //    requestBody.put("name", "Method 5");
+   //    requestBody.put("min_limit", "200.00000000");
+   //    requestBody.put("max_limit", "7000.00000000");
+   //    requestBody.put("fixed_charge", "150.00000000");
+   //    requestBody.put("rate", "2.00000000");
+   //    requestBody.put("percent_charge", "3.00");
+   //    requestBody.put("currency", "USD");
+   //    requestBody.put("description", "Test Method 5");
+
+   //    response = given()
+   //            .spec(spec)
+   //            .contentType(ContentType.JSON)
+   //            .header("Accept", "application/json")
+   //            .headers("Authorization", "Bearer " + generateToken("admin"))
+   //            .when()
+   //            .body(requestBody.toString())
+   //            .post(fullPath);
+
+   //    response.prettyPrint();
+
+
+   //}
+
+    @Given("The API adminuser sends a POST request and saves the response no data withdrawal reject with valid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_no_data_withdrawal_reject_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+    @Given("The API adminuser verifies that the message in the response body is {string}")
+    public void the_api_adminuser_verifies_that_the_message_in_the_response_body_is(String message) {
+
+        response.then()
+                .assertThat()
+                .body("data.message", Matchers.equalTo(message));
+
+
+    }
+
 
 
 
@@ -1453,40 +1576,72 @@ public class CommonApi extends ApiUtils {
 
     @And("The API adminuser saves the response from the admin subscriber delete endpoint with valid authorization information")
     public void theAPIAdminuserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithValidAuthorizationInformation() {
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .header("Accept", "application/json")
-                .headers("Authorization", "Bearer " + generateToken("admin"))
-                .when()
-                .body(requestBody.toString())
-                .post(fullPath);
 
-        response.prettyPrint();
+            //   jsonPath = response.jsonPath();
+            //   int id = jsonPath.getInt("data.Method.id");
+            //   fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
 
 
+     @And("The API adminuser prepares a POST request without data to send to the api admin withdrawmethods add endpoint")
+            public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheApiAdminWithdrawmethodsAddEndpoint () {
+              /*
+{
+        "name": "Method 5",
+        "min_limit": "200.00000000",
+        "max_limit": "7000.00000000",
+        "fixed_charge": "150.00000000",
+        "rate": "2.00000000",
+        "percent_charge": "3.00",
+        "currency": "USD",
+        "description": "Test Method 5"
+}
+         */
+                requestBody = new JSONObject();
+                requestBody.put("name", "Method 5");
+                requestBody.put("min_limit", "200.00000000");
+                requestBody.put("max_limit", "7000.00000000");
+                requestBody.put("fixed_charge", "150.00000000");
+                requestBody.put("rate", "2.00000000");
+                requestBody.put("percent_charge", "3.00");
+                requestBody.put("currency", "USD");
+                requestBody.put("description", "Test Method 5");
 
-    }
 
-    @Then("The API user saves the response from the admin subscriber delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
-    public void theAPIUserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized() {
-        try {
-            response = given()
-                    .spec(spec)
-                    .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
-                    .when()
+                response = given()
+                        .spec(spec)
+                        .contentType(ContentType.JSON)
+                        .header("Accept", "application/json")
+                        .headers("Authorization", "Bearer " + generateToken("admin"))
+                        .when()
+                        .body(requestBody.toString())
+                        .post(fullPath);
 
-                    .get(fullPath);
-        } catch (Exception e) {
-            mesaj = e.getMessage();
-        }
-        System.out.println("Mesaj: " + mesaj);
+                response.prettyPrint();
 
-    }
 
-    @Then("The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal uptaded endpoint with valid authorization information")
-    public void theAPIAdminuserPreparesAPATCHRequestContainingTheTheCorrectIdAndAccurateDataSendToTheApiWithdrawalUptadedEndpointWithValidAuthorizationInformation() {
+            }
+
+            @Then("The API user saves the response from the admin subscriber delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
+            public void theAPIUserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized
+            () {
+                try {
+                    response = given()
+                            .spec(spec)
+                            .header("Accept", "application/json")
+                            .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                            .when()
+
+                            .get(fullPath);
+                } catch (Exception e) {
+                    mesaj = e.getMessage();
+                }
+                System.out.println("Mesaj: " + mesaj);
+
+            }
+
+            @Then("The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal uptaded endpoint with valid authorization information")
+            public void theAPIAdminuserPreparesAPATCHRequestContainingTheTheCorrectIdAndAccurateDataSendToTheApiWithdrawalUptadedEndpointWithValidAuthorizationInformation
+            () {
 
      /*
 
@@ -1495,52 +1650,54 @@ public class CommonApi extends ApiUtils {
         "min_limit": "1000",
         "max_limit": "15000"
          */
-        requestBody = new JSONObject();
-        int id = jsonPath.getInt("data.data[0].id");
-        fullPath = pathParameters("api/withdraw/methods/update/"+id+" ");
-        jsonPath = response.jsonPath();
-        requestBody = new JSONObject();
-        requestBody.put("name", "Method 115 Updated");
-        requestBody.put("min limit", "1000");
-        requestBody.put("max limit", "15000");
+                requestBody = new JSONObject();
+                int id = jsonPath.getInt("data.data[0].id");
+                fullPath = pathParameters("api/withdraw/methods/update/" + id + " ");
+                jsonPath = response.jsonPath();
+                requestBody = new JSONObject();
+                requestBody.put("name", "Method 115 Updated");
+                requestBody.put("min limit", "1000");
+                requestBody.put("max limit", "15000");
 
-    }
+            }
 
-    @Given("The API user verifies that the content of the data field in the response body includes {int},{int},{string},{string},{string},{int},{string},{string}")
-    public void theAPIUserVerifiesThatTheContentOfTheDataFieldInTheResponseBodyIncludesDataIndexIdImageStatus(int id,int dataIndex,String name, String image, String description,int status,String created_at,String updated_at) {
+            @Given("The API user verifies that the content of the data field in the response body includes {int},{int},{string},{string},{string},{int},{string},{string}")
+            public void theAPIUserVerifiesThatTheContentOfTheDataFieldInTheResponseBodyIncludesDataIndexIdImageStatus (
+            int id, int dataIndex, String name, String image, String description,int status, String created_at, String
+            updated_at){
 
-         jsonPath = new JsonPath(response.getBody().asString());
+                jsonPath = new JsonPath(response.getBody().asString());
 
-        Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
-        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
-        Assert.assertEquals(null, jsonPath.get("data[" + dataIndex + "].image"));
-        Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
-        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
-        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
-        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+                Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
+                Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+                Assert.assertEquals(null, jsonPath.get("data[" + dataIndex + "].image"));
+                Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
+                Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+                Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+                Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
 
-    }
+            }
 
 
-    @And("The API adminuser prepares a POST request without data to send to the admin api subscriber add endpoint")
-    public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminApiSubscriberAddEndpoint() {
-        requestBody = new JSONObject();
-        requestBody.put("email", "umit123@gmail.com");
+            @And("The API adminuser prepares a POST request without data to send to the admin api subscriber add endpoint")
+            public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminApiSubscriberAddEndpoint () {
+                requestBody = new JSONObject();
+                requestBody.put("email", "umit123@gmail.com");
 
-        response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .header("Accept", "application/json")
-                .headers("Authorization", "Bearer " + generateToken("admin"))
-                .when()
-                .body(requestBody.toString())
-                .post(fullPath);
-        response.prettyPrint();
+                response = given()
+                        .spec(spec)
+                        .contentType(ContentType.JSON)
+                        .header("Accept", "application/json")
+                        .headers("Authorization", "Bearer " + generateToken("admin"))
+                        .when()
+                        .body(requestBody.toString())
+                        .post(fullPath);
+                response.prettyPrint();
 
-        jsonPath = response.jsonPath();
-        int id=jsonPath.getInt("Added subscriber id");
-        fullPath = pathParameters("api/subscriber/delete/"+id+" ");
+                jsonPath = response.jsonPath();
+                int id = jsonPath.getInt("Added subscriber id");
+                fullPath = pathParameters("api/subscriber/delete/" + id + " ");
 
-    }
+
+        }
 }
-
