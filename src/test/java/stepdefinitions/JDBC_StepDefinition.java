@@ -471,6 +471,34 @@ public class JDBC_StepDefinition extends DBUtils {
     }
 
 
+    @Given("The query is prepared and executed to the deposits amount table")
+    public void the_query_is_prepared_and_executed_to_the_deposits_amount_table() throws SQLException {
+        query = queryManage.getAdmindeposits();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the deposits amount table is validated")
+    public void the_result_set_returned_from_the_deposits_amount_table_is_validated() throws SQLException {
+        expectedData = "1";
+        resultSet.next();
+        actualData = resultSet.getString("user_id");
+        assertEquals(expectedData,actualData);
+    }
+    @Given("The query is prepared and executed to the deposits table.")
+    public void the_query_is_prepared_and_executed_to_the_deposits_table() throws SQLException {
+        query = queryManage.getDepositsQuery();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("The query is prepared and executed to the one admin notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_one_admin_notifications_table() throws SQLException {
+        query = queryManage.getAdminNotifications();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the one admin notifications table is validated.")
+    public void the_result_set_returned_from_the_one_admin_notifications_table_is_validated() throws SQLException {
+        Assert.assertFalse(resultSet.next());
+    }
+
+
     @Given("The query is prepared and executed to the admin password resets table to add new a row.")
     public void the_query_is_prepared_and_executed_to_the_admin_password_resets_table_to_add_new_a_row() throws SQLException {
 
@@ -494,6 +522,7 @@ public class JDBC_StepDefinition extends DBUtils {
             long id = generatedKeys.getLong(1);
             System.out.println("admin password resets tablosunda Oluşturulan  yeni id : " + id);
         }
+
 
 
     }
