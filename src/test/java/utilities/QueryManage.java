@@ -23,7 +23,7 @@ public class QueryManage {
     private String supportAttachmentVerifyQuery = "SELECT id, support_message_id, attachment, created_At, updated_At  FROM u168183796_qaloantec.support_attachments WHERE support_message_id = ?";
     private String supportAttachmentAddQuery="INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
 
-
+    private String categoriesListExcelQuery = "SELECT * FROM u168183796_qaloantec.categories";
 
 
 
@@ -81,5 +81,7 @@ public class QueryManage {
         return supportAttachmentAddQuery;
     }
 
-
+    public String getCategoriesListExcelQuery() {
+        return categoriesListExcelQuery;
+    }
 }
