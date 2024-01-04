@@ -330,7 +330,8 @@ public class DBUtils {
         resultSet = getStatement().executeQuery(query);
         ResultSetMetaData metaData = resultSet.getMetaData();
         int columnCount = metaData.getColumnCount();
-// Creating header row
+
+        // Creating header row
         Row headerRow = sheet.createRow(0);
         for (int i = 1; i <= columnCount; i++) {
             Cell cell = headerRow.createCell(i - 1);
@@ -347,9 +348,29 @@ public class DBUtils {
                     if (value instanceof String) {
                         cell.setCellValue((String) value);
                     } else if (value instanceof Integer) {
-                        cell.setCellValue((Integer) value);
+                        if (metaData.getColumnName(i).equalsIgnoreCase("status")) {
+                            // Değişiklik burada
+                            int statusValue = (Integer) value;
+                            if (statusValue == 1) {
+                                cell.setCellValue("1");
+                            } else {
+                                cell.setCellValue("0");
+                            }
+                        } else {
+                            cell.setCellValue((Integer) value);
+                        }
                     } else if (value instanceof Double) {
                         cell.setCellValue((Double) value);
+                    } else if (value instanceof Date) {
+                        cell.setCellValue((Date) value);
+                    } else if (value instanceof Boolean) {
+                        cell.setCellValue((Boolean) value);
+                    } else if (value instanceof Time) {
+                        cell.setCellValue((Time) value);
+                    } else if (value instanceof Timestamp) {
+                        cell.setCellValue((Timestamp) value);
+                    } else {
+                        cell.setCellValue(value.toString());
                     }
                 }
             }
@@ -359,7 +380,6 @@ public class DBUtils {
         workbook.write(fileOut);
         fileOut.close();
         workbook.close();
-
         System.out.println("Excel file has been created successfully!");
 
     }

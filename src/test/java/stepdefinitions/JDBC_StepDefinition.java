@@ -3,18 +3,27 @@ package stepdefinitions;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.bouncycastle.asn1.cms.TimeStampedData;
 import org.junit.Assert;
 import utilities.DBUtils;
 import utilities.QueryManage;
 import utilities.ReusableMethods;
 
+
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+
+import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 import static org.junit.Assert.assertEquals;
@@ -37,6 +46,8 @@ public class JDBC_StepDefinition extends DBUtils {
     int totalAmount;
     String remark;
 
+
+    ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
 
     @Given("Database baglantisi kurulur.")
     public void database_baglantisi_kurulur() {
@@ -143,7 +154,7 @@ public class JDBC_StepDefinition extends DBUtils {
         assertEquals(expectedData, actualData);
     }
 
-    @Given("The query is prepared and executedUpdate to the transport_feemaster table.")
+    @Given("The query is prepared and executedUpdate to the Catagories table.")
     public void the_query_is_prepared_and_executed_update_to_the_transport_feemaster_table() throws SQLException {
 
         String queryIdList = queryManage.getCategoriesIdListQuery();
@@ -300,6 +311,7 @@ public class JDBC_StepDefinition extends DBUtils {
 
     }
 
+
     @Given("The query is prepared and executed to the loans table.")
     public void the_query_is_prepared_and_executed_to_the_loans_table() throws SQLException {
         query = QueryManage.getLoansInsertQuery();
@@ -347,9 +359,274 @@ public class JDBC_StepDefinition extends DBUtils {
             assertEquals(expecteName[index], subject);
             index++;
         }
+    }
+
+        @Given("query hazirlanir ve bir tablo, verilen tablo ismi {string} ile o tablodaki tum satir ve sutunlr excel dosyasi olarak proje klasorune kaydedilir")
+        public void query_hazirlanir_ve_bir_tablo_verilen_tablo_ismi_ile_o_tablodaki_tum_satir_ve_sutunlr_excel_dosyasi_olarak_proje_klasorune_kaydedilir
+        (String tabloIsmi) throws SQLException, IOException {
+            query = queryManage.getCategoriesListExcelQuery();
+            exportToExcel(query, tabloIsmi);
+
+        }
+
+
+        @When("Retrieve user data without country_code!=TR and id=11")
+        public void retrieveUserData () throws SQLException {
+
+            String sql = "SELECT firstname, lastname FROM users WHERE country_code != 'TR' AND id = 11";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+        }
+
+        @Then("Verify firstname and lastname information")
+        public void verifyUserData () throws SQLException {
+
+            while (resultSet.next()) {
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+
+                assertEquals("Mehmet", firstname);
+                assertEquals("Genç", lastname);
+                System.out.println(firstname + " " + lastname);
+            }
+
+        }
+
+        @When("Retrieve users in reverse order by lastname and firstname")
+        public void retrieveUsersInReverseOrder () throws SQLException {
+
+            String sql = "SELECT lastname, firstname FROM users ORDER BY lastname DESC, firstname DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                String lastname = resultSet.getString("lastname");
+                lastnamesInReverseOrder.add(lastname);
+            }
+
+
+            resultSet.close();
+        }
+
+        @Then("Verify the first lastname in the list")
+        public void verifyFirstLastname () {
+
+            String expectedFirstLastname = "ZULAUF";
+            String actualFirstLastname = lastnamesInReverseOrder.get(0);
+
+            assertEquals(expectedFirstLastname, actualFirstLastname);
+
+
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Given("there are installments in the database")
+        public void thereAreInstallmentsInTheDatabase () throws SQLException {
+            // Veritabanına örnek veriler ekleyelim
+            connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO installments (loan_id, delay_charge, installment_date, given_at) VALUES (?, ?, ?, ?)")) {
+                statement.setInt(1, 1);
+                statement.setDouble(2, 10.0);
+                statement.setString(3, "2024-01-01");
+                statement.setString(4, "2023-12-01");
+                statement.executeUpdate();
+            }
+        }
+
+
+        private int loanId;
+        private double totalDelayCharge;
+
+        @Given("the loan with ID {string}")
+        public void setLoanId (String loanId){
+            this.loanId = Integer.parseInt(loanId);
+        }
+
+
+
+    @When("I calculate the total_delay_charge for the loan")
+    public void calculateTotalDelayCharge() {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+            Statement statement = connection.createStatement();
+
+            String query = "SELECT SUM(delay_charge) FROM installments WHERE loan_id = " + loanId;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                totalDelayCharge = resultSet.getDouble(1);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("the total_delay_charge should be {string}")
+    public void assertTotalDelayCharge(String expectedTotalDelayCharge) {
+        double expected = Double.parseDouble(expectedTotalDelayCharge);
+        assert totalDelayCharge == expected : "Total delay charge does not match the expected value";
+    }
+
+
+    @Given("The query is prepared and executed to the gateways table.")
+    public void the_query_is_prepared_and_executed_to_the_gateways_table() throws SQLException {
+        query = queryManage.getGatewaysListQuery();
+
+        resultSet = getStatement().executeQuery(query);
+    }
+
+    @Given("The resultSet returned from the gateways table is validated")
+    public void the_result_set_returned_from_the_gateways_table_is_validated() throws SQLException {
+
+        while (resultSet.next()) {
+            int code = resultSet.getInt("code");
+            System.out.println("Code: " + code);
+        }
+    }
+
+
+    @Given("The query is prepared and executed to the admin_notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_admin_notifications_table() throws SQLException {
+        query = queryManage.getAdminNotificationsQuery();
+        resultSet = getStatement().executeQuery(query);
+    }
+
+    @Given("The resultSet returned from the admin_notifications table is validated")
+    public void the_result_set_returned_from_the_admin_notifications_table_is_validated() throws SQLException {
+        if (resultSet.next()) {
+            int notificationCount = resultSet.getInt(1);
+            System.out.println("Kullanici adedi: " + notificationCount);
+        } else {
+            System.out.println("Kullanici bulunamadi");
+        }
+    }
+
+    @Given("The query is prepared and executed to the Deposits from gateway_currencies table.")
+    public void the_query_is_prepared_and_executed_to_the_deposits_from_gateway_currencies_table() throws SQLException {
+        query = queryManage.getDepositsGatewayCurrenciesQuery();
+        resultSet = getStatement().executeQuery(query);
+    }
+
+    @Given("currency USD Verifies that the Total Amount of Deposits is Calculated from the gateway_currencies table")
+    public void currency_USD_verifies_that_the_total_amount_of_deposits_is_calculated_from_the_gateway_currencies_table() throws SQLException {
+        expectedData = "916375.18000000";
+
+        resultSet.next();
+        actualData = resultSet.getString("toplam_usd");
+
+        assertEquals(expectedData, actualData);
+    }
+
+
+    @Given("The query is prepared and executed to the deposits amount table")
+    public void the_query_is_prepared_and_executed_to_the_deposits_amount_table() throws SQLException {
+        query = queryManage.getAdmindeposits();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("The resultSet returned from the deposits amount table is validated")
+    public void the_result_set_returned_from_the_deposits_amount_table_is_validated() throws SQLException {
+        expectedData = "1";
+        resultSet.next();
+        actualData = resultSet.getString("user_id");
+        assertEquals(expectedData, actualData);
+    }
+
+    @Given("The query is prepared and executed to the deposits table.")
+    public void the_query_is_prepared_and_executed_to_the_deposits_table() throws SQLException {
+        query = queryManage.getDepositsQuery();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("The query is prepared and executed to the one admin notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_one_admin_notifications_table() throws SQLException {
+        query = queryManage.getAdminNotifications();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("The resultSet returned from the one admin notifications table is validated.")
+    public void the_result_set_returned_from_the_one_admin_notifications_table_is_validated() throws SQLException {
+        Assert.assertFalse(resultSet.next());
+    }
+
+
+    @Given("The query is prepared and executed to the admin password resets table to add new a row.")
+    public void the_query_is_prepared_and_executed_to_the_admin_password_resets_table_to_add_new_a_row() throws SQLException {
+
+
+        query = queryManage.getAdminPasswordResetsQuery();
+        preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setNull(1, java.sql.Types.BIGINT);  // Otomatik artan sütun olduğu için null atanır.
+        preparedStatement.setString(2, faker.internet().emailAddress());  // Parametre sırası 2
+        preparedStatement.setString(3, faker.name().username());  // Parametre sırası 3
+        magic = faker.number().numberBetween(0, 1);
+        preparedStatement.setInt(4, magic);  // Parametre sırası 4
+
+
+        Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+        preparedStatement.setTimestamp(5, timeStamp);  // Parametre sırası 5
+        preparedStatement.executeUpdate();
+
+        // Oluşturulan id değerini almak
+        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            long id = generatedKeys.getLong(1);
+            System.out.println("admin password resets tablosunda Oluşturulan  yeni id : " + id);
+        }
 
 
     }
+
+    @Given("The query is prepared and verified by executing it on the cron job logs table.")
+    public void the_query_is_prepared_and_verified_by_executing_it_on_the_cron_job_logs_table() throws SQLException {
+        query = queryManage.getCronJobLogsQuery();
+        preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        preparedStatement.setInt(1, faker.number().numberBetween(500, 1000));  // parametre sirasi 1
+
+        magic = faker.number().numberBetween(1, 9);
+        preparedStatement.setInt(2, magic); // parametre sirasi 2
+
+        // Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+        // preparedStatement.setTimestamp(3, timeStamp); // parametre sirasi 3
+        // preparedStatement.setTimestamp(4, timeStamp);  // parametre sirasi 4
+        magic = faker.number().numberBetween(0, 100);
+        preparedStatement.setInt(3, magic);      // parametre sirasi 5
+
+        preparedStatement.setString(4, faker.name().username());  // Parametre sırası 6
+        //preparedStatement.setTimestamp(7, timeStamp);  // parametre sirasi 7
+        //preparedStatement.setTimestamp(8, timeStamp);  // parametre sirasi 8
+
+
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
+        if (rowCount > 0) {
+            System.out.println("Ekleme işlemi başarıyla gerçekleştirildi.");
+        } else {
+            System.out.println("Ekleme işlemi başarısız oldu.");
+        }
+    }
+
+    @Given("user login query is prepared en executed")
+    public void user_login_query_is_prepared_en_executed() throws SQLException {
+
+        query = queryManage.getUserloginsQuery();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+
+
+    }
+
 
     @Given("The query is prepared and executed to the transactions table.")
     public void the_query_is_prepared_and_executed_to_the_transactions_table() throws SQLException {
@@ -370,9 +647,27 @@ public class JDBC_StepDefinition extends DBUtils {
 
             }
         }
-
     }
+
+        @Given("data from the user login query is validated")
+        public void data_from_the_user_login_query_is_validated () throws SQLException {
+            resultSet.next();
+            String city = resultSet.getString("city");
+
+
+            Assert.assertEquals("", city);
+
+
+        }
+
 }
+
+
+
+
+
+
+
 
 
 
