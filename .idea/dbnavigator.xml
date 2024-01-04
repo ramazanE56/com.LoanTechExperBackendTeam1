@@ -5,15 +5,32 @@
     <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
-  <component name="DBNavigator.Project.DatabaseBrowserManager">
-    <autoscroll-to-editor value="false" />
-    <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
-    <loaded-nodes />
-  </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
+<<<<<<< HEAD
     <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7">
       <console name="LoanTechExper" type="STANDARD" schema="" session="Main" />
+=======
+    <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
+      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[#DB_US06: In the "Support_messages" table in the database,
+  #verify the "support_ticket_id" of the data whose "message" information is "Tickett".
+
+SELECT support_ticket_id FROM u168183796_qaloantec.support_messages WHERE message = 'Tickett';
+
+
+#DB_US18: Add only the data containing "id, name, discription" to the Catagories table.
+
+SELECT * FROM u168183796_qaloantec.categories;
+INSERT INTO categories (id, name, description) VALUES (5, 'ismailtemiz', 'SDET');
+
+
+
+#Update and verify the "update_log" value of the
+                  #data with "version=?"and "id=?" in the "update_logs" table.
+SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
+    </connection>
+    <connection id="5e683329-c63e-45c9-8477-988f219fead8">
+      <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="" session="Main" />
+>>>>>>> main
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -25,6 +42,7 @@
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7" />
   </component>
+<<<<<<< HEAD
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.update_logs" active-filter-id="" />
     <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.admins" active-filter-id="" />
@@ -49,6 +67,8 @@
     </execution-history>
     <argument-values-cache />
   </component>
+=======
+>>>>>>> main
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
