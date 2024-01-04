@@ -41,6 +41,11 @@ public class JDBC_StepDefinition extends DBUtils {
     Faker faker = new Faker();
     int magic;
 
+    String loan_number;
+
+    int totalAmount;
+    String remark;
+
 
     ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
 
@@ -306,91 +311,144 @@ public class JDBC_StepDefinition extends DBUtils {
 
     }
 
-    @Given("query hazirlanir ve bir tablo, verilen tablo ismi {string} ile o tablodaki tum satir ve sutunlr excel dosyasi olarak proje klasorune kaydedilir")
-    public void query_hazirlanir_ve_bir_tablo_verilen_tablo_ismi_ile_o_tablodaki_tum_satir_ve_sutunlr_excel_dosyasi_olarak_proje_klasorune_kaydedilir(String tabloIsmi) throws SQLException, IOException {
-        query = queryManage.getCategoriesListExcelQuery();
-        exportToExcel(query, tabloIsmi);
+
+    @Given("The query is prepared and executed to the loans table.")
+    public void the_query_is_prepared_and_executed_to_the_loans_table() throws SQLException {
+        query = QueryManage.getLoansInsertQuery();
+        loan_number = faker.internet().password();
+        int user_id = faker.number().numberBetween(10, 1000);
+        int id = faker.number().numberBetween(700, 1000);
+        int plan_id = faker.number().numberBetween(0, 1);
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setString(1, loan_number);
+        preparedStatement.setInt(2, id);
+        preparedStatement.setInt(3, user_id);
+        preparedStatement.setInt(4, plan_id);
+        System.out.println("**" + loan_number + "**");
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
 
     }
 
+    @Given("The resultSet returned from the loans table delete loan number is validated.")
+    public void the_result_set_returned_from_the_loans_table_delete_loan_number_is_validated() throws SQLException {
+        query = QueryManage.getLoansDeleteQuery();
+        System.out.println(loan_number);
+        preparedStatement = getPraperedStatement(query);
+        preparedStatement.setString(1, loan_number);
 
-    @When("Retrieve user data without country_code!=TR and id=11")
-    public void retrieveUserData() throws SQLException {
-
-        String sql = "SELECT firstname, lastname FROM users WHERE country_code != 'TR' AND id = 11";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        resultSet = preparedStatement.executeQuery();
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
     }
 
-    @Then("Verify firstname and lastname information")
-    public void verifyUserData() throws SQLException {
+    @Given("verify the name information of the first two records in the cron_schedules table in the database")
+    public void verify_the_name_information_of_the_first_two_records_in_the_cron_schedules_table_in_the_database() throws SQLException {
+        query = queryManage.getCron_Shedules();
 
-        while (resultSet.next()) {
-            String firstname = resultSet.getString("firstname");
-            String lastname = resultSet.getString("lastname");
+        resultSet = getStatement().executeQuery(query);
 
-            assertEquals("Mehmet", firstname);
-            assertEquals("Genç", lastname);
-            System.out.println(firstname + " " + lastname);
-        }
+        String[] expecteName = {"5 Minutes", "10 Minutes"};
 
-    }
+        int index = 0;
 
-    @When("Retrieve users in reverse order by lastname and firstname")
-    public void retrieveUsersInReverseOrder() throws SQLException {
+        while (resultSet.next() && index < expecteName.length) {
+            String subject = resultSet.getString("name");
+            System.out.println(subject);
 
-        String sql = "SELECT lastname, firstname FROM users ORDER BY lastname DESC, firstname DESC";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-
-        while (resultSet.next()) {
-            String lastname = resultSet.getString("lastname");
-            lastnamesInReverseOrder.add(lastname);
-        }
-
-
-        resultSet.close();
-    }
-
-    @Then("Verify the first lastname in the list")
-    public void verifyFirstLastname() {
-
-        String expectedFirstLastname = "ZULAUF";
-        String actualFirstLastname = lastnamesInReverseOrder.get(0);
-
-        assertEquals(expectedFirstLastname, actualFirstLastname);
-
-
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            // Beklenen veri ile gerçek veriyi karşılaştır
+            assertEquals(expecteName[index], subject);
+            index++;
         }
     }
 
-    @Given("there are installments in the database")
-    public void thereAreInstallmentsInTheDatabase() throws SQLException {
-        // Veritabanına örnek veriler ekleyelim
-        connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO installments (loan_id, delay_charge, installment_date, given_at) VALUES (?, ?, ?, ?)")) {
-            statement.setInt(1, 1);
-            statement.setDouble(2, 10.0);
-            statement.setString(3, "2024-01-01");
-            statement.setString(4, "2023-12-01");
-            statement.executeUpdate();
+        @Given("query hazirlanir ve bir tablo, verilen tablo ismi {string} ile o tablodaki tum satir ve sutunlr excel dosyasi olarak proje klasorune kaydedilir")
+        public void query_hazirlanir_ve_bir_tablo_verilen_tablo_ismi_ile_o_tablodaki_tum_satir_ve_sutunlr_excel_dosyasi_olarak_proje_klasorune_kaydedilir
+        (String tabloIsmi) throws SQLException, IOException {
+            query = queryManage.getCategoriesListExcelQuery();
+            exportToExcel(query, tabloIsmi);
+
         }
-    }
 
 
-    private int loanId;
-    private double totalDelayCharge;
+        @When("Retrieve user data without country_code!=TR and id=11")
+        public void retrieveUserData () throws SQLException {
 
-    @Given("the loan with ID {string}")
-    public void setLoanId(String loanId) {
-        this.loanId = Integer.parseInt(loanId);
-    }
+            String sql = "SELECT firstname, lastname FROM users WHERE country_code != 'TR' AND id = 11";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+        }
+
+        @Then("Verify firstname and lastname information")
+        public void verifyUserData () throws SQLException {
+
+            while (resultSet.next()) {
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+
+                assertEquals("Mehmet", firstname);
+                assertEquals("Genç", lastname);
+                System.out.println(firstname + " " + lastname);
+            }
+
+        }
+
+        @When("Retrieve users in reverse order by lastname and firstname")
+        public void retrieveUsersInReverseOrder () throws SQLException {
+
+            String sql = "SELECT lastname, firstname FROM users ORDER BY lastname DESC, firstname DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                String lastname = resultSet.getString("lastname");
+                lastnamesInReverseOrder.add(lastname);
+            }
+
+
+            resultSet.close();
+        }
+
+        @Then("Verify the first lastname in the list")
+        public void verifyFirstLastname () {
+
+            String expectedFirstLastname = "ZULAUF";
+            String actualFirstLastname = lastnamesInReverseOrder.get(0);
+
+            assertEquals(expectedFirstLastname, actualFirstLastname);
+
+
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Given("there are installments in the database")
+        public void thereAreInstallmentsInTheDatabase () throws SQLException {
+            // Veritabanına örnek veriler ekleyelim
+            connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO installments (loan_id, delay_charge, installment_date, given_at) VALUES (?, ?, ?, ?)")) {
+                statement.setInt(1, 1);
+                statement.setDouble(2, 10.0);
+                statement.setString(3, "2024-01-01");
+                statement.setString(4, "2023-12-01");
+                statement.executeUpdate();
+            }
+        }
+
+
+        private int loanId;
+        private double totalDelayCharge;
+
+        @Given("the loan with ID {string}")
+        public void setLoanId (String loanId){
+            this.loanId = Integer.parseInt(loanId);
+        }
+
+
 
     @When("I calculate the total_delay_charge for the loan")
     public void calculateTotalDelayCharge() {
@@ -476,23 +534,27 @@ public class JDBC_StepDefinition extends DBUtils {
         query = queryManage.getAdmindeposits();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("The resultSet returned from the deposits amount table is validated")
     public void the_result_set_returned_from_the_deposits_amount_table_is_validated() throws SQLException {
         expectedData = "1";
         resultSet.next();
         actualData = resultSet.getString("user_id");
-        assertEquals(expectedData,actualData);
+        assertEquals(expectedData, actualData);
     }
+
     @Given("The query is prepared and executed to the deposits table.")
     public void the_query_is_prepared_and_executed_to_the_deposits_table() throws SQLException {
         query = queryManage.getDepositsQuery();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("The query is prepared and executed to the one admin notifications table.")
     public void the_query_is_prepared_and_executed_to_the_one_admin_notifications_table() throws SQLException {
         query = queryManage.getAdminNotifications();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("The resultSet returned from the one admin notifications table is validated.")
     public void the_result_set_returned_from_the_one_admin_notifications_table_is_validated() throws SQLException {
         Assert.assertFalse(resultSet.next());
@@ -522,7 +584,6 @@ public class JDBC_StepDefinition extends DBUtils {
             long id = generatedKeys.getLong(1);
             System.out.println("admin password resets tablosunda Oluşturulan  yeni id : " + id);
         }
-
 
 
     }
@@ -566,17 +627,44 @@ public class JDBC_StepDefinition extends DBUtils {
 
     }
 
-    @Given("data from the user login query is validated")
-    public void data_from_the_user_login_query_is_validated() throws SQLException {
-        resultSet.next();
-        String city = resultSet.getString("city");
 
+    @Given("The query is prepared and executed to the transactions table.")
+    public void the_query_is_prepared_and_executed_to_the_transactions_table() throws SQLException {
 
-        Assert.assertEquals("", city);
+        query = queryManage.getTranssactionsQuery();
 
-
+        resultSet = getStatement().executeQuery(query);
     }
+
+    @Given("The resultSet returned from the transactions table is validated.")
+    public void the_result_set_returned_from_the_transactions_table_is_validated() throws SQLException {
+
+        while (resultSet.next()) {
+            remark = resultSet.getString("remark");
+            totalAmount = resultSet.getInt("total_amount");
+            if (totalAmount > 1000) {
+                System.out.println("Remark: " + remark + ", Total Amount: " + totalAmount);
+
+            }
+        }
+    }
+
+        @Given("data from the user login query is validated")
+        public void data_from_the_user_login_query_is_validated () throws SQLException {
+            resultSet.next();
+            String city = resultSet.getString("city");
+
+
+            Assert.assertEquals("", city);
+
+
+        }
+
 }
+
+
+
+
 
 
 
