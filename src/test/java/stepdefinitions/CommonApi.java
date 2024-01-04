@@ -1945,5 +1945,103 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
+    @Given("The API user saves the response from the user list loan endpoint with valid authorization information")
+    public void the_apı_user_saves_the_response_from_the_user_list_loan_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
 
+    }
+    @And("The API user saves the response from the admin deposit approve close endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheAdminDepositApproveCloseEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API user prepares a POST request containing the correct data to send to the admin categories add endpoint")
+    public void theAPIUserPreparesAPOSTRequestContainingTheCorrectDataToSendToTheAdminCategoriesAddEndpoint() {
+    /*  "name":"Car Loan",
+    "description":"If you want to buy a car, this loan is for you."
+
+     */
+        requestBody = new JSONObject();
+        requestBody.put("name", "Home loan 2");
+        requestBody.put("description", "yeter da");
+
+    }
+    @When("The API user sends a POST request and saves the response from the admin categories add endpoint with valid authorization information")
+    public void theAPIUserSendsAPOSTRequestAndSavesTheResponseFromTheAdminCategoriesAddEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API admin prepares a POST request containing the correct data to send to the admin categories add endpoint")
+    public void theAPIAdminPreparesAPOSTRequestContainingTheCorrectDataToSendToTheAdminCategoriesAddEndpoint() {
+
+        //  "name":"Car Loan",
+
+
+        requestBody = new JSONObject();
+        requestBody.put("name", "Test Category1");
+
+    }
+    @And("The API administrator prepares a POST request with incorrect data to be sent to the admin categories adding endpoint")
+    public void theAPIAdministratorPreparesAPOSTRequestWithIncorrectDataToBeSentToTheAdminCategoriesAddingEndpoint() {
+
+    }
+
+    @And("The API admin saves the response from the admin categories details list endpoint with valid authorization information")
+    public void theAPIAdminSavesTheResponseFromTheAdminCategoriesDetailsListEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API user saves the response from the user loanplans delete endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheUserLoanplansDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+    @Then("The API admin saves the response from the admin loanplan delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
+    public void theAPIAdminSavesTheResponseFromTheAdminLoanplanDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+
+                    .delete(fullPath);
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("Mesaj: " + mesaj);
+
+
+    }
 }

@@ -636,6 +636,16 @@ public class JDBC_StepDefinition extends DBUtils {
         resultSet = getStatement().executeQuery(query);
     }
 
+    @Given("The resultSet returned from the deposits table is validated.")
+    public void the_result_set_returned_from_the_deposits_table_is_validated() throws SQLException {
+        expectedData = "102.00000000";
+        resultSet.next();
+        actualData = resultSet.getString("charge");
+        assertEquals(expectedData,actualData);
+    }
+
+
+
     @Given("The resultSet returned from the transactions table is validated.")
     public void the_result_set_returned_from_the_transactions_table_is_validated() throws SQLException {
 
@@ -659,6 +669,7 @@ public class JDBC_StepDefinition extends DBUtils {
 
 
         }
+
 
 }
 
