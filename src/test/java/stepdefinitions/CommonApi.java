@@ -1697,6 +1697,94 @@ public class CommonApi extends ApiUtils {
 
 
     }
+    @And("The API adminuser saves the response from the admin Deposit deletedt  endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminDepositDeletedtEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @And("The API adminuser saves the response from the admin categories list endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminCategoriesListEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Then("Verify the information of the one with the id  in the API admin response body: {int}, {string},  {string},  {string}, {string},  {string}, {string}")
+    public void verifyTheInformationOfTheOneWithTheIdInTheAPIAdminResponseBodyDataIndex( int dataIndex, String name, String image, String status, String description, String created_at, String updated_at) {
+
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+        Assert.assertEquals(image, jsonPath.getString("data[" + dataIndex + "].image"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+        Assert.assertEquals(description, jsonPath.getInt("data[" + dataIndex + "].description"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+    }
+
+
+    @When("The API adminuser sends a POST request and saves the response from the admin ticket add endpoint with valid authorization information")
+    public void theAPIAdminuserSendsAPOSTRequestAndSavesTheResponseFromTheAdminTicketAddEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @And("The API adminuser prepares a POST request containing the missing email")
+    public void theAPIAdminuserPreparesAPOSTRequestContainingTheMissingEmail() {
+
+        requestBody=new JSONObject();
+    }
+
+    @And("The API user saves the response from the admin ticket detail endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheAdminTicketDetailEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @And("The API adminuser saves the response from the admin ticket close endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminTicketCloseEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+
+    }
 }
      */
 
