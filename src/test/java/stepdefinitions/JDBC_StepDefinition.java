@@ -297,6 +297,7 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
 
     }
 
+
     @When("Retrieve user data without country_code!=TR and id=11")
     public void retrieveUserData() throws SQLException {
 
@@ -401,7 +402,58 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
         double expected = Double.parseDouble(expectedTotalDelayCharge);
         assert totalDelayCharge == expected : "Total delay charge does not match the expected value";
     }
-}
+
+
+    @Given("The query is prepared and executed to the gateways table.")
+    public void the_query_is_prepared_and_executed_to_the_gateways_table() throws SQLException {
+        query= queryManage.getGatewaysListQuery();
+
+        resultSet= getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the gateways table is validated")
+    public void the_result_set_returned_from_the_gateways_table_is_validated() throws SQLException {
+
+        while (resultSet.next()) {
+                int code = resultSet.getInt("code");
+                System.out.println("Code: " + code);
+            }
+        }
+
+
+    @Given("The query is prepared and executed to the admin_notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_admin_notifications_table() throws SQLException {
+        query=queryManage.getAdminNotificationsQuery();
+        resultSet=getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the admin_notifications table is validated")
+    public void the_result_set_returned_from_the_admin_notifications_table_is_validated() throws SQLException {
+        if (resultSet.next()) {
+            int notificationCount = resultSet.getInt(1);
+            System.out.println("Kullanici adedi: " + notificationCount);
+        } else {
+            System.out.println("Kullanici bulunamadi");
+        }
+            }
+
+    @Given("The query is prepared and executed to the Deposits from gateway_currencies table.")
+    public void the_query_is_prepared_and_executed_to_the_deposits_from_gateway_currencies_table() throws SQLException {
+        query=queryManage.getDepositsGatewayCurrenciesQuery();
+        resultSet=getStatement().executeQuery(query);
+    }
+    @Given("currency USD Verifies that the Total Amount of Deposits is Calculated from the gateway_currencies table")
+    public void currency_USD_verifies_that_the_total_amount_of_deposits_is_calculated_from_the_gateway_currencies_table() throws SQLException {
+        expectedData = "916375.18000000";
+
+        resultSet.next();
+        actualData = resultSet.getString("toplam_usd");
+
+        assertEquals(expectedData, actualData);
+    }
+
+
+    }
+
+
 
 
 

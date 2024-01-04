@@ -15,7 +15,8 @@ import org.junit.runner.RunWith;
         monochrome = true,// raporların konsolda okunaklı çıkması için
         features = "src/test/resources/features/api",
         glue = {"stepdefinitions", "hooks/api"},
-        tags = "@smt",
+
+        tags = "@12355",
         dryRun = false
 
 
