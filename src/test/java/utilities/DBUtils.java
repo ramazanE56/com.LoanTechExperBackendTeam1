@@ -363,4 +363,14 @@ public class DBUtils {
         System.out.println("Excel file has been created successfully!");
 
     }
+    public static PreparedStatement getPraperedStatement(String sqlQuery) {
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sqlQuery);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return preparedStatement;
+    }
 }

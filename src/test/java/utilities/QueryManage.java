@@ -22,12 +22,14 @@ public class QueryManage {
     private String supportAttachmentQuery = "DELETE FROM support_attachments WHERE support_message_id = ?";
     private String supportAttachmentVerifyQuery = "SELECT id, support_message_id, attachment, created_At, updated_At  FROM u168183796_qaloantec.support_attachments WHERE support_message_id = ?";
     private String supportAttachmentAddQuery="INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
+    private static String loansDeleteQuery="Delete from loans Where loan_number=? ;";
+
+    private static String loansInsertQuery="Insert into loans (loan_number,id,user_id,plan_id)Values(?,?,?,?);";
 
 
+    private  String cron_Shedules="SELECT name FROM cron_schedules LIMIT 2;";
 
-
-
-
+private String transsactionsQuery="SELECT remark, SUM(amount) AS total_amount FROM transactions GROUP BY remark HAVING total_amount > 1000;";
 
     //*********Getter**********
 
@@ -81,5 +83,19 @@ public class QueryManage {
         return supportAttachmentAddQuery;
     }
 
+    public static String getLoansDeleteQuery() {
+        return loansDeleteQuery;
+    }
 
+    public static String getLoansInsertQuery() {
+        return loansInsertQuery;
+    }
+
+    public String getCron_Shedules() {
+        return cron_Shedules;
+    }
+
+    public String getTranssactionsQuery() {
+        return transsactionsQuery;
+    }
 }
