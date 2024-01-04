@@ -4910,7 +4910,7 @@ public class CommonUi extends ReusableMethods {
     public void verify_that_add_new_button_is_visible_and_accessible() {
 
     }
-    
+
 
     @Given("Fill the all information on page")
     public void fill_the_all_information_on_page() {
@@ -4926,6 +4926,5 @@ public class CommonUi extends ReusableMethods {
     public void verify_that_new_user_is_added_in_table() {
 
     }
-    
-    
+
 }

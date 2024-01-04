@@ -3,18 +3,27 @@ package stepdefinitions;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.bouncycastle.asn1.cms.TimeStampedData;
 import org.junit.Assert;
 import utilities.DBUtils;
 import utilities.QueryManage;
 import utilities.ReusableMethods;
 
+
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+
+import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +42,7 @@ public class JDBC_StepDefinition extends DBUtils {
     int magic;
 
 
+    ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
     @Given("Database baglantisi kurulur.")
     public void database_baglantisi_kurulur() {
 
@@ -138,7 +148,7 @@ public class JDBC_StepDefinition extends DBUtils {
         assertEquals(expectedData, actualData);
     }
 
-    @Given("The query is prepared and executedUpdate to the transport_feemaster table.")
+    @Given("The query is prepared and executedUpdate to the Catagories table.")
     public void the_query_is_prepared_and_executed_update_to_the_transport_feemaster_table() throws SQLException {
 
         String queryIdList = queryManage.getCategoriesIdListQuery();
@@ -301,25 +311,142 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
 
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("The resultSet returned from the deposits table is validated.")
     public void the_result_set_returned_from_the_deposits_table_is_validated() throws SQLException {
         expectedData = "102.00000000";
 
+
+
+
+        while (resultSet.next()) {
+            String lastname = resultSet.getString("lastname");
+            lastnamesInReverseOrder.add(lastname);
+        }
+
+
+        resultSet.close();
+    }
+    @Then("Verify the first lastname in the list")
+    public void verifyFirstLastname() {
+
+        String expectedFirstLastname = "ZULAUF";
+        String actualFirstLastname = lastnamesInReverseOrder.get(0);
+
+        assertEquals(expectedFirstLastname, actualFirstLastname);
+
+
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Given("there are installments in the database")
+    public void thereAreInstallmentsInTheDatabase() throws SQLException {
+        // Veritabanına örnek veriler ekleyelim
+        connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO installments (loan_id, delay_charge, installment_date, given_at) VALUES (?, ?, ?, ?)")) {
+            statement.setInt(1, 1);
+            statement.setDouble(2, 10.0);
+            statement.setString(3, "2024-01-01");
+            statement.setString(4, "2023-12-01");
+            statement.executeUpdate();
+        }
+    }
+
+
+    private int loanId;
+    private double totalDelayCharge;
+
+    @Given("the loan with ID {string}")
+    public void setLoanId(String loanId) {
+        this.loanId = Integer.parseInt(loanId);
+    }
+
+    @When("I calculate the total_delay_charge for the loan")
+    public void calculateTotalDelayCharge() {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+            Statement statement = connection.createStatement();
+
+            String query = "SELECT SUM(delay_charge) FROM installments WHERE loan_id = " + loanId;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                totalDelayCharge = resultSet.getDouble(1);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("the total_delay_charge should be {string}")
+    public void assertTotalDelayCharge(String expectedTotalDelayCharge) {
+        double expected = Double.parseDouble(expectedTotalDelayCharge);
+        assert totalDelayCharge == expected : "Total delay charge does not match the expected value";
+    }
+
+
+    @Given("The query is prepared and executed to the gateways table.")
+    public void the_query_is_prepared_and_executed_to_the_gateways_table() throws SQLException {
+        query= queryManage.getGatewaysListQuery();
+
+        resultSet= getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the gateways table is validated")
+    public void the_result_set_returned_from_the_gateways_table_is_validated() throws SQLException {
+
+        while (resultSet.next()) {
+                int code = resultSet.getInt("code");
+                System.out.println("Code: " + code);
+            }
+        }
+
+
+    @Given("The query is prepared and executed to the admin_notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_admin_notifications_table() throws SQLException {
+        query=queryManage.getAdminNotificationsQuery();
+        resultSet=getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the admin_notifications table is validated")
+    public void the_result_set_returned_from_the_admin_notifications_table_is_validated() throws SQLException {
+        if (resultSet.next()) {
+            int notificationCount = resultSet.getInt(1);
+            System.out.println("Kullanici adedi: " + notificationCount);
+        } else {
+            System.out.println("Kullanici bulunamadi");
+        }
+            }
+
+    @Given("The query is prepared and executed to the Deposits from gateway_currencies table.")
+    public void the_query_is_prepared_and_executed_to_the_deposits_from_gateway_currencies_table() throws SQLException {
+        query=queryManage.getDepositsGatewayCurrenciesQuery();
+        resultSet=getStatement().executeQuery(query);
+    }
+    @Given("currency USD Verifies that the Total Amount of Deposits is Calculated from the gateway_currencies table")
+    public void currency_USD_verifies_that_the_total_amount_of_deposits_is_calculated_from_the_gateway_currencies_table() throws SQLException {
+        expectedData = "916375.18000000";
+
+        resultSet.next();
+        actualData = resultSet.getString("toplam_usd");
+
+        assertEquals(expectedData, actualData);
+
         resultSet.next();
         actualData = resultSet.getString("charge");
 
+
         assertEquals(expectedData,actualData);
     }
-    @Given("The query is prepared and executed to the admin notifications table.")
-    public void the_query_is_prepared_and_executed_to_the_admin_notifications_table() throws SQLException {
-        query = queryManage.getAdminNotifications();
 
-        resultSet = DBUtils.getStatement().executeQuery(query);
-    }
-    @Given("The resultSet returned from the admin notifications table is validated.")
-    public void the_result_set_returned_from_the_admin_notifications_table_is_validated() throws SQLException {
-    Assert.assertFalse(resultSet.next());
-    }
     @Given("The query is prepared and executed to the deposits amount table")
     public void the_query_is_prepared_and_executed_to_the_deposits_amount_table() throws SQLException {
         query = queryManage.getAdmindeposits();
@@ -335,7 +462,20 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
 
         assertEquals(expectedData,actualData);
     }
+    @Given("The query is prepared and executed to the one admin notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_one_admin_notifications_table() throws SQLException {
+        query = queryManage.getAdminNotifications();
+
+        resultSet = DBUtils.getStatement().executeQuery(query);
+
 }
+    @Given("The resultSet returned from the one admin notifications table is validated.")
+    public void the_result_set_returned_from_the_one_admin_notifications_table_is_validated() throws SQLException {
+        Assert.assertFalse(resultSet.next());
+    }
+
+}
+
 
 
 

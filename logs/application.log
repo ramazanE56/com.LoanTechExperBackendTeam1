@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2024-01-04 11:44:20 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
 2024-01-04 11:44:20 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\user\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
 2024-01-04 11:44:26 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
@@ -5,3 +6,47 @@
 2024-01-04 11:44:33 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
 2024-01-04 15:13:49 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
 2024-01-04 15:13:49 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\user\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+=======
+2024-01-03 21:43:31 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-03 21:43:31 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-03 21:43:33 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-03 21:43:33 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:00:56 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:00:56 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:01:52 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:01:52 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:02:46 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:02:46 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:02:48 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:02:48 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:02:50 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-04 09:08:35 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:08:35 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:08:37 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:08:37 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:08:39 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-04 09:08:58 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:08:58 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:09:00 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:09:00 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:32:11 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:32:11 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:32:38 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:32:38 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:36:41 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:36:41 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:38:03 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:38:03 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 09:38:05 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 09:38:05 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 10:23:54 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 10:23:54 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 10:24:14 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 10:24:14 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 10:24:57 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 10:24:57 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 10:24:59 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 10:24:59 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-04 11:49:45 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-04 11:49:45 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+>>>>>>> main

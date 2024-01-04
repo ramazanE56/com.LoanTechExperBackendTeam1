@@ -22,11 +22,23 @@ public class QueryManage {
     private String supportAttachmentQuery = "DELETE FROM support_attachments WHERE support_message_id = ?";
     private String supportAttachmentVerifyQuery = "SELECT id, support_message_id, attachment, created_At, updated_At  FROM u168183796_qaloantec.support_attachments WHERE support_message_id = ?";
     private String supportAttachmentAddQuery="INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
+
     // Arif Emre
     private String DepositsQuery = "SELECT charge FROM deposits WHERE amount < 500000 AND trx = '4GC9SMZUS69S';";
     private String adminNotifications = "SELECT * FROM admin_notifications WHERE user_id = 2 AND id > 20;";
     private String admindeposits = "SELECT * FROM deposits WHERE amount BETWEEN 100 AND 500;";
 
+
+
+    private String categoriesListExcelQuery = "SELECT * FROM u168183796_qaloantec.categories";
+
+
+
+
+
+    private String gatewaysListQuery="SELECT code FROM gateways ORDER BY code DESC LIMIT 5";
+    private String adminNotificationsQuery="SELECT COUNT(*) FROM admin_notifications WHERE is_read = 1 AND user_id = 1";
+    private String depositsGatewayCurrenciesQuery="SELECT SUM(amount) AS toplam_usd FROM deposits WHERE method_currency = 'USD'";
 
 
 
@@ -81,6 +93,17 @@ public class QueryManage {
     public String getSupportAttachmentAddQuery(){
         return supportAttachmentAddQuery;
     }
+    public String getGatewaysListQuery() {
+        return gatewaysListQuery;
+    }
+
+    public String getAdminNotificationsQuery() {
+        return adminNotificationsQuery;
+    }
+
+    public String getDepositsGatewayCurrenciesQuery() {
+        return depositsGatewayCurrenciesQuery;
+    }
 
     // Arif Emre
     public String getDepositsQuery() {    return DepositsQuery;}
@@ -91,4 +114,7 @@ public class QueryManage {
 
 
 
+    public String getCategoriesListExcelQuery() {
+        return categoriesListExcelQuery;
+    }
 }
