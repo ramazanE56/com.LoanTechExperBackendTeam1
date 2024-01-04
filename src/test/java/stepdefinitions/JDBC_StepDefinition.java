@@ -3,18 +3,19 @@ package stepdefinitions;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.bouncycastle.asn1.cms.TimeStampedData;
 import org.junit.Assert;
 import utilities.DBUtils;
 import utilities.QueryManage;
 import utilities.ReusableMethods;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +34,7 @@ public class JDBC_StepDefinition extends DBUtils {
     int magic;
 
 
+    ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
     @Given("Database baglantisi kurulur.")
     public void database_baglantisi_kurulur() {
 
@@ -295,7 +297,110 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
 
     }
 
+    @When("Retrieve user data without country_code!=TR and id=11")
+    public void retrieveUserData() throws SQLException {
 
+        String sql = "SELECT firstname, lastname FROM users WHERE country_code != 'TR' AND id = 11";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        resultSet = preparedStatement.executeQuery();
+    }
+
+    @Then("Verify firstname and lastname information")
+    public void verifyUserData() throws SQLException {
+
+        while (resultSet.next()) {
+            String firstname = resultSet.getString("firstname");
+            String lastname = resultSet.getString("lastname");
+
+            assertEquals("Mehmet", firstname);
+            assertEquals("Genç", lastname);
+            System.out.println(firstname+" "+lastname);
+        }
+
+    }
+
+    @When("Retrieve users in reverse order by lastname and firstname")
+    public void retrieveUsersInReverseOrder() throws SQLException {
+
+        String sql = "SELECT lastname, firstname FROM users ORDER BY lastname DESC, firstname DESC";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+
+        while (resultSet.next()) {
+            String lastname = resultSet.getString("lastname");
+            lastnamesInReverseOrder.add(lastname);
+        }
+
+
+        resultSet.close();
+    }
+    @Then("Verify the first lastname in the list")
+    public void verifyFirstLastname() {
+
+        String expectedFirstLastname = "ZULAUF";
+        String actualFirstLastname = lastnamesInReverseOrder.get(0);
+
+        assertEquals(expectedFirstLastname, actualFirstLastname);
+
+
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Given("there are installments in the database")
+    public void thereAreInstallmentsInTheDatabase() throws SQLException {
+        // Veritabanına örnek veriler ekleyelim
+        connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO installments (loan_id, delay_charge, installment_date, given_at) VALUES (?, ?, ?, ?)")) {
+            statement.setInt(1, 1);
+            statement.setDouble(2, 10.0);
+            statement.setString(3, "2024-01-01");
+            statement.setString(4, "2023-12-01");
+            statement.executeUpdate();
+        }
+    }
+
+
+    private int loanId;
+    private double totalDelayCharge;
+
+    @Given("the loan with ID {string}")
+    public void setLoanId(String loanId) {
+        this.loanId = Integer.parseInt(loanId);
+    }
+
+    @When("I calculate the total_delay_charge for the loan")
+    public void calculateTotalDelayCharge() {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://45.87.83.5/u168183796_qaloantec", "u168183796_qaloantecuser", "0&vG1A/MuWN");
+            Statement statement = connection.createStatement();
+
+            String query = "SELECT SUM(delay_charge) FROM installments WHERE loan_id = " + loanId;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                totalDelayCharge = resultSet.getDouble(1);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("the total_delay_charge should be {string}")
+    public void assertTotalDelayCharge(String expectedTotalDelayCharge) {
+        double expected = Double.parseDouble(expectedTotalDelayCharge);
+        assert totalDelayCharge == expected : "Total delay charge does not match the expected value";
+    }
 }
 
 
