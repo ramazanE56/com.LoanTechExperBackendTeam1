@@ -22,9 +22,17 @@ public class QueryManage {
     private String supportAttachmentQuery = "DELETE FROM support_attachments WHERE support_message_id = ?";
     private String supportAttachmentVerifyQuery = "SELECT id, support_message_id, attachment, created_At, updated_At  FROM u168183796_qaloantec.support_attachments WHERE support_message_id = ?";
     private String supportAttachmentAddQuery="INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
+
+
+    private String categoriesListExcelQuery = "SELECT * FROM u168183796_qaloantec.categories";
+
+
+
+
     private String gatewaysListQuery="SELECT code FROM gateways ORDER BY code DESC LIMIT 5";
     private String adminNotificationsQuery="SELECT COUNT(*) FROM admin_notifications WHERE is_read = 1 AND user_id = 1";
     private String depositsGatewayCurrenciesQuery="SELECT SUM(amount) AS toplam_usd FROM deposits WHERE method_currency = 'USD'";
+
 
 
     //*********Getter**********
@@ -91,5 +99,7 @@ public class QueryManage {
     }
 
 
-
+    public String getCategoriesListExcelQuery() {
+        return categoriesListExcelQuery;
+    }
 }

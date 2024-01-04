@@ -11,7 +11,15 @@ import utilities.DBUtils;
 import utilities.QueryManage;
 import utilities.ReusableMethods;
 
+
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+
 import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -140,7 +148,7 @@ public class JDBC_StepDefinition extends DBUtils {
         assertEquals(expectedData, actualData);
     }
 
-    @Given("The query is prepared and executedUpdate to the transport_feemaster table.")
+    @Given("The query is prepared and executedUpdate to the Catagories table.")
     public void the_query_is_prepared_and_executed_update_to_the_transport_feemaster_table() throws SQLException {
 
         String queryIdList = queryManage.getCategoriesIdListQuery();
@@ -294,6 +302,12 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+    @Given("query hazirlanir ve bir tablo, verilen tablo ismi {string} ile o tablodaki tum satir ve sutunlr excel dosyasi olarak proje klasorune kaydedilir")
+    public void query_hazirlanir_ve_bir_tablo_verilen_tablo_ismi_ile_o_tablodaki_tum_satir_ve_sutunlr_excel_dosyasi_olarak_proje_klasorune_kaydedilir(String tabloIsmi) throws SQLException, IOException {
+        query=queryManage.getCategoriesListExcelQuery();
+        exportToExcel(query,tabloIsmi);
 
     }
 
