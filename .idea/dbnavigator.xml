@@ -1,84 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DBNavigator.Project.DataEditorManager">
-    <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="false" />
-    <value-preview-pinned value="false" />
-  </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-<<<<<<< HEAD
-    <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7">
-      <console name="LoanTechExper" type="STANDARD" schema="" session="Main" />
-=======
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[#DB_US06: In the "Support_messages" table in the database,
-  #verify the "support_ticket_id" of the data whose "message" information is "Tickett".
-
-SELECT support_ticket_id FROM u168183796_qaloantec.support_messages WHERE message = 'Tickett';
-
-
-#DB_US18: Add only the data containing "id, name, discription" to the Catagories table.
-
-SELECT * FROM u168183796_qaloantec.categories;
-INSERT INTO categories (id, name, description) VALUES (5, 'ismailtemiz', 'SDET');
-
-
-
-#Update and verify the "update_log" value of the
-                  #data with "version=?"and "id=?" in the "update_logs" table.
-SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
     <connection id="5e683329-c63e-45c9-8477-988f219fead8">
       <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="" session="Main" />
->>>>>>> main
     </connection>
-  </component>
-  <component name="DBNavigator.Project.DatabaseEditorStateManager">
-    <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
-  <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7" />
-  </component>
-<<<<<<< HEAD
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.update_logs" active-filter-id="" />
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.admins" active-filter-id="" />
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.support_tickets" active-filter-id="" />
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.cron_job_logs" active-filter-id="" />
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.users" active-filter-id="" />
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.user_notifications" active-filter-id="" />
-    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.categories" active-filter-id="ceec9110-911d-49e7-bd21-01b6152e0863">
-      <filter id="ceec9110-911d-49e7-bd21-01b6152e0863" name="1" temporary="false" custom-name="false" type="basic" join-type="AND">
-        <condition column="id" operator="=" value="1" active="true" />
-      </filter>
-    </filter-actions>
-  </component>
-  <component name="DBNavigator.Project.ExecutionManager">
-    <retain-sticky-names value="false" />
-  </component>
-  <component name="DBNavigator.Project.MethodExecutionManager">
-    <method-browser />
-    <execution-history>
-      <group-entries value="true" />
-      <execution-inputs />
-    </execution-history>
-    <argument-values-cache />
-  </component>
-=======
->>>>>>> main
-  <component name="DBNavigator.Project.ObjectQuickFilterManager">
-    <last-used-operator value="EQUAL" />
-    <filters />
-  </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7" active="true" signed="true">
+      <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" active="true" signed="true">
         <database>
-          <name value="LoanTechExper" />
-          <description value="LoanTechExper" />
+          <name value="Connection" />
+          <description value="LoanTech Exper Database Access Information" />
+          <database-type value="MYSQL" />
+          <config-type value="BASIC" />
+          <database-version value="5.5" />
+          <driver-source value="BUNDLED" />
+          <driver-library value="" />
+          <driver value="" />
+          <url-type value="DATABASE" />
+          <host value="45.87.83.5" />
+          <port value="3306" />
+          <database value="u168183796_qaloantec" />
+          <tns-folder value="" />
+          <tns-profile value="" />
+          <type value="USER_PASSWORD" />
+          <user value="u168183796_qaloantecuser" />
+          <deprecated-pwd value="MCZ2RzFBL011V04=" />
+        </database>
+        <properties>
+          <auto-commit value="false" />
+        </properties>
+        <ssh-settings>
+          <active value="false" />
+          <proxy-host value="" />
+          <proxy-port value="22" />
+          <proxy-user value="" />
+          <deprecated-proxy-pwd value="" />
+          <auth-type value="PASSWORD" />
+          <key-file value="" />
+          <key-passphrase value="" />
+        </ssh-settings>
+        <ssl-settings>
+          <active value="false" />
+          <certificate-authority-file value="" />
+          <client-certificate-file value="" />
+          <client-key-file value="" />
+        </ssl-settings>
+        <details>
+          <charset value="UTF-8" />
+          <session-management value="true" />
+          <ddl-file-binding value="true" />
+          <database-logging value="true" />
+          <connect-automatically value="true" />
+          <restore-workspace value="true" />
+          <restore-workspace-deep value="false" />
+          <environment-type value="default" />
+          <connectivity-timeout value="30" />
+          <idle-time-to-disconnect value="30" />
+          <idle-time-to-disconnect-pool value="5" />
+          <credential-expiry-time value="10" />
+          <max-connection-pool-size value="7" />
+          <alternative-statement-delimiter value="" />
+        </details>
+        <debugger>
+          <compile-dependencies value="true" />
+          <tcp-driver-tunneling value="false" />
+          <tcp-host-address value="" />
+          <tcp-port-from value="4000" />
+          <tcp-port-to value="4999" />
+        </debugger>
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
+          <object-type-filter>
+            <object-type name="SCHEMA" enabled="true" />
+            <object-type name="USER" enabled="true" />
+            <object-type name="ROLE" enabled="true" />
+            <object-type name="PRIVILEGE" enabled="true" />
+            <object-type name="CHARSET" enabled="true" />
+            <object-type name="TABLE" enabled="true" />
+            <object-type name="VIEW" enabled="true" />
+            <object-type name="MATERIALIZED_VIEW" enabled="true" />
+            <object-type name="NESTED_TABLE" enabled="true" />
+            <object-type name="COLUMN" enabled="true" />
+            <object-type name="INDEX" enabled="true" />
+            <object-type name="CONSTRAINT" enabled="true" />
+            <object-type name="DATASET_TRIGGER" enabled="true" />
+            <object-type name="DATABASE_TRIGGER" enabled="true" />
+            <object-type name="SYNONYM" enabled="true" />
+            <object-type name="SEQUENCE" enabled="true" />
+            <object-type name="PROCEDURE" enabled="true" />
+            <object-type name="FUNCTION" enabled="true" />
+            <object-type name="PACKAGE" enabled="true" />
+            <object-type name="TYPE" enabled="true" />
+            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
+            <object-type name="ARGUMENT" enabled="true" />
+            <object-type name="DIMENSION" enabled="true" />
+            <object-type name="CLUSTER" enabled="true" />
+            <object-type name="DBLINK" enabled="true" />
+          </object-type-filter>
+          <object-name-filters />
+        </object-filters>
+      </connection>
+      <connection id="5e683329-c63e-45c9-8477-988f219fead8" active="true" signed="true">
+        <database>
+          <name value="LoanTech Exper Database Access Information" />
+          <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
           <database-version value="5.5" />
@@ -566,9 +597,5 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
         </visibility-settings>
       </environment>
     </general-settings>
-  </component>
-  <component name="DBNavigator.Project.StatementExecutionManager">
-    <execution-variables />
-    <execution-variable-types />
   </component>
 </project>
