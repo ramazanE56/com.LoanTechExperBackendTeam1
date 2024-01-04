@@ -22,9 +22,10 @@ public class QueryManage {
     private String supportAttachmentQuery = "DELETE FROM support_attachments WHERE support_message_id = ?";
     private String supportAttachmentVerifyQuery = "SELECT id, support_message_id, attachment, created_At, updated_At  FROM u168183796_qaloantec.support_attachments WHERE support_message_id = ?";
     private String supportAttachmentAddQuery="INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
-
-
-
+    // Arif Emre
+    private String DepositsQuery = "SELECT charge FROM deposits WHERE amount < 500000 AND trx = '4GC9SMZUS69S';";
+    private String adminNotifications = "SELECT * FROM admin_notifications WHERE user_id = 2 AND id > 20;";
+    private String admindeposits = "SELECT * FROM deposits WHERE amount BETWEEN 100 AND 500;";
 
 
 
@@ -80,6 +81,14 @@ public class QueryManage {
     public String getSupportAttachmentAddQuery(){
         return supportAttachmentAddQuery;
     }
+
+    // Arif Emre
+    public String getDepositsQuery() {    return DepositsQuery;}
+    public String getAdminNotifications() {return adminNotifications;}
+    public String getAdmindeposits() { return admindeposits;}
+
+
+
 
 
 }

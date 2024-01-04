@@ -293,9 +293,48 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
             e.printStackTrace();
         }
 
+}
+
+    @Given("The query is prepared and executed to the deposits table.")
+    public void the_query_is_prepared_and_executed_to_the_deposits_table() throws SQLException {
+        query = queryManage.getDepositsQuery();
+
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
+    @Given("The resultSet returned from the deposits table is validated.")
+    public void the_result_set_returned_from_the_deposits_table_is_validated() throws SQLException {
+        expectedData = "102.00000000";
 
+        resultSet.next();
+        actualData = resultSet.getString("charge");
 
+        assertEquals(expectedData,actualData);
+    }
+    @Given("The query is prepared and executed to the admin notifications table.")
+    public void the_query_is_prepared_and_executed_to_the_admin_notifications_table() throws SQLException {
+        query = queryManage.getAdminNotifications();
+
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the admin notifications table is validated.")
+    public void the_result_set_returned_from_the_admin_notifications_table_is_validated() throws SQLException {
+    Assert.assertFalse(resultSet.next());
+    }
+    @Given("The query is prepared and executed to the deposits amount table")
+    public void the_query_is_prepared_and_executed_to_the_deposits_amount_table() throws SQLException {
+        query = queryManage.getAdmindeposits();
+
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("The resultSet returned from the deposits amount table is validated")
+    public void the_result_set_returned_from_the_deposits_amount_table_is_validated() throws SQLException {
+        expectedData = "1";
+
+        resultSet.next();
+        actualData = resultSet.getString("user_id");
+
+        assertEquals(expectedData,actualData);
+    }
 }
 
 
