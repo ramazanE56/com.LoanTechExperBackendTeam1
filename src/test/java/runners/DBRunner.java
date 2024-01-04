@@ -14,7 +14,11 @@ import org.junit.runner.RunWith;
         monochrome = true,// raporların konsolda okunaklı çıkması için
         features = "src/test/resources/features/db",
         glue = {"stepdefinitions", "hooks/db"},
+
         tags = "@DB",
+
+        //tags = "@q05",
+
         dryRun = false
 
 )

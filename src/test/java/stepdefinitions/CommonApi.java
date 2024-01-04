@@ -20,6 +20,7 @@ import static hooks.api.HooksApi.spec;
 
 import static io.restassured.RestAssured.given;
 
+import static java.nio.file.Paths.get;
 import static org.apache.hc.client5.http.async.methods.SimpleRequestBuilder.delete;
 import static org.bouncycastle.asn1.x500.style.RFC4519Style.name;
 
@@ -479,6 +480,7 @@ public class CommonApi extends ApiUtils {
 
 
     }
+
     @Given("The API user records the response with invalid authorization information,")
     public void the_apı_user_records_the_response_with_invalid_authorization_information() {
         try {
@@ -528,6 +530,7 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
+
     @Given("The API adminuser saves the GET response from the blogs add  endpoint with valid authorization information")
     public void the_apı_adminuser_saves_the_get_response_from_the_blogs_add_endpoint_with_valid_authorization_information() {
         response = given()
@@ -552,6 +555,7 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
+
     @Then("The API adminuser saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is Unauthorized")
     public void the_apı_adminuser_saves_the_response_from_the_user_ticket_delete_endpoint_with_invalid_authorization_information_and_confirms_that_the_status_code_is_and_the_error_message_is_unauthorized(String string) {
         try {
@@ -571,6 +575,7 @@ public class CommonApi extends ApiUtils {
         Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
 
     }
+
     @Given("The API adminuser saves the response from the user ticket detail endpoint with valid authorization information")
     public void the_apı_adminuser_saves_the_response_from_the_user_ticket_detail_endpoint_with_valid_authorization_information() {
         response = given()
@@ -624,8 +629,8 @@ public class CommonApi extends ApiUtils {
         response = given()
                 .spec(spec)
                 .contentType(ContentType.JSON)
-                .header("Accep","applications/json")
-                .headers("Authorization","Bearer "+ generateToken("user"))
+                .header("Accep", "applications/json")
+                .headers("Authorization", "Bearer " + generateToken("user"))
                 .when()
                 .get(fullPath);
         response.prettyPrint();
@@ -759,200 +764,196 @@ public class CommonApi extends ApiUtils {
     }
 
 
-
-
     @And("The API adminuser saves the response from the admin withdraw methods details endpoint with valid authorization information")
     public void theAPIAdminuserSavesTheResponseFromTheAdminWithdrawMethodsDetailsEndpointWithValidAuthorizationInformation() {
 
 
-
-
-
         response = given()
 
-                    .spec(spec)
-                    .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + generateToken("admin"))
-                    .when()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
 
-                    .get(fullPath);
-
-
+                .get(fullPath);
 
 
-            response.prettyPrint();
+        response.prettyPrint();
 
     }
 
 
     @And("The API user saves the response endpoint with invalid authorization information")
-    public void theAPIUserSavesTheResponseEndpointWithInvalidAuthorizationInformation () {
-            try {
-                response = given()
-                        .spec(spec)
-                        .contentType(ContentType.JSON)
-                        .header("Accept", "application/json")
-                        .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
-                        .when()
-                        .patch(fullPath);
+    public void theAPIUserSavesTheResponseEndpointWithInvalidAuthorizationInformation() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .contentType(ContentType.JSON)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .patch(fullPath);
 
-                response.prettyPrint();
-            } catch (Exception e) {
-                mesaj = e.getMessage();
-            }
-            System.out.println("mesaj: " + mesaj);
+            response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("mesaj: " + mesaj);
 
-            Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
     }
 
     //GET isteği yaparak başlangıçtaki data[0].status değerini al
     @And("The API adminuser saves the response from the categories add endpoint with get reguest for first status")
-    public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithGetReguestforfirststatus () {
+    public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithGetReguestforfirststatus() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        initialStatus = jsonPath.getInt("data[0].status");
+
+
+    }
+
+    //PATCH isteği yaparak data[0].status değerini update et
+    @Then("The API adminuser saves the response from the categories add endpoint with PATCH reguest")
+    public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithPATCHReguest() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        //update edilmiş statusu updateStatus'a ata
+
+    }
+
+    @And("The API adminuser saves the response from the categories add endpoint with get reguest for updated status")
+    public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithGetReguestForUpdatedStatus() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
+        jsonPath = response.jsonPath();
+        updatedStatus = jsonPath.getInt("data[0].status");
+    }
+
+
+    //ilk status değeri ile  update edilmiş değerin aynı olmadığını doğrula
+    @Then("Verify that the desired category status record is updated via API")
+    public void verifyThatTheDesiredCategoryStatusRecordIsUpdatedViaAPI() {
+        Assert.assertNotEquals(initialStatus, updatedStatus);
+    }
+
+    @Then("The API user saves the response from the delete endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @Then("The API user saves the response from the delete endpoint with invalid authorization information")
+    public void theAPIUserSavesTheResponseFromTheDeleteEndpointWithInvalidAuthorizationInformation() {
+        try {
             response = given()
                     .spec(spec)
                     .contentType(ContentType.JSON)
                     .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + generateToken("admin"))
-                    .when()
-                    .get(fullPath);
-            response.prettyPrint();
-            jsonPath = response.jsonPath();
-            initialStatus = jsonPath.getInt("data[0].status");
-
-
-        }
-
-        //PATCH isteği yaparak data[0].status değerini update et
-        @Then("The API adminuser saves the response from the categories add endpoint with PATCH reguest")
-        public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithPATCHReguest () {
-            response = given()
-                    .spec(spec)
-                    .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + generateToken("admin"))
-                    .when()
-                    .patch(fullPath);
-            response.prettyPrint();
-            jsonPath = response.jsonPath();
-            //update edilmiş statusu updateStatus'a ata
-
-        }
-        @And("The API adminuser saves the response from the categories add endpoint with get reguest for updated status")
-        public void theAPIAdminuserSavesTheResponseFromTheCategoriesAddEndpointWithGetReguestForUpdatedStatus () {
-            response = given()
-                    .spec(spec)
-                    .contentType(ContentType.JSON)
-                    .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + generateToken("admin"))
-                    .when()
-                    .get(fullPath);
-            response.prettyPrint();
-            jsonPath = response.jsonPath();
-            updatedStatus = jsonPath.getInt("data[0].status");
-        }
-
-
-        //ilk status değeri ile  update edilmiş değerin aynı olmadığını doğrula
-        @Then("Verify that the desired category status record is updated via API")
-        public void verifyThatTheDesiredCategoryStatusRecordIsUpdatedViaAPI () {
-            Assert.assertNotEquals(initialStatus, updatedStatus);
-        }
-
-        @Then("The API user saves the response from the delete endpoint with valid authorization information")
-        public void theAPIUserSavesTheResponseFromTheDeleteEndpointWithValidAuthorizationInformation () {
-            response = given()
-                    .spec(spec)
-                    .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + generateToken("admin"))
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
                     .when()
                     .delete(fullPath);
 
             response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
         }
-        @Then("The API user saves the response from the delete endpoint with invalid authorization information")
-        public void theAPIUserSavesTheResponseFromTheDeleteEndpointWithInvalidAuthorizationInformation () {
-            try {
-                response = given()
-                        .spec(spec)
-                        .contentType(ContentType.JSON)
-                        .header("Accept", "application/json")
-                        .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
-                        .when()
-                        .delete(fullPath);
+        System.out.println("mesaj: " + mesaj);
 
-                response.prettyPrint();
-            } catch (Exception e) {
-                mesaj = e.getMessage();
-            }
-            System.out.println("mesaj: " + mesaj);
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+    }
 
-            Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
-        }
+    @Then("The API adminuser saves the response from the withdrawal endpoint with get reguest")
+    public void TheAPIAdminuserSavesTheResponseFromTheWithdrawalEndpointWithGetReguest() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+        response.prettyPrint();
 
-        @Then("The API adminuser saves the response from the withdrawal endpoint with get reguest")
-        public void TheAPIAdminuserSavesTheResponseFromTheWithdrawalEndpointWithGetReguest () {
+    }
+
+    @And("The API user saves the response get request endpoint with invalid authorization information")
+    public void theAPIUserSavesTheResponseGetRequestEndpointWithInvalidAuthorizationInformation() {
+        try {
             response = given()
                     .spec(spec)
                     .contentType(ContentType.JSON)
                     .header("Accept", "application/json")
-                    .headers("Authorization", "Bearer " + generateToken("admin"))
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
                     .when()
                     .get(fullPath);
+
             response.prettyPrint();
-
+        } catch (Exception e) {
+            mesaj = e.getMessage();
         }
+        System.out.println("mesaj: " + mesaj);
 
-        @And("The API user saves the response get request endpoint with invalid authorization information")
-        public void theAPIUserSavesTheResponseGetRequestEndpointWithInvalidAuthorizationInformation () {
-            try {
-                response = given()
-                        .spec(spec)
-                        .contentType(ContentType.JSON)
-                        .header("Accept", "application/json")
-                        .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
-                        .when()
-                        .get(fullPath);
+        Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
+    }
 
-                response.prettyPrint();
-            } catch (Exception e) {
-                mesaj = e.getMessage();
-            }
-            System.out.println("mesaj: " + mesaj);
-
-            Assert.assertTrue(mesaj.contains("status code: 401, reason phrase: Unauthorized"));
-        }
-        @Then("The API User verifies that id is {int} in the response body")
-        public void theAPIUserVerifiesThatIdIsIdInTheResponseBody ( int id){
-            jsonPath = response.jsonPath();
-            Assert.assertEquals(id, jsonPath.getInt("data.id"));
+    @Then("The API User verifies that id is {int} in the response body")
+    public void theAPIUserVerifiesThatIdIsIdInTheResponseBody(int id) {
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("data.id"));
 
 
-        }
+    }
 
-        @Then("The API User verifies that email is {string} in the response body")
-        public void theAPIUserVerifiesThatEmailIsInTheResponseBody (String email){
-            jsonPath = response.jsonPath();
-            // email="mehmetkahraman@gmail.com";
-            Assert.assertEquals(String.valueOf(email), jsonPath.getString("data.email"));
-            System.out.println(email);
-            System.out.println(jsonPath.getString("data.email"));
+    @Then("The API User verifies that email is {string} in the response body")
+    public void theAPIUserVerifiesThatEmailIsInTheResponseBody(String email) {
+        jsonPath = response.jsonPath();
+        // email="mehmetkahraman@gmail.com";
+        Assert.assertEquals(String.valueOf(email), jsonPath.getString("data.email"));
+        System.out.println(email);
+        System.out.println(jsonPath.getString("data.email"));
 
-        }
+    }
 
-        @Then("The API User verifies that createdat is {string} in the response body")
-        public void theAPIUserVerifiesThatCreatedatIsInTheResponseBody (String creatDate){
-            jsonPath = response.jsonPath();
-            Assert.assertEquals(creatDate, jsonPath.getString("data.created_at"));
-            System.out.println(creatDate);
-            System.out.println(jsonPath.getString("data.created_at"));
-        }
+    @Then("The API User verifies that createdat is {string} in the response body")
+    public void theAPIUserVerifiesThatCreatedatIsInTheResponseBody(String creatDate) {
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(creatDate, jsonPath.getString("data.created_at"));
+        System.out.println(creatDate);
+        System.out.println(jsonPath.getString("data.created_at"));
+    }
 
-        @Then("The API User verifies that updatedat is {string} in the response body")
-        public void theAPIUserVerifiesThatUpdatedatIsInTheResponseBody (String updateDate){
-            jsonPath = response.jsonPath();
-            Assert.assertEquals(updateDate, jsonPath.getString("data.updated_at"));
-            System.out.println(updateDate);
-            System.out.println(jsonPath.getString("data.updated_at"));
-        }
+    @Then("The API User verifies that updatedat is {string} in the response body")
+    public void theAPIUserVerifiesThatUpdatedatIsInTheResponseBody(String updateDate) {
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(updateDate, jsonPath.getString("data.updated_at"));
+        System.out.println(updateDate);
+        System.out.println(jsonPath.getString("data.updated_at"));
+    }
 
 
     @Then("Verify the user information of the one with the id {} in the API user response body: {int}, {string}, {string}, {string}, {string}, {int}, {int}, {string}, {string}, {string}")
@@ -1005,7 +1006,7 @@ public class CommonApi extends ApiUtils {
 
 
     @Then("The API adminuser verifies that the id information in the response body is {int}")
-    public void theAPIAdminuserVerifiesThatTheIdInformationInTheResponseBodyIs( int id) {
+    public void theAPIAdminuserVerifiesThatTheIdInformationInTheResponseBodyIs(int id) {
 
     }
 
@@ -1021,8 +1022,6 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
-
-
 
 
     @When("The API adminuser saves the response from the api loanplans list endpoint with valid authorization information")
@@ -1052,21 +1051,19 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
 
 
-
-
     }
 
     @And("The API adminuser verifies that the remark information in the response body is {string}")
-    public void theAPIAdminuserVerifiesThatTheRemarkInformationInTheResponseBodyIs(String message){
-            response.then()
-                    .assertThat()
-                    .body("message.error[0]", Matchers.equalTo(message));
-        }
+    public void theAPIAdminuserVerifiesThatTheRemarkInformationInTheResponseBodyIs(String message) {
+        response.then()
+                .assertThat()
+                .body("message.error[0]", Matchers.equalTo(message));
+    }
 
 
     @Given("The API user verifies that the content of the {int} field in the request body includes {int}, {string}, {string}, {string}, {int}, {string}, {string}")
     public void the_apı_user_verifies_that_the_content_of_the_field_in_the_request_body_includes(int dataIndex, int id, String name, String image, String description, int status, String created_at, String updated_at) {
-        jsonPath= response.jsonPath();
+        jsonPath = response.jsonPath();
         Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
         Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
         Assert.assertEquals(null, jsonPath.get("data[" + dataIndex + "].image"));
@@ -1108,7 +1105,6 @@ public class CommonApi extends ApiUtils {
          */
 
 
-
     }
 
 
@@ -1137,7 +1133,7 @@ public class CommonApi extends ApiUtils {
 //       requestBody.put("description", "Test Method 5");
 
 
-//   }
+    //   }
     @Given("The API user saves the response from the user ticket delete endpoint with valid authorization information.")
     public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_valid_authorization_information() {
 
@@ -1153,7 +1149,12 @@ public class CommonApi extends ApiUtils {
     }
 
 
-    @When("The API adminuser prepares a POST request with valid authorization information and without data \\(category_id, name, title)")
+    @Given("The API user saves the response from the user ticket delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is {string}")
+    public void the_api_user_saves_the_response_from_the_user_ticket_delete_endpoint_with_invalid_authorization_information_and_confirms_that_the_status_code_is_and_the_error_message_is(String string, String string2) {
+    }
+
+
+    @When("The API adminuser prepares a POST request with valid authorization information and without data (category_id, name, title)")
     public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndWithoutDataCategory_idNameTitle() {
         requestBody = new JSONObject();
     }
@@ -1165,7 +1166,7 @@ public class CommonApi extends ApiUtils {
                 .body("data.message", Matchers.equalTo(message));
     }
 
-    @When("The API adminuser prepares a POST request with invalid authorization information and correct data \\(category_id, name, title)")
+    @When("The API adminuser prepares a POST request with invalid authorization information and correct data (category_id, name, title)")
     public void theAPIAdminuserPreparesAPOSTRequestWithInvalidAuthorizationInformationAndCorrectDataCategory_idNameTitle() {
 
 
@@ -1180,6 +1181,8 @@ public class CommonApi extends ApiUtils {
 
             response.prettyPrint();
 
+
+            get(fullPath);
 
 
         } catch (Exception e) {
@@ -1197,8 +1200,8 @@ public class CommonApi extends ApiUtils {
 
         response = given()
                 .spec(spec)
-                .header("Accep","applications/json")
-                .headers("Authorization","Bearer "+ generateToken("user"))
+                .header("Accep", "applications/json")
+                .headers("Authorization", "Bearer " + generateToken("user"))
                 .when()
                 .get(fullPath);
         response.prettyPrint();
@@ -1232,11 +1235,6 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
 
 
-        jsonPath = response.jsonPath();
-        int id = jsonPath.getInt("data.Method.id");
-        fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
-
-
     }
 
 
@@ -1249,7 +1247,7 @@ public class CommonApi extends ApiUtils {
 
 
     @Given("The API adminuser prepares a PATCH request containing the the correct id and accurate data send to the api withdrawal approve endpoint with valid authorization information")
-    public void  the_api_adminuser_prepares_a_patch_request_containing_the_the_correct_id_and_accurate_data_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
+    public void the_api_adminuser_prepares_a_patch_request_containing_the_the_correct_id_and_accurate_data_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
 
         /*
         {
@@ -1260,15 +1258,15 @@ public class CommonApi extends ApiUtils {
 
         jsonPath = response.jsonPath();
         int id = jsonPath.getInt("data.data[0].id");
-        fullPath = pathParameters("api/withdrawal/approve/"+id+"");
+        fullPath = pathParameters("api/withdrawal/approve/" + id + "");
 
 
         requestBody = new JSONObject();
         requestBody.put("details", "Admin Not...");
 
 
-
     }
+
     @Given("The API adminuser sends a PATCH request and saves the response with valid authorization information")
     public void the_api_adminuser_sends_a_patch_request_and_saves_the_response_with_valid_authorization_information() {
 
@@ -1314,6 +1312,7 @@ public class CommonApi extends ApiUtils {
         requestBody = new JSONObject();
 
     }
+
     @Given("The API user prepares a PATCH request containing non-existent record to send to the api withdrawal approve endpoint with valid authorization information")
     public void the_api_user_prepares_a_patch_request_containing_non_existent_record_to_send_to_the_api_withdrawal_approve_endpoint_with_valid_authorization_information() {
         requestBody = new JSONObject();
@@ -1371,18 +1370,18 @@ public class CommonApi extends ApiUtils {
 
     @Given("The API user sends a POST request and saves the response with invalid authorization information")
     public void the_api_user_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
+
         response = given()
                 .spec(spec)
                 .contentType(ContentType.JSON)
                 .header("Accept", "application/json")
                 .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
                 .when()
-                .body(requestBody.toString())
                 .post(fullPath);
 
         response.prettyPrint();
-    }
 
+    }
 
 
     @Given("The API adminuser prepares a PATCH request with valid authorization information and correct data")
@@ -1396,6 +1395,7 @@ public class CommonApi extends ApiUtils {
         response.prettyPrint();
 
     }
+
     @Given("The API adminuser sends a PATCH request and saves the response from the user loans approve endpoint with valid authorization information")
     public void the_apı_adminuser_sends_a_patch_request_and_saves_the_response_from_the_user_loans_approve_endpoint_with_valid_authorization_information() {
         jsonPath = response.jsonPath();
@@ -1413,6 +1413,125 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
+
+
+    @When("The API user sends GET request to api loanplans list endpoint")
+    public void the_api_user_sends_get_request_to_api_loanplans_list_endpoint() {
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+
+    }
+
+    @Given("The API adminuser verifies that the status_code is {int}")
+    public void the_api_adminuser_verifies_that_the_status_code_is(int status) {
+        response.then()
+                .assertThat()
+                .statusCode(status);
+
+
+    }
+
+    @Given("The API adminser verifies that the message information in the response body is {string}")
+    public void the_api_adminser_verifies_that_the_message_information_in_the_response_body_is(String message) {
+
+        response.then()
+                .assertThat()
+                .body("message.error[0]", Matchers.equalTo(message));
+
+    }
+
+    @Given("The API adminuser sends a POST request and saves the response with invalid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_with_invalid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API adminuser sends a POST request and saves the response withdrawal reject with valid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_withdrawal_reject_with_valid_authorization_information() {
+    }
+
+    //@And("The API adminuser prepares a POST request without data to send to the api admin withdrawmethods add endpoint")
+    //public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheApiAdminWithdrawmethodsAddEndpoint() {
+    //          /*
+    //    {
+    //    "name": "Method 5",
+    //    "min_limit": "200.00000000",
+    //    "max_limit": "7000.00000000",
+    //    "fixed_charge": "150.00000000",
+    //    "rate": "2.00000000",
+    //    "percent_charge": "3.00",
+    //    "currency": "USD",
+    //    "description": "Test Method 5"
+    //    }
+    //     */
+    //    requestBody = new JSONObject();
+    //    requestBody.put("name", "Method 5");
+    //    requestBody.put("min_limit", "200.00000000");
+    //    requestBody.put("max_limit", "7000.00000000");
+    //    requestBody.put("fixed_charge", "150.00000000");
+    //    requestBody.put("rate", "2.00000000");
+    //    requestBody.put("percent_charge", "3.00");
+    //    requestBody.put("currency", "USD");
+    //    requestBody.put("description", "Test Method 5");
+
+    //    response = given()
+    //            .spec(spec)
+    //            .contentType(ContentType.JSON)
+    //            .header("Accept", "application/json")
+    //            .headers("Authorization", "Bearer " + generateToken("admin"))
+    //            .when()
+    //            .body(requestBody.toString())
+    //            .post(fullPath);
+
+    //    response.prettyPrint();
+
+
+    //}
+
+    @Given("The API adminuser sends a POST request and saves the response no data withdrawal reject with valid authorization information")
+    public void the_api_adminuser_sends_a_post_request_and_saves_the_response_no_data_withdrawal_reject_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @Given("The API adminuser verifies that the message in the response body is {string}")
+    public void the_api_adminuser_verifies_that_the_message_in_the_response_body_is(String message) {
+
+        response.then()
+                .assertThat()
+                .body("data.message", Matchers.equalTo(message));
+
+    }
+
+
+    //   jsonPath = response.jsonPath();
+    //   int id = jsonPath.getInt("data.Method.id");
+    //   fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
+
 
     @And("The API adminuser prepares a POST request without data to send to the api admin withdrawmethods add endpoint")
     public void theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheApiAdminWithdrawmethodsAddEndpoint() {
@@ -1437,6 +1556,7 @@ public class CommonApi extends ApiUtils {
         requestBody.put("percent_charge", "3.00");
         requestBody.put("currency", "USD");
         requestBody.put("description", "Test Method 5");
+
         response = given()
                 .spec(spec)
                 .contentType(ContentType.JSON)
@@ -1447,10 +1567,133 @@ public class CommonApi extends ApiUtils {
                 .post(fullPath);
 
         response.prettyPrint();
-
         jsonPath = response.jsonPath();
         int id = jsonPath.getInt("data.Method.id");
-        fullPath = pathParameters("api/withdraw/methods/delete/"+id+"");
+        fullPath = pathParameters("api/withdraw/methods/delete/" + id + "");
+
+
+    }
+
+    @And("The API adminuser prepares a POST request without data to send to the admin api subscriber add endpoint")
+    public void
+    theAPIAdminuserPreparesAPOSTRequestWithoutDataToSendToTheAdminApiSubscriberAddEndpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("email", "umit123@gmail.com");
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+        response.prettyPrint();
+
+
+        jsonPath = response.jsonPath();
+        System.out.println("Full Response: " + jsonPath.prettify());
+        int id = jsonPath.getInt("Added Subscriber Id");
+       fullPath = pathParameters("api/subscriber/delete/" + id + " ");
+
+
+    }
+
+    @And("The API adminuser saves the response from the admin subscriber delete endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("user"))
+                .when()
+
+                .delete(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Then("The API user saves the response from the admin subscriber delete endpoint with invalid authorization information and confirms that the status code is {string} and the error message is Unauthorized")
+    public void theAPIUserSavesTheResponseFromTheAdminSubscriberDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized(int arg0) {
+        {
+            try {
+                response = given()
+                        .spec(spec)
+                        .header("Accept", "application/json")
+                        .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                        .when()
+
+                        .get(fullPath);
+            } catch (Exception e) {
+                mesaj = e.getMessage();
+            }
+            System.out.println("Mesaj: " + mesaj);
+
+
+        }
+    }
+
+    @And("The API adminuser saves the response from the categories details endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheCategoriesDetailsEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Given("The API user verifies that the content of the data field in the response body includes {int},{int},{string},{string},{string},{int},{string},{string}")
+    public void theAPIUserVerifiesThatTheContentOfTheDataFieldInTheResponseBodyIncludesDataIndexIdImageStatus(
+            int id, int dataIndex, String name, String image, String description,int status, String created_at, String
+            updated_at){
+
+        jsonPath = new JsonPath(response.getBody().asString());
+
+        Assert.assertEquals(id, jsonPath.getInt("data[" + dataIndex + "].id"));
+        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+        Assert.assertEquals(null, jsonPath.get("data[" + dataIndex + "].image"));
+        Assert.assertEquals(description, jsonPath.getString("data[" + dataIndex + "].description"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+
+
+    }
+
+    @And("The API adminuser saves the response from the admin api subscriber delete endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminApiSubscriberDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+
+
+    }
+
+    @And("The API adminuser prepares a POST request with valid authorization information and correct data")
+    public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndCorrectData() {
+    /*
+    {
+
+            "id": 6262,
+            "method_name": "Manuel",
+            "method_currency": "QAR",
+            "method_amount": "1,240,000.00",
+            "amount": "1,000.00",
+            "charge": "240.00",
+            "rate": "1,000.00",
+            "trx": "APKPA626262",
+            "rejection_message": null
 
 
     }
@@ -1543,8 +1786,164 @@ public class CommonApi extends ApiUtils {
 
     }
 }
+     */
+
+        requestBody = new JSONObject();
+        requestBody.put("id", 6262);
+        requestBody.put("method_name","Manuel");
+        requestBody.put("method_currency","QAR");
+        requestBody.put("method_amount",1500000);
+        requestBody.put("amount",1000);
+        requestBody.put("charge",500);
+        requestBody.put("trx","APKPA626262");
+        requestBody.put("rejection_message", "null");
+    }
+
+    @When("The API adminuser sends a POST request and saves the response from the deposit reject endpoint with valid authorization information")
+    public void theAPIAdminuserSendsAPOSTRequestAndSavesTheResponseFromTheDepositRejectEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
 
 
+    @Then("The API adminuser prepares a PATCH request with valid authorization information and correct data \\(name, min_limit, max_limit)")
+    public void the_apı_adminuser_prepares_a_post_request_with_valid_authorization_information_and_correct_data_name_min_limit_max_limit() {
 
 
+        /*
+        "name": "Method 5 Updated",
+        "min_limit": "3000",
+        "max_limit": "10000"
+         */
+        requestBody = new JSONObject();
+        requestBody.put("name", "Method 5 Updated");
+        requestBody.put("min_limit", 3000);
+        requestBody.put("max_limit", 10000);
 
+    }
+    @Then("The API adminuser sends a PATCH request and saves the response from the withdraw methods update add endpoint with valid authorization information")
+    public void the_apı_adminuser_sends_a_patch_request_and_saves_the_response_from_the_withdraw_methods_update_add_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @And("The API user verifies that the remark information in the withdraw response body is {string}")
+    public void theAPIUserVerifiesThatTheRemarkInformationInTheWithdrawResponseBodyIs(String message) {
+
+        response.then()
+                .assertThat()
+                .body("data.message", Matchers.equalTo(message));
+
+
+    }
+
+    @Then("The API adminuser prepares a PATCH request with valid authorization information and  data fields \\(name, min_limit, max_limit)")
+    public void theAPIAdminuserPreparesAPATCHRequestWithValidAuthorizationInformationAndDataFieldsNameMin_limitMax_limit() {
+        requestBody = new JSONObject();
+
+    }
+
+    @Then("The API adminuser sends a PATCH request and saves the response from the withdraw methods update add endpoint with invalid authorization information")
+    public void theAPIAdminuserSendsAPATCHRequestAndSavesTheResponseFromTheWithdrawMethodsUpdateAddEndpointWithInvalidAuthorizationInformation() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .contentType(ContentType.JSON)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .body(requestBody.toString())
+                    .patch(fullPath);
+
+            response.prettyPrint();
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("Mesaj: " + mesaj);
+
+    }
+
+    @Then("The API adminuser sends a POST request and saves the response from the deposit reject endpoint with invalid authorization information")
+    public void theAPIAdminuserSendsAPOSTRequestAndSavesTheResponseFromTheDepositRejectEndpointWithInvalidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @And("The API adminuser prepares a POST request with valid authorization information and does not include the required data")
+    public void theAPIAdminuserPreparesAPOSTRequestWithValidAuthorizationInformationAndDoesNotIncludeTheRequiredData() {
+        requestBody = new JSONObject();
+    }
+
+
+    @Then("The API admin records the response with invalid authorization information, verifies that the status code is '401' and confirms that the error information is Unauthorized")
+    public void theAPIAdminRecordsTheResponseWithInvalidAuthorizationInformationVerifiesThatTheStatusCodeIsAndConfirmsThatTheErrorInformationIsUnauthorized() {
+
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+                    .patch(fullPath);
+
+            response.prettyPrint();
+ /*
+ {
+    "remark": "unauthenticated",
+    "status": "error",
+    "status_code": 401,
+    "message": {
+        "error": [
+            "Unauthorized request"
+        ]
+    }
+
+  */
+    }
+
+
+    @And("The API admin verifies that the data message information in the response body is {string}")
+    public void theAPIAdminVerifiesThatTheDataMessageInformationInTheResponseBodyIs(String message) {
+        response.then()
+                .assertThat()
+                .body("message.error[0]", Matchers.equalTo(message));
+    }
+
+
+    @Then("The API admin records the delete response with invalid authorization information, verifies that the status code is '401' and confirms that the error information is Unauthorized")
+    public void theAPIAdminRecordsTheDeleteResponseWithInvalidAuthorizationInformationVerifiesThatTheStatusCodeIsAndConfirmsThatTheErrorInformationIsUnauthorized() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+    }
+
+}
