@@ -21,10 +21,15 @@ public class QueryManage {
     private String usersMobileUpdateQuery = "UPDATE users SET mobile = ? WHERE username LIKE '%e_'";
     private String supportAttachmentQuery = "DELETE FROM support_attachments WHERE support_message_id = ?";
     private String supportAttachmentVerifyQuery = "SELECT id, support_message_id, attachment, created_At, updated_At  FROM u168183796_qaloantec.support_attachments WHERE support_message_id = ?";
-    private String supportAttachmentAddQuery="INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
+    private String supportAttachmentAddQuery = "INSERT INTO support_attachments (`id`, `support_message_id`, `attachment`, `created_at`) VALUES (?, ?, ?, ?)";
+    private String adminPasswordResetsQuery = "INSERT INTO admin_password_resets (`id`, `email`, `token`,`status`,`created_at` ) VALUES (?, ?, ?, ?,?)";
+    private String cronJobLogsQuery = "INSERT INTO u168183796_qaloantec.cron_job_logs (`id`, `cron_job_id`, `duration`,`error`) VALUES (?, ?, ?, ?)";
+
+    private String userloginsQuery = "SELECT city, user_id, user_ip  FROM user_logins GROUP BY  city;";
 
 
     private String categoriesListExcelQuery = "SELECT * FROM u168183796_qaloantec.categories";
+
 
 
 
@@ -35,6 +40,9 @@ public class QueryManage {
     private String admindeposits = "SELECT * FROM deposits WHERE amount BETWEEN 100 AND 500;";
     private String DepositsQuery = "SELECT charge FROM deposits WHERE amount < 500000 AND trx = '4GC9SMZUS69S';";
     private String adminNotifications = "SELECT * FROM admin_notifications WHERE user_id = 2 AND id > 20;";
+
+
+
 
 
 
@@ -79,17 +87,18 @@ public class QueryManage {
 
     }
 
-    public String getSupportAttachmentQuery(){
+    public String getSupportAttachmentQuery() {
         return supportAttachmentQuery;
     }
 
-    public String getSupportAttachmentVerifyQuery(){
+    public String getSupportAttachmentVerifyQuery() {
         return supportAttachmentVerifyQuery;
     }
 
-    public String getSupportAttachmentAddQuery(){
+    public String getSupportAttachmentAddQuery() {
         return supportAttachmentAddQuery;
     }
+
     public String getGatewaysListQuery() {
         return gatewaysListQuery;
     }
@@ -102,10 +111,25 @@ public class QueryManage {
         return depositsGatewayCurrenciesQuery;
     }
 
+    public String getAdminPasswordResetsQuery() {
+        return adminPasswordResetsQuery;
+    }
+
+
+    public String getCronJobLogsQuery() {
+        return cronJobLogsQuery;
+    }
+
+
+    public String getUserloginsQuery() {
+        return userloginsQuery;
+    }
 
     public String getCategoriesListExcelQuery() {
         return categoriesListExcelQuery;
+
     }
+
 
     public String getAdmindeposits() {
         return admindeposits;
@@ -118,4 +142,7 @@ public class QueryManage {
     public String getAdminNotifications() {
         return adminNotifications;
     }
+
+
+
 }

@@ -1,16 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DBNavigator.Project.DatabaseConsoleManager">
+<<<<<<< HEAD
+=======
+
+   <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7">
+      <console name="LoanTechExper" type="STANDARD" schema="" session="Main" />
+
+>>>>>>> main
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
     <connection id="5e683329-c63e-45c9-8477-988f219fead8">
       <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="" session="Main" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="DBNavigator.Project.DatabaseSessionManager">
+    <connection id="eaeba3e1-57e6-4572-8265-3d87dd0362a7" />
+  </component>
+
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.update_logs" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.admins" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.support_tickets" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.cron_job_logs" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.users" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.user_notifications" active-filter-id="" />
+    <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.categories" active-filter-id="ceec9110-911d-49e7-bd21-01b6152e0863">
+      <filter id="ceec9110-911d-49e7-bd21-01b6152e0863" name="1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="1" active="true" />
+      </filter>
+    </filter-actions>
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
+  </component>
+
+
+  <component name="DBNavigator.Project.ObjectQuickFilterManager">
+    <last-used-operator value="EQUAL" />
+    <filters />
+  </component>
+>>>>>>> main
   <component name="DBNavigator.Project.Settings">
     <connections>
       <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" active="true" signed="true">
