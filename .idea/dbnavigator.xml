@@ -12,6 +12,13 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
+<<<<<<< HEAD
+    <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    </connection>
+    <connection id="5e683329-c63e-45c9-8477-988f219fead8">
+      <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="" session="Main" />
+=======
     <connection id="a2f7d776-ef36-43af-9f12-db56b6e1ce70">
       <console name="u168183796_qaloantec" type="STANDARD" schema="" session="Main"><![CDATA[SELECT remark, SUM(amount) AS total_amount
 FROM Transactions
@@ -20,6 +27,7 @@ HAVING total_amount > 1000;]]></console>
     </connection>
     <connection id="ef1e657c-ec1c-48fb-bf75-d07df109e532">
       <console name="u168183796_qaloantec" type="STANDARD" schema="" session="Main" />
+>>>>>>> main
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -28,6 +36,8 @@ HAVING total_amount > 1000;]]></console>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+<<<<<<< HEAD
+=======
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="a2f7d776-ef36-43af-9f12-db56b6e1ce70" />
     <connection id="ef1e657c-ec1c-48fb-bf75-d07df109e532" />
@@ -36,6 +46,7 @@ HAVING total_amount > 1000;]]></console>
     <last-used-operator value="EQUAL" />
     <filters />
   </component>
+>>>>>>> main
   <component name="DBNavigator.Project.Settings">
     <connections>
       <connection id="a2f7d776-ef36-43af-9f12-db56b6e1ce70" active="true" signed="true">
