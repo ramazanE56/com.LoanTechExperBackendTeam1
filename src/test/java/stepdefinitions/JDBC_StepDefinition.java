@@ -31,7 +31,8 @@ public class JDBC_StepDefinition extends DBUtils {
     String query;
     Faker faker = new Faker();
     int magic;
-
+    String version;
+    int id;
 
     @Given("Database baglantisi kurulur.")
     public void database_baglantisi_kurulur() {
@@ -147,17 +148,17 @@ public class JDBC_StepDefinition extends DBUtils {
         while (resultSet.next()) {
             existingIds.add(resultSet.getInt("id"));
         }
-            int newId = 1;
-           while (existingIds.contains(newId)) {
-               newId++;
-           }
+        int newId = 1;
+        while (existingIds.contains(newId)) {
+            newId++;
+        }
 
 
-int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name, description) VALUES (" + newId + ", 'ismailtemiz', 'SDET')");
-            System.out.println("Eklenecek yeni ID: " + newId);
-            ReusableMethods.wait(3);
+        int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name, description) VALUES (" + newId + ", 'ismailtemiz', 'SDET')");
+        System.out.println("Eklenecek yeni ID: " + newId);
+        ReusableMethods.wait(3);
 
-        resultSet = getStatement().executeQuery("SELECT name, description  FROM categories WHERE id = "+newId+";");
+        resultSet = getStatement().executeQuery("SELECT name, description  FROM categories WHERE id = " + newId + ";");
         if (resultSet.next()) {
             // Verinin doğrulama işlemini yapın
             String name = resultSet.getString("name");
@@ -166,9 +167,9 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
             assertEquals("SDET", description);
         }
 
-        if(rowcount > 0){
+        if (rowcount > 0) {
             System.out.println("Ekleme işlemi başarıyla gerçekleştirildi.");
-        } else{
+        } else {
             System.out.println("Ekleme işlemi başarısız oldu.");
         }
     }
@@ -177,21 +178,22 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
     @Given("The query is prepared and executedUpdate to the update_logs table.")
     public void the_query_is_prepared_and_executed_update_to_the_update_logs_table() throws SQLException {
 
-                query=queryManage.getUpdate_logsQuery();
-                 String updateLog= faker.lorem().word();
-                preparedUpdate(query,updateLog,"Windows 10",79);
-                 System.out.println("Update_log :"+updateLog);
+        query = queryManage.getUpdate_logsQuery();
+        String updateLog = faker.lorem().word();
+        preparedUpdate(query, updateLog, "Windows 10", 79);
+        System.out.println("Update_log :" + updateLog);
     }
 
     @Given("The query is prepared and executed to the support_tickets table.")
     public void the_query_is_prepared_and_executed_to_the_support_tickets_table() throws SQLException {
 
-        query= queryManage.getSupportTicketsQuery();
+        query = queryManage.getSupportTicketsQuery();
 
-        resultSet= getStatement().executeQuery(query);
+        resultSet = getStatement().executeQuery(query);
 
 
     }
+
     @Given("The resultSet returned from the support_tickets table is validated.")
     public void the_result_set_returned_from_the_support_tickets_table_is_validated() throws SQLException {
 
@@ -215,7 +217,7 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
 
     @Given("The query is prepared and executed to the users table.")
     public void the_query_is_prepared_and_executed_to_the_users_table() throws SQLException {
-        query= queryManage.getUsersMobileUpdateQuery();
+        query = queryManage.getUsersMobileUpdateQuery();
 
         preparedStatement = connection.prepareStatement(query);
 
@@ -226,20 +228,19 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
         int affectedRows = preparedStatement.executeUpdate();
 
         // Güncellenen satır sayısı
-       System.out.println("Güncellenen satır sayısı: " + affectedRows);
+        System.out.println("Güncellenen satır sayısı: " + affectedRows);
 
     }
-
 
 
     //Support_attachment tablosuna yeni veri ekleme
     @Given("The query is prepared and executed to the support_attachment table to add new a row.")
     public void the_query_is_prepared_and_executed_to_the_support_attachment_table_to_add_new_a_row() throws SQLException {
 
-        query=queryManage.getSupportAttachmentAddQuery();
+        query = queryManage.getSupportAttachmentAddQuery();
         preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setNull(1, java.sql.Types.BIGINT);  // Otomatik artan sütun olduğu için null atanır.
-        magic = faker.number().numberBetween(500,32000);
+        magic = faker.number().numberBetween(500, 32000);
         preparedStatement.setInt(2, magic);  // Parametre sırası 2
         preparedStatement.setString(3, faker.name().username());  // Parametre sırası 3
         Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
@@ -256,14 +257,14 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
     }
 
 
-//Suuport_attachment tablosundan veri silme
+    //Suuport_attachment tablosundan veri silme
     @Given("The query is prepared and executed to the support_attachment table.")
     public void the_query_is_prepared_and_executed_to_the_support_attachment_table() throws SQLException {
-        query=queryManage.getSupportAttachmentQuery();
-        preparedStatement=connection.prepareStatement(query);
-        preparedStatement.setInt(1,magic);
+        query = queryManage.getSupportAttachmentQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, magic);
         preparedStatement.executeUpdate();
-        System.out.println(magic+ " sayılı support message id silindi");
+        System.out.println(magic + " sayılı support message id silindi");
     }
 
 
@@ -274,20 +275,20 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
         try {
             query = queryManage.getSupportAttachmentVerifyQuery();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,magic);
+            preparedStatement.setInt(1, magic);
             resultSet = preparedStatement.executeQuery();// Sorguyu çalıştırma
 
             // ResultSet verilerini konsolda yazdırma
             if (resultSet.next()) {
                 do {
                     String id = String.valueOf(resultSet.getInt("id"));
-                    System.out.println(id +" sayılı support message_id henüz silinmedi.");
+                    System.out.println(id + " sayılı support message_id henüz silinmedi.");
                     Assert.assertNotNull(id);
 
                 } while (resultSet.next());
             } else {
 
-                System.out.println(magic+ " sayılı support message_id silindiği içi bulunamamıştır.");
+                System.out.println(magic + " sayılı support message_id silindiği içi bulunamamıştır.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -295,7 +296,71 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
 
     }
 
+    @Given("The query is prepared and executed to the admin_password_resets table")
+    public void the_query_is_prepared_and_executed_to_the_admin_password_resets_table() throws SQLException {
 
+        query = queryManage.getupdatePasswordQuery();
+        preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setInt(1, 1);
+        preparedStatement.setInt(2, 0);
+        preparedStatement.setString(3, "ron.yost@hotmail.com");
+        int rowCount = preparedStatement.executeUpdate();
+        System.out.println("Uptade islemi gerceklesti ve " + rowCount + " satir etkilendi");
+        assertEquals(1, rowCount);
+    }
+
+    @Given("The query is prepared and executedUpdate to the loan_plans table")
+    public void the_query_is_prepared_and_executed_update_to_the_loan_plans_table() throws SQLException {
+
+        query = queryManage.getVerifyNameQuery();
+        resultSet = getStatement().executeQuery(query);
+
+    }
+
+    @Given("The resultSet returned from the loan_plans table is validated.")
+    public void the_result_set_returned_from_the_loan_plans_table_is_validated() throws SQLException {
+
+        String[] expectedNames = {"Luna", "Luna", "Kredi5"};
+        int index = 0;
+
+        while (resultSet.next() && index < expectedNames.length) {
+            String names = resultSet.getString("name");
+            System.out.println(names);
+            assertEquals(expectedNames[index], names);
+            index++;
+
+        }
+
+    }
+
+    @Given("The query is prepared and executed to the update_logs table")
+    public void the_query_is_prepared_and_executed_to_the_update_logs_table() throws SQLException {
+
+        query = queryManage.getLogsInsertQuery();
+        id = faker.number().numberBetween(10, 500);
+        String version = faker.lorem().word();
+        String update_log = faker.lorem().word();
+
+        preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, version);
+        preparedStatement.setString(3, update_log);
+        System.out.println("**" + id + "**");
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
+
+    }
+
+    @Given("Verify that update_logsid is deleted")
+    public void verify_that_update_logsid_is_deleted() throws SQLException {
+
+        query = queryManage.getdeleteUptadeLogsQuery();
+        preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
+
+    }
 }
 
 

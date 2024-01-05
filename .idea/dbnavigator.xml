@@ -13,25 +13,25 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
-      <console name="Connection" type="STANDARD" schema="" session="Main">#DB_US06: In the &quot;Support_messages&quot; table in the database,
-  #verify the &quot;support_ticket_id&quot; of the data whose &quot;message&quot; information is &quot;Tickett&quot;.
+      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[#DB_US06: In the "Support_messages" table in the database,
+  #verify the "support_ticket_id" of the data whose "message" information is "Tickett".
 
 SELECT support_ticket_id FROM u168183796_qaloantec.support_messages WHERE message = 'Tickett';
 
 
-#DB_US18: Add only the data containing &quot;id, name, discription&quot; to the Catagories table.
+#DB_US18: Add only the data containing "id, name, discription" to the Catagories table.
 
 SELECT * FROM u168183796_qaloantec.categories;
 INSERT INTO categories (id, name, description) VALUES (5, 'ismailtemiz', 'SDET');
 
 
 
-#Update and verify the &quot;update_log&quot; value of the
-                  #data with &quot;version=?&quot;and &quot;id=?&quot; in the &quot;update_logs&quot; table.
-SELECT * FROM u168183796_qaloantec.update_logs;</console>
+#Update and verify the "update_log" value of the
+                  #data with "version=?"and "id=?" in the "update_logs" table.
+SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
     </connection>
     <connection id="5e683329-c63e-45c9-8477-988f219fead8">
-      <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="" session="Main" />
+      <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="u168183796_qaloantec" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -52,6 +52,12 @@ SELECT * FROM u168183796_qaloantec.update_logs;</console>
     <filter-actions connection-id="b3c72ada-ce95-4d34-8d53-43244777a80e" dataset="u168183796_qaloantec.categories" active-filter-id="ceec9110-911d-49e7-bd21-01b6152e0863">
       <filter id="ceec9110-911d-49e7-bd21-01b6152e0863" name="1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="1" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="5e683329-c63e-45c9-8477-988f219fead8" dataset="u168183796_qaloantec.admin_notifications" active-filter-id="" />
+    <filter-actions connection-id="5e683329-c63e-45c9-8477-988f219fead8" dataset="u168183796_qaloantec.admin_password_resets" active-filter-id="46897c7a-d3ed-492a-b6fd-eee85f31a53b">
+      <filter id="46897c7a-d3ed-492a-b6fd-eee85f31a53b" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
   </component>
