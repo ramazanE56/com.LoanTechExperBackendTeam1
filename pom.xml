@@ -175,7 +175,8 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <skipTests>false</skipTests>
                     <includes>
-                        <include>**/runners/*BackendRunner*.java</include>
+                        <include>**/runners/*ApiRunner*.java</include>
+                        <include>**/runners/*DBRunner*.java</include>
                     </includes>
                 </configuration>
             </plugin>
@@ -209,7 +210,8 @@
 
                     <useFile>false</useFile>
                     <includes>
-                        <include>**/runners/*BackendRunner*.java</include>
+                        <include>**/runners/*ApiRunner*.java</include>
+                        <include>**/runners/*DBRunner*.java</include>
                     </includes>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
