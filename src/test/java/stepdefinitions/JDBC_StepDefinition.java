@@ -32,7 +32,8 @@ public class JDBC_StepDefinition extends DBUtils {
     String query;
     Faker faker = new Faker();
     int magic;
-
+    private int loanId;
+    private double totalDelayCharge;
 
     ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
     @Given("Database baglantisi kurulur.")
@@ -367,8 +368,7 @@ int rowcount = getStatement().executeUpdate("INSERT INTO  categories  (id, name,
     }
 
 
-    private int loanId;
-    private double totalDelayCharge;
+
 
     @Given("the loan with ID {string}")
     public void setLoanId(String loanId) {
