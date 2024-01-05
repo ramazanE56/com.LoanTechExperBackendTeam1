@@ -18,7 +18,7 @@ Examples:
   |id|
   |255|
 
-  @api
+
   Scenario Outline: TC_02:Verify that when a PATCH request is sent to the
                     'api/withdraw/methods/update/{{id}}' endpoint with valid authorization information,
                     and the request body does not contain the correct 'id'
@@ -35,7 +35,7 @@ Examples:
       |id|
       |255|
 
-  @api
+
   Scenario: TC_03:Verify that when a PATCH request is sent to the
             'api/withdraw/methods/update/{{id}}' endpoint with valid authorization information and
             a body lacking the 'id' field but containing data fields (name, min_limit, max_limit),
