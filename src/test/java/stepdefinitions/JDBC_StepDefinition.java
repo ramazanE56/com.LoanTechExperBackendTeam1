@@ -41,10 +41,15 @@ public class JDBC_StepDefinition extends DBUtils {
     Faker faker = new Faker();
     int magic;
 
+    private int loanId;
+    private double totalDelayCharge;
+
+
     String loan_number;
 
     int totalAmount;
     String remark;
+
 
 
     ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
@@ -370,6 +375,7 @@ public class JDBC_StepDefinition extends DBUtils {
         }
 
 
+
         @When("Retrieve user data without country_code!=TR and id=11")
         public void retrieveUserData () throws SQLException {
 
@@ -440,13 +446,13 @@ public class JDBC_StepDefinition extends DBUtils {
         }
 
 
-        private int loanId;
-        private double totalDelayCharge;
+
 
         @Given("the loan with ID {string}")
         public void setLoanId (String loanId){
             this.loanId = Integer.parseInt(loanId);
         }
+
 
 
 
