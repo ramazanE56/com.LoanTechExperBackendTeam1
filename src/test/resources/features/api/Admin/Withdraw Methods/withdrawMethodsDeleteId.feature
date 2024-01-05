@@ -1,6 +1,6 @@
 
 Feature: API_US066 : As an administrator, I should be able to delete the withdrawal methods record in the system through the API connection.
-  @api
+
   Scenario: TC01 : When a valid authorization information and a correct 'id' are sent in a DELETE
                     request to the 'api/withdraw/methods/delete/{{id}}' endpoint, it should be verified that the returned status code is 200,
                     and the message information in the request body is "Withdraw Method deleted"
@@ -13,7 +13,7 @@ Feature: API_US066 : As an administrator, I should be able to delete the withdra
 
 
 
-  @api
+
   Scenario: TC02 : When valid authorization information and a DELETE request without the 'id'
   are sent to the 'api/withdraw/methods/delete/{{id}}' endpoint,
   it should be verified that the returned status code is 203, and the message
@@ -25,7 +25,7 @@ Feature: API_US066 : As an administrator, I should be able to delete the withdra
     And The API User verifies that the message information in the response body is "No id"
 
 
-  @api
+
     Scenario Outline: TC03 : When valid authorization information and a DELETE request containing a non-existent 'id' are sent
                               to the 'api/withdraw/methods/delete/{{id}}' endpoint, it should be verified that the returned
                               status code is 203, and the message information in the request body is "No Withdraw Method"
@@ -39,7 +39,7 @@ Feature: API_US066 : As an administrator, I should be able to delete the withdra
         | id       |
         | 29122023 |
 
-  @api
+
     Scenario Outline: TC04 api/withdraw/methods/delete/{{id}} endpoint'ine
                       gecersiz authorization bilgileri ile bir DELETE body gönderildiginde dönen
                       status code'in 401 oldugu ve request body'deki error bilgisinin "Unauthorized request" oldugu dogrulanmali
@@ -51,7 +51,7 @@ Feature: API_US066 : As an administrator, I should be able to delete the withdra
         | id  |
         | 187 |
 
-  @api
+
       Scenario Outline: TC05 : The deletion of the withdrawal methods record through the API should be verified.
                                 This can be confirmed by sending a GET request to the 'api/withdraw/methods/details/{{id}}'
                                 endpoint with the Deleted method id returned in the request body

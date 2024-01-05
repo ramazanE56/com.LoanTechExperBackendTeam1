@@ -1,4 +1,4 @@
-@api
+
 Feature: US003 :As a user, I want to be able to create a new user ticket record through API connection.
 
   Scenario: TC001: When a POST request with valid authorization information and correct data (subject, priority, message)

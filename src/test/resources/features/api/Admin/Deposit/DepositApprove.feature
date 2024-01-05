@@ -58,7 +58,7 @@ Feature: API_US050: As an administrator, I want to be able to update the deposit
     Examples:
       | id  |
       | 1064 |
-  @api
+
   Scenario Outline: TC05: When an invalid PATCH request with unauthorized authorization information is sent to the
   'api/deposit/approve/{{id}}' endpoint, the expected behavior is that the status code in the request is 401.
   Additionally, the error information in the request body should be confirmed as "Unauthorized request"

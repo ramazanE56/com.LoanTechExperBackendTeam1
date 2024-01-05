@@ -47,7 +47,7 @@ Examples:
     Then The API user verifies that the status code is 203
     And The API user verifies that the remark information in the withdraw response body is "No id."
 
-  @api
+
   Scenario Outline: TC_04:Verify that when a PATCH request is sent to the
                    'api/withdraw/methods/update/{{id}}' endpoint with valid authorization information and
                    a body containing an (id) that does not exist in the records,
@@ -65,7 +65,7 @@ Examples:
       |id|
       |255555|
 
-  @api
+
   Scenario Outline: TC_05:Verify that when a PATCH request is sent to the 'api/withdraw/methods/update/{{id}}'
                     endpoint with invalid authorization information but with the correct 'id'
                     and a PATCH body containing data fields (name, min_limit, max_limit),
@@ -81,7 +81,7 @@ Examples:
       |id|
       |255|
 
-  @api
+
 Scenario Outline: TC_06:The update of the withdrawal methods record through the API should be verified.
                   This can be confirmed by sending a GET request to the 'api/withdraw/methods/details/{{id}}'
                   endpoint with the Updated method id returned in the request body

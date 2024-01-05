@@ -11,7 +11,7 @@ Feature: API_US060: As an administrator, I should be able to delete a withdrawal
     Examples:
       | id  |
       | 188 |
-  @api
+
   Scenario: TC002: When a valid DELETE request is sent to the 'api/withdrawal/delete/{{id}}' endpoint with proper authorization information but without including the required (id),
   the expected behavior is that the status code in the request is 203.
   Additionally, the message information in the request body should be confirmed as "No id"
@@ -20,7 +20,7 @@ Feature: API_US060: As an administrator, I should be able to delete a withdrawal
     Then  The API user saves the response from the delete endpoint with valid authorization information
     Then  The API user verifies that the status code is 203
     And   The API User verifies that the message information in the response body is "No id"
-  @api
+
   Scenario Outline: TC003: When a valid DELETE request is sent to the 'api/withdrawal/delete/{{id}}' endpoint with proper authorization information and
   an (id) that corresponds to a non-existent record, the expected behavior is that the status code in the request is 203.
   Additionally, the message information in the request body should be confirmed as "No withdrawal"
@@ -43,7 +43,7 @@ Feature: API_US060: As an administrator, I should be able to delete a withdrawal
       | id  |
       | 186 |
 
-  @api
+
   Scenario Outline: TC005:The deletion of the withdrawal record through the API should be confirmed by sending a GET request to the 'api/withdrawal/details/{{id}}' endpoint
   with the Deleted withdrawal id from the request body. This action verifies that the record has been deleted
 

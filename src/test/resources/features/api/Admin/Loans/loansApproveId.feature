@@ -57,7 +57,7 @@
         | id            |
         | 7657686877867 |
 
-    @api
+
     Scenario Outline: TC_05 When an invalid authorization is provided along with a PATCH body to the
         'api/loans/approve/{{id}}' endpoint, the expected status code is 401, and the error message
         in the request body should be verified as "Unauthorized request"
