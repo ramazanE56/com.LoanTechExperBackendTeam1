@@ -2056,15 +2056,52 @@ public class CommonApi extends ApiUtils {
                 .headers("Authorization", "Bearer " + generateToken("user"))
                 .when()
                 .body(requestBody.toString())
-                .post(fullPath);
+                .patch(fullPath);
 
         response.prettyPrint();
-
     }
 
-    @And("The API user prepares a PATCH request with valid authorization information and correct data \\(firstname, lastname, address, state, zip, city)")
-    public void theAPIUserPreparesAPATCHRequestWithValidAuthorizationInformationAndCorrectDataFirstnameLastnameAddressStateZipCity() {
-
-        patchRequestBody = "{ \"firstname\": \"Jsuphi atilim\", \"lastname\": \"celikoz\", \"address\": \"Bahcelievler\", \"state\": \"Istanbul\", \"zip\": \"34186\", \"city\": \"Istanbul\" }";
-    }
+    @And("The API user prepares a PATCH request containing the correct data to send to the user ticket add endpoint")
+    public void theAPIUserPreparesAPATCHRequestContainingTheCorrectDataToSendToTheUserTicketAddEndpoint() {
+        /*
+        {
+    "firstname":"suphi atilim",
+    "lastname" :"celikoz",
+    "address" :"Bahcelievler",
+    "state":"Istanbul",
+    "zip":"34186",
+    "city":"Istanbul"
 }
+         */
+        requestBody=new JSONObject();
+        requestBody.put("firstname","suphi atilim");
+        requestBody.put("lastname","celikoz");
+        requestBody.put("address","Bahcelievler");
+        requestBody.put("state","Istanbul");
+        requestBody.put("zip","34186");
+        requestBody.put("city","Istanbul");
+
+    }
+
+    @And("The API user prepares a PATCH request with missing data to send to the user ticket add endpoint.")
+    public void theAPIUserPreparesAPATCHRequestWithMissingDataToSendToTheUserTicketAddEndpoint() {
+        requestBody=new JSONObject();
+
+    }
+
+    @When("The API user sends a PATCH request and saves the response from the user ticket add endpoint with invalid authorization information")
+    public void theAPIUserSendsAPATCHRequestAndSavesTheResponseFromTheUserTicketAddEndpointWithInvalidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                .when()
+                .body(requestBody.toString())
+                .patch(fullPath);
+
+        response.prettyPrint();
+    }
+
+}
+
