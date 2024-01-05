@@ -39,7 +39,7 @@ Scenario Outline: TC_03:When a DELETE request with valid authorization credentia
   Examples:
   |id|
   |626262|
-  @api
+
 Scenario Outline: TC_04: When an invalid DELETE request body is sent with unauthorized credentials to the
                     'api/subscriber/delete/{{id}}' endpoint, it should return a status code of 401,
                      and the error message in the request body should be "Unauthorized request"

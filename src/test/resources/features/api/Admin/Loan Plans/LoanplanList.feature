@@ -1,6 +1,6 @@
-@api
-Feature: US17: As an administrator, I want to access the list of loan plans via API connection.
 
+Feature: US17: As an administrator, I want to access the list of loan plans via API connection.
+  @api
   Scenario: TC01: When a GET request with valid authorization information is sent to the api/loanplans/list endpoint,
           the returned status code should be 200, and the request remark should be verified as "success"
 
