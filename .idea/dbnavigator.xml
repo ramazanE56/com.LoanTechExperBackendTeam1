@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DBNavigator.Project.DataEditorManager">
-    <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="false" />
-    <value-preview-pinned value="false" />
-  </component>
-  <component name="DBNavigator.Project.DatabaseBrowserManager">
-    <autoscroll-to-editor value="false" />
-    <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
-    <loaded-nodes />
-  </component>
+<<<<<<< HEAD
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
       <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[#DB_US06: In the "Support_messages" table in the database,
@@ -34,12 +24,12 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
       <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="u168183796_qaloantec" session="Main" />
     </connection>
   </component>
-  <component name="DBNavigator.Project.DatabaseEditorStateManager">
-    <last-used-providers />
-  </component>
+=======
+>>>>>>> main
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+<<<<<<< HEAD
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" />
     <connection id="5e683329-c63e-45c9-8477-988f219fead8" />
@@ -76,7 +66,10 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
     <last-used-operator value="EQUAL" />
     <filters />
   </component>
+=======
+>>>>>>> main
   <component name="DBNavigator.Project.Settings">
+<<<<<<< HEAD
     <connections>
       <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" active="true" signed="true">
         <database>
@@ -265,6 +258,9 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
         </object-filters>
       </connection>
     </connections>
+=======
+    <connections />
+>>>>>>> main
     <browser-settings>
       <general>
         <display-mode value="TABBED" />
@@ -396,6 +392,7 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
+          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
@@ -661,9 +658,5 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
         </visibility-settings>
       </environment>
     </general-settings>
-  </component>
-  <component name="DBNavigator.Project.StatementExecutionManager">
-    <execution-variables />
-    <execution-variable-types />
   </component>
 </project>
