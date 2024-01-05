@@ -41,6 +41,10 @@ public class JDBC_StepDefinition extends DBUtils {
     Faker faker = new Faker();
     int magic;
 
+    String version;
+    int id;
+
+
     private int loanId;
     private double totalDelayCharge;
 
@@ -53,6 +57,7 @@ public class JDBC_StepDefinition extends DBUtils {
 
 
     ArrayList<String> lastnamesInReverseOrder = new ArrayList<>();
+
 
     @Given("Database baglantisi kurulur.")
     public void database_baglantisi_kurulur() {
@@ -316,6 +321,72 @@ public class JDBC_StepDefinition extends DBUtils {
 
     }
 
+    @Given("The query is prepared and executed to the admin_password_resets table")
+    public void the_query_is_prepared_and_executed_to_the_admin_password_resets_table() throws SQLException {
+
+
+        query = queryManage.getupdatePasswordQuery();
+        preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setInt(1, 1);
+        preparedStatement.setInt(2, 0);
+        preparedStatement.setString(3, "ron.yost@hotmail.com");
+        int rowCount = preparedStatement.executeUpdate();
+        System.out.println("Uptade islemi gerceklesti ve " + rowCount + " satir etkilendi");
+        assertEquals(1, rowCount);
+    }
+
+    @Given("The query is prepared and executedUpdate to the loan_plans table")
+    public void the_query_is_prepared_and_executed_update_to_the_loan_plans_table() throws SQLException {
+
+        query = queryManage.getVerifyNameQuery();
+        resultSet = getStatement().executeQuery(query);
+
+    }
+
+    @Given("The resultSet returned from the loan_plans table is validated.")
+    public void the_result_set_returned_from_the_loan_plans_table_is_validated() throws SQLException {
+
+        String[] expectedNames = {"Luna", "Luna", "Kredi5"};
+        int index = 0;
+
+        while (resultSet.next() && index < expectedNames.length) {
+            String names = resultSet.getString("name");
+            System.out.println(names);
+            assertEquals(expectedNames[index], names);
+            index++;
+
+        }
+
+    }
+
+    @Given("The query is prepared and executed to the update_logs table")
+    public void the_query_is_prepared_and_executed_to_the_update_logs_table() throws SQLException {
+
+        query = queryManage.getLogsInsertQuery();
+        id = faker.number().numberBetween(10, 500);
+        String version = faker.lorem().word();
+        String update_log = faker.lorem().word();
+
+        preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, version);
+        preparedStatement.setString(3, update_log);
+        System.out.println("**" + id + "**");
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
+
+    }
+
+    @Given("Verify that update_logsid is deleted")
+    public void verify_that_update_logsid_is_deleted() throws SQLException {
+
+        query = queryManage.getdeleteUptadeLogsQuery();
+        preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        int rowCount = preparedStatement.executeUpdate();
+        Assert.assertEquals(1, rowCount);
+
+    }
 
     @Given("The query is prepared and executed to the loans table.")
     public void the_query_is_prepared_and_executed_to_the_loans_table() throws SQLException {
@@ -675,6 +746,7 @@ public class JDBC_StepDefinition extends DBUtils {
 
 
         }
+
 
 
 }
