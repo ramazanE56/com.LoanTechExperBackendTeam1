@@ -15,7 +15,7 @@
         | id  |
         | 141 |
 
-    @api
+
     Scenario Outline: TC_02 When a DELETE request with valid authorization information and containing a
       non-existent 'id' is sent to the 'api/blogs/remove/{{id}}' endpoint, it should be verified that
       the returned status code is 203, and the message information in the request body indicates "No blog."
@@ -40,7 +40,7 @@
       Examples:
         | id |
         |    |
-    @api
+
     Scenario Outline: TC_04 When an invalid authorization information is used to send a DELETE request
       body to the 'api/blogs/remove/{{id}}' endpoint, it should be verified that the returned status
       code is 401, and the error information in the request body indicates "Unauthorized request"

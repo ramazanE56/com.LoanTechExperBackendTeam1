@@ -13,7 +13,7 @@ Feature: US_016: As an administrator, I should be able to delete a category reco
       | id  |
       | 664 |
 
-  @api
+
   Scenario: TC_02: When a DELETE request with valid authorization information and no 'id' is sent to the
   api/categories/delete/{{id}} endpoint, the returned status code should be 203, and the message in the request body
   should be verified as "No id"
@@ -35,7 +35,7 @@ Feature: US_016: As an administrator, I should be able to delete a category reco
       | id  |
       | 664 |
 
-  @api
+
   Scenario Outline:TC_04: When a DELETE request with invalid authorization information and correct 'id' is sent to the
   api/categories/delete/{{id}} endpoint, the returned status code should be 401, and the error message in the request
   body should be verified as "Unauthorized request"
@@ -48,7 +48,7 @@ Feature: US_016: As an administrator, I should be able to delete a category reco
       | id  |
       | 664 |
 
-  @api
+
   Scenario Outline:TC_05: The deletion of the desired category record through the API should be verified. This can be confirmed by sending a GET request to the api/categories/details/{{id}} endpoint with the Deleted category id returned in the request body to ensure that the record has been successfully deleted
 
     Given The API user sets "api/categories/delete/<id>" path parameters

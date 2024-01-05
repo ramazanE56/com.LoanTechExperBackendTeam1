@@ -1,4 +1,4 @@
-@api
+
 Feature: US_007 As a user, I want to be able to update the change password information for a registered user in the system through API connection.
 
   Scenario: TC_01 When a PATCH request with valid authorization information and correct data
@@ -10,7 +10,7 @@ Feature: US_007 As a user, I want to be able to update the change password infor
     * The API user saves the response from the user changepassword detail endpoint with valid authorization information
     * The API user verifies that the status code is 200
     * The API user verifies that the message information in the response body is "Password changes successfully"
-
+  @api
   Scenario: TC_02 When a PATCH request with valid authorization information and a new password containing only digits
   (current_password, password) is sent to the user/changepassword endpoint, the returned status code should be 203,
   and the message in the request body should be verified as "The password must contain at least one uppercase and one lowercase letter. (and 1 more error)"
@@ -20,7 +20,7 @@ Feature: US_007 As a user, I want to be able to update the change password infor
     * The API user saves the response from the user changepassword detail endpoint with valid authorization information
     * The API user verifies that the status code is 203
     * The API user verifies that the message information in the response body is "The password must contain at least one uppercase and one lowercase letter. (and 1 more error)"
-
+  @api
   Scenario: TC_03 When a PATCH request with valid authorization information
   and a new password containing at least one uppercase letter, one lowercase letter,
   and a digit (current_password, password) is sent to the user/changepassword endpoint, the returned status code should be 203,

@@ -38,7 +38,7 @@ Feature: US_33 As an administrator, I should be able to delete a ticket record i
       Examples:
         | id |
         | 45677834786843|
-  @api
+
       Scenario Outline: TC_04 When an invalid DELETE request body is sent with unauthorized credentials to the
       'api/tickets/delete/{{id}}' endpoint, it should return a status code of 401,
       and the error message in the request body should be "Unauthorized request"

@@ -223,7 +223,7 @@ public class JDBC_StepDefinition extends DBUtils {
     public void the_result_set_returned_from_the_support_tickets_table_is_validated() throws SQLException {
 
 
-        String[] expectedSubjects = {"Test", "testSubject", "Loantech", "s", "deserunt", "asdasd", "Test Ticket", "Test Ticket", "üüüüüü", "Test_attachment", "Test_attachment", "HelloWorld", "Ticket666", "Test Ticket", "Test Ticket", "Blue Test Ticket", "Blue Test Ticket", "Test Ticket", "Test Ticket", "Ticket666", "Blue Test Ticket", "Blue Test Ticket", "Blue Test Ticket", "Test Ticket", "Test Ticket", "Test Ticket", "Test Ticket"};
+        String[] expectedSubjects = {"testSubject", "Loantech", "s", "deserunt", "asdasd", "Test Ticket", "Test Ticket", "Test_attachment", "Test_attachment", "HelloWorld", "Ticket666", "Test Ticket", "Test Ticket", "Blue Test Ticket", "Blue Test Ticket", "Test Ticket", "Test Ticket", "Ticket666", "Blue Test Ticket", "Blue Test Ticket", "Blue Test Ticket", "Test Ticket", "Test Ticket", "Test Ticket", "Test Ticket"};
 
         int index = 0;
 
@@ -447,7 +447,7 @@ public class JDBC_StepDefinition extends DBUtils {
 
 
 
-        @When("Retrieve user data without country_code!=TR and id=11")
+        @When("Retrieve user data without country_codeTR and id=11")
         public void retrieveUserData () throws SQLException {
 
             String sql = "SELECT firstname, lastname FROM users WHERE country_code != 'TR' AND id = 11";

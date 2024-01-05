@@ -1,6 +1,6 @@
-@api
-Feature: US_063: As an administrator, I want to be able to create a new withdrawal methods record through the API connection.
 
+Feature: US_063: As an administrator, I want to be able to create a new withdrawal methods record through the API connection.
+  @api
   Scenario: TC_01: When a valid authorization information and correct data (name, min_limit, max_limit, fixed_charge, rate, percent_charge, currency, description) are sent in the POST body to the 'api/withdraw/methods/add' endpoint, it should be verified that the returned status code is 200, and the remark information in the request body is "success"
 
     Given The API user sets "api/withdraw/methods/add" path parameters
@@ -10,7 +10,7 @@ Feature: US_063: As an administrator, I want to be able to create a new withdraw
     Then The API user verifies that the status code is 200
     And The API User verifies that the message information in the response body is "Withdraw method added successfully"
 
-
+  @api
     Scenario: TC_02: When valid authorization information and incomplete data (name, min_limit, max_limit, fixed_charge, rate, percent_charge, currency, description) are sent in the POST body to the 'api/withdraw/methods/add' endpoint, it should be verified that the returned status code is 203, and the remark information in the request body is "failed"
 
       Given The API user sets "api/withdraw/methods/add" path parameters
@@ -18,7 +18,7 @@ Feature: US_063: As an administrator, I want to be able to create a new withdraw
       When The API adminuser sends a POST request and saves the response from the user ticket add endpoint with valid authorization information
       Then The API user verifies that the status code is 203
       And The API user verifies that the remark information in the response body is "failed"
-
+  @api
       Scenario: TC_03 When valid authorization information and a POST request without data (name, min_limit, max_limit, fixed_charge, rate, percent_charge, currency, description) are sent to the 'api/withdraw/methods/add' endpoint, it should be verified that the returned status code is 203, and the remark information in the request body is "failed"
 
         Given The API user sets "api/withdraw/methods/add" path parameters

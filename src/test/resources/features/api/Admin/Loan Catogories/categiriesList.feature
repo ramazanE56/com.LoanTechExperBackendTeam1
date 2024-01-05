@@ -1,7 +1,7 @@
-@api
+
 Feature: API_US011 : As an administrator, I want to access the list of categories via API connection.
 
-
+  @api
   Scenario: TC01 : When a valid GET request is sent to the 'api/categories/list' endpoint with the appropriate authorization credentials,
   it should return a status code of 200, and the request remark should be "success"
 

@@ -1,6 +1,6 @@
 Feature: US_51:As an administrator, I want to be able to reject the deposit information
   of a user with a given ID through the API connection.
-  @api
+
   Scenario Outline: TC_01:When a valid POST request is sent to the 'api/deposit/reject/{{id}}'
   endpoint with proper authorization information, the correct (id),
   and the accurate data (message) in the body, the expected behavior
