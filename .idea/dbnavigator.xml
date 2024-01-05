@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e">
       <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[#DB_US06: In the "Support_messages" table in the database,
@@ -23,10 +24,13 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
       <console name="LoanTech Exper Database Access Information" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
+=======
+>>>>>>> main
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.Settings">
+<<<<<<< HEAD
     <connections>
       <connection id="b3c72ada-ce95-4d34-8d53-43244777a80e" active="true" signed="true">
         <database>
@@ -215,6 +219,9 @@ SELECT * FROM u168183796_qaloantec.update_logs;]]></console>
         </object-filters>
       </connection>
     </connections>
+=======
+    <connections />
+>>>>>>> main
     <browser-settings>
       <general>
         <display-mode value="TABBED" />

@@ -1,4 +1,4 @@
-
+@api
 Feature: US58 : As an administrator, I want to be able to approve the withdrawal information of a user with a given ID through the API connection.
 
   Scenario: TC01: When a valid PATCH request is sent to the 'api/withdrawal/approve/{{id}}' endpoint with proper authorization information,

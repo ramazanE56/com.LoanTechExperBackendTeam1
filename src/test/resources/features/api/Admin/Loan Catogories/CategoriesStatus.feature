@@ -1,4 +1,4 @@
-@MK
+@api
 Feature: API_US015 : As an administrator,  I want to update the status information of existing categories via API connection.
 
   Scenario Outline: TC001 : When a PATCH request with valid authorization information and correct data (id) is sent to the

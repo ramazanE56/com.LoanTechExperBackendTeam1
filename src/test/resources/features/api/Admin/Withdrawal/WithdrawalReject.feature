@@ -1,4 +1,4 @@
-@smt
+@api
 Feature: US59: As an administrator, I want to be able to reject the withdrawal information of a user with a given ID through the API connection.
 
   Scenario Outline: TC01: When a valid POST request is sent to the 'api/withdrawal/reject/{{id}}' endpoint with proper authorization information,

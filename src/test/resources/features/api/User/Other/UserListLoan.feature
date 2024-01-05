@@ -1,3 +1,4 @@
+@api
 Feature: API_US010: As a user, I want to access the list of loans via API connection.
   Scenario: TC01: When a valid GET request is sent to the 'user/list/loan'
       endpoint with the appropriate authorization credentials, it should return

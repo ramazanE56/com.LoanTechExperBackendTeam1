@@ -1,4 +1,4 @@
-Feature: As an administrator, I want to update the existing category information via API connection.
+Feature: API_US014:As an administrator, I want to update the existing category information via API connection.
 
   Scenario: TC01 When a POST request with valid authorization information, correct 'id', and valid data (name)
   is sent to the api/categories/update/{{id}} endpoint, the returned status code should be 200, and the

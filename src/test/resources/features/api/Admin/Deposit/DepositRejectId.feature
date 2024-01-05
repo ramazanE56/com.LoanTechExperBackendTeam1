@@ -1,6 +1,6 @@
 Feature: US_51:As an administrator, I want to be able to reject the deposit information
   of a user with a given ID through the API connection.
-@1231234
+  @api
   Scenario Outline: TC_01:When a valid POST request is sent to the 'api/deposit/reject/{{id}}'
   endpoint with proper authorization information, the correct (id),
   and the accurate data (message) in the body, the expected behavior
@@ -37,7 +37,7 @@ Feature: US_51:As an administrator, I want to be able to reject the deposit info
   |id|
   |672|
 
-
+  @api
   Scenario Outline: TC_03:Verify that when a POST request with valid authorization
   information and a previously rejected (id) along with a body containing
   data fields (message) is sent to the 'api/deposit/reject/{{id}}'
@@ -53,7 +53,7 @@ Feature: US_51:As an administrator, I want to be able to reject the deposit info
     Examples:
       |id|
       |670|
-
+  @api
   Scenario: TC_04:When a valid POST request is sent to the 'api/deposit/reject/{{id}}'
   endpoint with proper authorization information and a POST body that does not include the required (id)
   but includes (message), the expected behavior is that the status code in the request is 203.
@@ -64,7 +64,7 @@ Feature: US_51:As an administrator, I want to be able to reject the deposit info
     When The API adminuser sends a POST request and saves the response from the deposit reject endpoint with valid authorization information
     Then The API user verifies that the status code is 203
     And The API adminuser verifies that the message information in the response body is "No id"
-
+  @api
   Scenario Outline: TC_05:When a valid POST request is sent to the 'api/deposit/reject/{{id}}'
   endpoint with proper authorization information and a POST body containing an invalid (id) for
   a non-existent record (message), the expected behavior is that the status code in the request is 203.
@@ -79,7 +79,7 @@ Feature: US_51:As an administrator, I want to be able to reject the deposit info
     Examples:
       |id|
       |3555|
-
+  @api
   Scenario Outline: TC_06:When an invalid POST request with unauthorized authorization information
   is sent to the 'api/deposit/reject/{{id}}' endpoint with the correct (id) and a POST body (message),
   the expected behavior is that the status code in the request is 401. Furthermore,

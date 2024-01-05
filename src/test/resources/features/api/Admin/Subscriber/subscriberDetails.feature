@@ -1,3 +1,4 @@
+@api
 Feature: API_US024: As an administrator, I want to access the subscriber details of a user with a specified ID via API connection.
 
   Scenario Outline: TC01:When a valid GET request with appropriate authorization credentials and
