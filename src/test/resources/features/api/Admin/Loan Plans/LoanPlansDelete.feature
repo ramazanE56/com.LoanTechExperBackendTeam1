@@ -13,7 +13,7 @@ Feature: API_US022 As an administrator, I should be able to delete a loan plan r
     Examples:
       | id  |
       | 141 |
-
+  @api
   Scenario: TC02 When a DELETE request with valid authorization information and no 'id' is sent to the
   user/ticket/delete/{{id}} endpoint, the returned status code should be 203, and the message in the
   response body should be verified as "No id"
@@ -23,7 +23,7 @@ Feature: API_US022 As an administrator, I should be able to delete a loan plan r
     Then The API user verifies that the status code is 203
     And The API User verifies that the message information in the response body is "No id"
 
-
+  @api
   Scenario Outline: TC03 When a DELETE request with valid authorization credentials and an (id) that does not
   correspond to an existing record is sent to the 'api/loanplans/delete/{{id}}' endpoint, it should return a
   status code of 203, and the message in the request body should be "No loanplan."
@@ -37,7 +37,7 @@ Feature: API_US022 As an administrator, I should be able to delete a loan plan r
       | id  |
       | 141 |
 
-
+  @api
   Scenario Outline: TC04 When an invalid DELETE request body is sent with unauthorized credentials to the
   'api/loanplans/delete/{{id}}' endpoint, it should return a status code of 401, and the error message in the
   request body should be "Unauthorized request"
@@ -50,7 +50,7 @@ Feature: API_US022 As an administrator, I should be able to delete a loan plan r
 
 
 
-
+  @api
   Scenario Outline: TC05 The deletion of the loan plan record intended to be removed through the API should be
   verified. This can be confirmed by sending a GET request to the 'api/loanplans/details/{{id}}' endpoint with
   the Deleted Loan Plan id returned in the request body, thus validating that the record has been deleted

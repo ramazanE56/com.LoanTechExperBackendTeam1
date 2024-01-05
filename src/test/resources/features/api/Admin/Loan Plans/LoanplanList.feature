@@ -1,4 +1,4 @@
-
+@api
 Feature: US17: As an administrator, I want to access the list of loan plans via API connection.
 
   Scenario: TC01: When a GET request with valid authorization information is sent to the api/loanplans/list endpoint,

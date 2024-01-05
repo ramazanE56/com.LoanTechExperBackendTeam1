@@ -16,7 +16,7 @@ Feature: As an administrator, I want to be able to update the deposit informatio
     Examples:
       | id  |
       | 658 |
-
+  @api
   Scenario Outline: TC02: Verify that when a PATCH request with valid authorization information and a previously approved
   (id) is sent to the 'api/deposit/approve/{{id}}' endpoint, the returned status code is 203, and the message information
   in the request body is "No deposit or deposit status is not pending."
@@ -31,7 +31,7 @@ Feature: As an administrator, I want to be able to update the deposit informatio
     Examples:
       | id  |
       | 129 |
-
+  @api
   Scenario: TC03: When a valid PATCH request is sent to the 'api/deposit/approve/{{id}}' endpoint with proper authorization
   information but without including the required (id) in the body, the expected behavior is that the status code in the
   request is 203. Additionally, the message information in the request body should be confirmed as "No id"
@@ -42,7 +42,7 @@ Feature: As an administrator, I want to be able to update the deposit informatio
     Then The API user verifies that the status code is 203
     And The API User verifies that the message information in the response body is "No id"
     #Api kullanicisi response bodydeki message bilgisinin "No id" oldugunu doğrular
-
+  @api
   Scenario Outline: TC04: When a valid PATCH request is sent to the 'api/deposit/approve/{{id}}' endpoint with proper
   authorization information and an (id) that corresponds to a non-existent record in the body, the expected behavior is
   that the status code in the request is 203. Additionally, the message information in the request body should be
@@ -58,7 +58,7 @@ Feature: As an administrator, I want to be able to update the deposit informatio
     Examples:
       | id  |
       | 1064 |
-
+  @api
   Scenario Outline: TC05: When an invalid PATCH request with unauthorized authorization information is sent to the
   'api/deposit/approve/{{id}}' endpoint, the expected behavior is that the status code in the request is 401.
   Additionally, the error information in the request body should be confirmed as "Unauthorized request"

@@ -1,3 +1,4 @@
+@api
 Feature: US_028: As an administrator, I want to access the list of tickets via API connection.
 
   Scenario: TC_01: When a GET request with valid authorization information is sent to the 'api/tickets/list' endpoint, it should be verified that the returned status code is 200, and the remark information in the request indicates "success"

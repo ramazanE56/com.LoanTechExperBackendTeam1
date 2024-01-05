@@ -1,4 +1,4 @@
-
+@api
   Feature: API_US008 As a user, I want to access the user plan through API connection.
 
 

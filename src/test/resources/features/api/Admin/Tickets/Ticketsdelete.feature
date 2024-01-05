@@ -13,7 +13,7 @@ Feature: US_33 As an administrator, I should be able to delete a ticket record i
     Examples:
       | id |
       | 293 |
-
+  @api
     Scenario: TC_02 When a DELETE request with valid authorization credentials
     and without the required (id) is sent to
     the 'api/tickets/delete/{{id}}' endpoint, it should return a status code of 203,
@@ -24,7 +24,7 @@ Feature: US_33 As an administrator, I should be able to delete a ticket record i
       * The API user verifies that the status code is 203
       * The API adminuser verifies that the message information in the response body is "No id"
 
-
+  @api
     Scenario Outline: TC_03 When a DELETE request with valid authorization credentials and
    an (id) that does not correspond to an existing record is sent to the
   'api/tickets/delete/{{id}}' endpoint, it should return a status code of 203,
@@ -38,7 +38,7 @@ Feature: US_33 As an administrator, I should be able to delete a ticket record i
       Examples:
         | id |
         | 45677834786843|
-
+  @api
       Scenario Outline: TC_04 When an invalid DELETE request body is sent with unauthorized credentials to the
       'api/tickets/delete/{{id}}' endpoint, it should return a status code of 401,
       and the error message in the request body should be "Unauthorized request"
@@ -50,7 +50,7 @@ Feature: US_33 As an administrator, I should be able to delete a ticket record i
         Examples:
           | id  |
           | 292 |
-
+  @api
         Scenario Outline: TC_05 The deletion of the desired ticket record via API should be
         confirmed by sending a GET request to the 'api/tickets/details/{{id}}'
         endpoint with the Deleted ticket id obtained from the request body.

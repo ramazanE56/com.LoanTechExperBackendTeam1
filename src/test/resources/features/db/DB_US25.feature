@@ -1,5 +1,5 @@
 Feature:DB_US25:"currency=USD" Calculate the Total Amount of Deposits from "gateway_currencies" table
-@123456
+  @db
   Scenario: TC_01:"currency=USD" Calculate the Total Amount of Deposits from "gateway_currencies" table
 
 

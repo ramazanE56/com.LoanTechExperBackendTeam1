@@ -15,7 +15,8 @@
       Examples:
         | id  |
         | 174 |
-    # https://qa.loantechexper.com/
+
+    @api
     Scenario Outline: Tc_02 Verify that when a PATCH request with valid authorization information and a previously
       approved (id) is sent to the 'api/loans/approve/{{id}}' endpoint, the returned status code is 203, and
       the message information in the request body is "No loan or loan status is not pending."
@@ -28,7 +29,7 @@
       Examples:
         | id  |
         | 174 |
-
+    @api
     Scenario Outline: TC_03 When valid authorization information and a PATCH body without (id) are sent to the
       api/loans/approve/{{id}} endpoint, it should be verified that the returned status code is 203 and the
       message in the request body is "No id"
@@ -41,7 +42,7 @@
       Examples:
         | id |
         |    |
-
+    @api
     Scenario Outline: TC_04 Valid authorization information should be passed to the 'api/loans/approve/{{id}}'
       endpoint, and when a PATCH body containing an invalid (id) for an unregistered record is sent,
       the expected status code is 203, and the message information in the request body should be verified as
@@ -56,7 +57,7 @@
         | id            |
         | 7657686877867 |
 
-
+    @api
     Scenario Outline: TC_05 When an invalid authorization is provided along with a PATCH body to the
         'api/loans/approve/{{id}}' endpoint, the expected status code is 401, and the error message
         in the request body should be verified as "Unauthorized request"

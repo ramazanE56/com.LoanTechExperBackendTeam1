@@ -40,3 +40,34 @@
 2024-01-04 10:24:59 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
 2024-01-04 11:49:45 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
 2024-01-04 11:49:45 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\atili\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:33:12 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:33:12 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:33:15 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:33:15 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:33:17 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-05 11:33:41 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:33:41 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:33:44 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:33:44 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:33:46 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-05 11:34:35 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:35 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:38 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:38 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:40 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-05 11:34:43 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:43 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:45 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:45 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:46 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-05 11:34:49 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:49 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:51 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:51 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:53 ERROR i.q.a.AllureLifecycle:609 - Could not add attachment: no test is running
+2024-01-05 11:34:56 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:56 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:34:59 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:34:59 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe
+2024-01-05 11:35:02 INFO  i.g.b.w.WebDriverManager:1217 - Using chromedriver 120.0.6099.109 (resolved driver for Chrome 120)
+2024-01-05 11:35:02 INFO  i.g.b.w.WebDriverManager:1270 - Exporting webdriver.chrome.driver as C:\Users\asus\.cache\selenium\chromedriver\win64\120.0.6099.109\chromedriver.exe

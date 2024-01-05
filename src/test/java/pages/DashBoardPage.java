@@ -10,7 +10,7 @@ import utilities.Driver;
 import java.util.List;
 
 
-public class DashBoardPage {
+public class DashBoardPage  extends ReusablePageElements{
 
 
     @FindBy(xpath = "(//*[@class=\"auth-form__input\"])[1]")
