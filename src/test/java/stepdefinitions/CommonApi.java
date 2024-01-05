@@ -35,6 +35,7 @@ public class CommonApi extends ApiUtils {
     Integer initialStatus;
     Integer updatedStatus;
     API_US020_POJO us20reqbody;
+    private String patchRequestBody;
 
     @Given("The API user sets {string} path parameters")
     public void the_apı_user_sets_path_parameters(String rawPaths) {
@@ -1697,6 +1698,94 @@ public class CommonApi extends ApiUtils {
 
 
     }
+    @And("The API adminuser saves the response from the admin Deposit deletedt  endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminDepositDeletedtEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .delete(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @And("The API adminuser saves the response from the admin categories list endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminCategoriesListEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @Then("Verify the information of the one with the id  in the API admin response body: {int}, {string},  {string},  {string}, {string},  {string}, {string}")
+    public void verifyTheInformationOfTheOneWithTheIdInTheAPIAdminResponseBodyDataIndex( int dataIndex, String name, String image, String status, String description, String created_at, String updated_at) {
+
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(name, jsonPath.getString("data[" + dataIndex + "].name"));
+        Assert.assertEquals(image, jsonPath.getString("data[" + dataIndex + "].image"));
+        Assert.assertEquals(status, jsonPath.getInt("data[" + dataIndex + "].status"));
+        Assert.assertEquals(description, jsonPath.getInt("data[" + dataIndex + "].description"));
+        Assert.assertEquals(created_at, jsonPath.getString("data[" + dataIndex + "].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("data[" + dataIndex + "].updated_at"));
+
+    }
+
+
+    @When("The API adminuser sends a POST request and saves the response from the admin ticket add endpoint with valid authorization information")
+    public void theAPIAdminuserSendsAPOSTRequestAndSavesTheResponseFromTheAdminTicketAddEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @And("The API adminuser prepares a POST request containing the missing email")
+    public void theAPIAdminuserPreparesAPOSTRequestContainingTheMissingEmail() {
+
+        requestBody=new JSONObject();
+    }
+
+    @And("The API user saves the response from the admin ticket detail endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheAdminTicketDetailEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+
+    @And("The API adminuser saves the response from the admin ticket close endpoint with valid authorization information")
+    public void theAPIAdminuserSavesTheResponseFromTheAdminTicketCloseEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
+
+        response.prettyPrint();
+
+
+    }
 }
      */
 
@@ -1857,5 +1946,125 @@ public class CommonApi extends ApiUtils {
 
         response.prettyPrint();
     }
+    @Given("The API user saves the response from the user list loan endpoint with valid authorization information")
+    public void the_apı_user_saves_the_response_from_the_user_list_loan_endpoint_with_valid_authorization_information() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
 
+    }
+    @And("The API user saves the response from the admin deposit approve close endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheAdminDepositApproveCloseEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .patch(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API user prepares a POST request containing the correct data to send to the admin categories add endpoint")
+    public void theAPIUserPreparesAPOSTRequestContainingTheCorrectDataToSendToTheAdminCategoriesAddEndpoint() {
+    /*  "name":"Car Loan",
+    "description":"If you want to buy a car, this loan is for you."
+
+     */
+        requestBody = new JSONObject();
+        requestBody.put("name", "Home loan 2");
+        requestBody.put("description", "yeter da");
+
+    }
+    @When("The API user sends a POST request and saves the response from the admin categories add endpoint with valid authorization information")
+    public void theAPIUserSendsAPOSTRequestAndSavesTheResponseFromTheAdminCategoriesAddEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API admin prepares a POST request containing the correct data to send to the admin categories add endpoint")
+    public void theAPIAdminPreparesAPOSTRequestContainingTheCorrectDataToSendToTheAdminCategoriesAddEndpoint() {
+
+        //  "name":"Car Loan",
+
+
+        requestBody = new JSONObject();
+        requestBody.put("name", "Test Category1");
+
+    }
+    @And("The API administrator prepares a POST request with incorrect data to be sent to the admin categories adding endpoint")
+    public void theAPIAdministratorPreparesAPOSTRequestWithIncorrectDataToBeSentToTheAdminCategoriesAddingEndpoint() {
+
+    }
+
+    @And("The API admin saves the response from the admin categories details list endpoint with valid authorization information")
+    public void theAPIAdminSavesTheResponseFromTheAdminCategoriesDetailsListEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+    @And("The API user saves the response from the user loanplans delete endpoint with valid authorization information")
+    public void theAPIUserSavesTheResponseFromTheUserLoanplansDeleteEndpointWithValidAuthorizationInformation() {
+        response = given()
+                .spec(spec)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("admin"))
+                .when()
+                .get(fullPath);
+
+        response.prettyPrint();
+    }
+    @Then("The API admin saves the response from the admin loanplan delete endpoint with invalid authorization information and confirms that the status code is '401' and the error message is Unauthorized")
+    public void theAPIAdminSavesTheResponseFromTheAdminLoanplanDeleteEndpointWithInvalidAuthorizationInformationAndConfirmsThatTheStatusCodeIsAndTheErrorMessageIsUnauthorized() {
+        try {
+            response = given()
+                    .spec(spec)
+                    .header("Accept", "application/json")
+                    .headers("Authorization", "Bearer " + ConfigReader.getProperty("invalidToken"))
+                    .when()
+
+                    .delete(fullPath);
+        } catch (Exception e) {
+            mesaj = e.getMessage();
+        }
+        System.out.println("Mesaj: " + mesaj);
+
+
+    }
+
+    @When("The API user sends a PATCH request and saves the response from the user ticket add endpoint with valid authorization information")
+    public void theAPIUserSendsAPATCHRequestAndSavesTheResponseFromTheUserTicketAddEndpointWithValidAuthorizationInformation() {
+
+        response = given()
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept", "application/json")
+                .headers("Authorization", "Bearer " + generateToken("user"))
+                .when()
+                .body(requestBody.toString())
+                .post(fullPath);
+
+        response.prettyPrint();
+
+    }
+
+    @And("The API user prepares a PATCH request with valid authorization information and correct data \\(firstname, lastname, address, state, zip, city)")
+    public void theAPIUserPreparesAPATCHRequestWithValidAuthorizationInformationAndCorrectDataFirstnameLastnameAddressStateZipCity() {
+
+        patchRequestBody = "{ \"firstname\": \"Jsuphi atilim\", \"lastname\": \"celikoz\", \"address\": \"Bahcelievler\", \"state\": \"Istanbul\", \"zip\": \"34186\", \"city\": \"Istanbul\" }";
+    }
 }
