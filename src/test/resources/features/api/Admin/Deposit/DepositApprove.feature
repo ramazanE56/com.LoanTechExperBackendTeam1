@@ -1,4 +1,4 @@
-Feature: As an administrator, I want to be able to update the deposit information of a user in the
+Feature: API_US050: As an administrator, I want to be able to update the deposit information of a user in the
   system to 'approved' through the API connection.
 
   Scenario Outline: TC01: When a valid PATCH request is sent to the 'api/deposit/approve/{{id}}'endpoint with proper

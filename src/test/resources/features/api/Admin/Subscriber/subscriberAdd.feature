@@ -1,3 +1,4 @@
+@api
 Feature: APi_US025:As an administrator, I want to create a new subscriber record via API connection.
 
   Scenario: TC01: When a valid POST request with appropriate authorization credentials and correct data (email) is sent to the 'api/subscriber/add' endpoint,
@@ -6,8 +7,8 @@ Feature: APi_US025:As an administrator, I want to create a new subscriber record
 
 
     Given The API user sets "api/subscriber/add" path parameters
-    And The API adminuser prepares a POST request containing the correct data to send to the user ticket add endpoint
-    When The API adminuser sends a POST request and saves the response from the admin ticket add endpoint with valid authorization information
+    And The API adminuser prepares a POST request containing the correct data to send to the admin subscriber add endpoint
+    When The API adminuser sends a POST request and saves the response from the admin subscriber add endpoint with valid authorization information
     Then The API user verifies that the status code is 200
     And The API user verifies that the remark information in the response body is "success"
 
@@ -17,7 +18,7 @@ Feature: APi_US025:As an administrator, I want to create a new subscriber record
 
     Given The API user sets "api/subscriber/add" path parameters
     And The API adminuser prepares a POST request containing the missing email
-    When The API adminuser sends a POST request and saves the response from the admin ticket add endpoint with valid authorization information
+    When The API adminuser sends a POST request and saves the response from the admin subscriber add endpoint with valid authorization information
     Then The API user verifies that the status code is 203
     And The API user verifies that the remark information in the response body is "failed"
 
@@ -27,7 +28,7 @@ Feature: APi_US025:As an administrator, I want to create a new subscriber record
 
     Given The API user sets "api/subscriber/add" path parameters
     And The API adminuser prepares a POST request containing the missing email
-    When The API adminuser sends a POST request and saves the response from the admin ticket add endpoint with valid authorization information
+    When The API adminuser sends a POST request and saves the response from the admin subscriber add endpoint with valid authorization information
     Then The API user verifies that the status code is 203
     And The API user verifies that the remark information in the response body is "failed"
 
@@ -51,7 +52,7 @@ Feature: APi_US025:As an administrator, I want to create a new subscriber record
 
 
     Given The API user sets "api/subscriber/details/<id>" path parameters
-    And The API user saves the response from the admin ticket detail endpoint with valid authorization information
+    And The API user saves GET the response from the admin subscriber details endpoint with valid authorization information
     Then The API user verifies that the status code is 200
     Then The API user verifies that the id information in the response body is <valueId>
 
