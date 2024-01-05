@@ -30,7 +30,7 @@ Feature: US59: As an administrator, I want to be able to reject the withdrawal i
         | id |
         |422|
 
-  @api
+
   Scenario Outline: TC03: Verify that when a POST request with valid authorization information and a previously rejected (id) along with a body containing data fields (details) is sent to the 'api/withdrawal/reject/{{id}}' endpoint,
                       the returned status code is 203, and the message information in the request body is "No withdraw or withdraw status is not pending."
 

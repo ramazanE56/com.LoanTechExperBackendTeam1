@@ -50,7 +50,7 @@ Feature: US_33 As an administrator, I should be able to delete a ticket record i
         Examples:
           | id  |
           | 292 |
-  @api
+
         Scenario Outline: TC_05 The deletion of the desired ticket record via API should be
         confirmed by sending a GET request to the 'api/tickets/details/{{id}}'
         endpoint with the Deleted ticket id obtained from the request body.

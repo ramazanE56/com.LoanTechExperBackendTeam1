@@ -1,6 +1,6 @@
 
 Feature: US030: Delete a file according to the "support_message_id=?" value in the "support_attachments" table and verify that it has been deleted.
-  @db
+
   Scenario: TC01: Delete a file according to the "support_message_id=?" value in the "support_attachments" table and verify that it has been deleted.
 
 
