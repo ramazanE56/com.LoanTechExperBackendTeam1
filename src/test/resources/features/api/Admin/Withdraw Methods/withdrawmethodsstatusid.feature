@@ -6,7 +6,7 @@ Feature:  APi_US064 :As an administrator, I want to be able to update the status
 
 
     Given The API user sets "api/withdraw/methods/status/<id>" path parameters
-    And The API adminuser saves the response from the admin ticket close endpoint with valid authorization information
+    And The API adminuser PATCH Hsaves the response from the admin withdraw methods close endpoint with valid authorization information
     Then The API user verifies that the status code is 200
     And The API admin verifies that the message information in the response body is "Status changed"
 
