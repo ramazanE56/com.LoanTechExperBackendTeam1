@@ -1,3 +1,4 @@
+@api
 Feature: US_007 As a user, I want to be able to update the change password information for a registered user in the system through API connection.
 
   Scenario: TC_01 When a PATCH request with valid authorization information and correct data

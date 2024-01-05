@@ -1,3 +1,4 @@
+@api
 Feature: US_063: As an administrator, I want to be able to create a new withdrawal methods record through the API connection.
 
   Scenario: TC_01: When a valid authorization information and correct data (name, min_limit, max_limit, fixed_charge, rate, percent_charge, currency, description) are sent in the POST body to the 'api/withdraw/methods/add' endpoint, it should be verified that the returned status code is 200, and the remark information in the request body is "success"

@@ -1,4 +1,4 @@
-
+@api
 Feature: US_18 As an administrator, I want to access the loan plan details of a user with a specified ID via API connection.
   Scenario Outline: TC_01 When a GET request with valid authorization information and correct data
   (id) is sent to the api/loanplans/details/{{id}} endpoint, the returned status code should be 200, and the request remark should be verified as "success"

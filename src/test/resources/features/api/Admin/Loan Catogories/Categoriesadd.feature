@@ -1,6 +1,6 @@
 Feature: API_US013 : As an administrator, I want to create a new category record via API connection.
 
-  @ism1
+  @api
   Scenario: TC01 : When a POST request with valid authorization information and correct data (name, description)
             is sent to the api/categories/add endpoint, the returned status code should be 200, and the remark in
             the response body should be verified as "success"
@@ -11,7 +11,7 @@ Feature: API_US013 : As an administrator, I want to create a new category record
     Then The API user verifies that the status code is 200
     And The API user verifies that the remark information in the response body is "success"
 
-  @ism2
+  @api
     Scenario: TC02 : When a POST (name, description) request with valid authorization information and incomplete missing
                       data (description) is sent to the api/categories/add endpoint, the returned status code should be 203,
                       and the remark in the request body should be verified as "failed"
@@ -22,7 +22,7 @@ Feature: API_US013 : As an administrator, I want to create a new category record
       Then The API user verifies that the status code is 203
       And The API user verifies that the remark information in the response body is "failed"
 
-  @ism3
+  @api
     Scenario: TC03 : When a POST request with valid authorization information and no data (name, description)
                     is sent to the api/categories/add endpoint, the returned status code should be 203, and the remark
                     in the request body should be verified as "failed"
@@ -34,7 +34,7 @@ Feature: API_US013 : As an administrator, I want to create a new category record
       And The API user verifies that the remark information in the response body is "failed"
 
 
-  @ism4
+  @api
 Scenario: TC04 : When a POST request with invalid authorization information and a
                   POST body (name, description) is sent to the api/categories/add endpoint,
                   the returned status code should be 401, and the error message in the request body should be verified as 'Unauthorized request'
@@ -49,7 +49,7 @@ Scenario: TC04 : When a POST request with invalid authorization information and 
 
 
 
-  @ism5
+  @api
   Scenario Outline: TC05 : The creation of a new category record through the API should be verified.
   This can be confirmed by sending a GET request to the api/categories/details/{{id}} endpoint with the
   Added category id returned in the request body

@@ -29,7 +29,7 @@
       Examples:
         | id  |
         | 158 |
-
+    @api
     Scenario Outline: TC_03  When a POST request with valid authorization information and no 'id' is sent to the
       api/loanplans/update/{{id}} endpoint with a body containing data (category_id, name, title), the
       returned status code should be 203, and the message in the request body should be verified as "No id."
@@ -43,7 +43,7 @@
         | id |
         |    |
 
-
+    @api
     Scenario Outline: TC_04 When a POST request with valid authorization information and a non-existent
       'id' is sent to the api/loanplans/update/{{id}} endpoint with a body containing data (category_id,
       name, title), the returned status code should be 203, and the message in the request body should
@@ -74,7 +74,7 @@
         | id |
         | 158  |
 
-
+    @api
     Scenario Outline: TC_06 The update of the desired loanplans record through the API should be verified.
       This can be confirmed by sending a GET request to the api/loanplans/details/{{id}} endpoint with the
       Updated loan plan id returned in the request body to ensure that the record has been successfully updated.
