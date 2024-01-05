@@ -1,4 +1,4 @@
-@api
+
 Feature: US59: As an administrator, I want to be able to reject the withdrawal information of a user with a given ID through the API connection.
 
   Scenario Outline: TC01: When a valid POST request is sent to the 'api/withdrawal/reject/{{id}}' endpoint with proper authorization information,
@@ -30,7 +30,7 @@ Feature: US59: As an administrator, I want to be able to reject the withdrawal i
         | id |
         |422|
 
-
+  @api
   Scenario Outline: TC03: Verify that when a POST request with valid authorization information and a previously rejected (id) along with a body containing data fields (details) is sent to the 'api/withdrawal/reject/{{id}}' endpoint,
                       the returned status code is 203, and the message information in the request body is "No withdraw or withdraw status is not pending."
 
@@ -44,7 +44,7 @@ Feature: US59: As an administrator, I want to be able to reject the withdrawal i
       | id |
       | 421|
 
-
+  @api
   Scenario: TC04: When a valid POST request is sent to the 'api/withdrawal/reject/{{id}}' endpoint with proper authorization information and without including the required (id) in the body (details),
                       the expected behavior is that the status code in the request is 203. Additionally, the message information in the request body should be confirmed as "No id"
 
@@ -54,7 +54,7 @@ Feature: US59: As an administrator, I want to be able to reject the withdrawal i
     * The API user verifies that the status code is 203
     * The API User verifies that the message information in the response body is "No id"
 
-
+  @api
   Scenario Outline: TC05: When a valid POST request is sent to the 'api/withdrawal/reject/{{id}}' endpoint with proper authorization information and an (id) that corresponds to a non-existent record, along with a POST body (details),
                           the expected behavior is that the status code in the request is 203.
                           Additionally, the message information in the request body should be confirmed as "No withdraw."
@@ -69,7 +69,7 @@ Feature: US59: As an administrator, I want to be able to reject the withdrawal i
       | id |
       | 1216|
 
-
+  @api
   Scenario Outline: TC06: When an invalid POST request with unauthorized authorization information is sent to the 'api/withdrawal/reject/{{id}}' endpoint, with the correct (id) and a POST body (details),
                       the expected behavior is that the status code in the request is 401.
                       Furthermore, the error information in the request body should be confirmed as "Unauthorized request"

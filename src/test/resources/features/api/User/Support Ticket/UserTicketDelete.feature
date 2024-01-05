@@ -22,7 +22,7 @@
         * The API user saves the response from the user ticket delete endpoint with valid authorization information.
         * The API user verifies that the status code is 203
         * The API User verifies that the message information in the response body is "No id"
-    @api
+
         Scenario Outline: TC03: When a DELETE request with valid authorization information and a non-existent 'id' is sent to the user/ticket/delete/{{id}} endpoint,
                         the returned status code should be 203,
                         and the message in the request body should be verified as "No ticket."

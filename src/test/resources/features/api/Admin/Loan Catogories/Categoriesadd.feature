@@ -11,7 +11,7 @@ Feature: API_US013 : As an administrator, I want to create a new category record
     Then The API user verifies that the status code is 200
     And The API user verifies that the remark information in the response body is "success"
 
-  @api
+
     Scenario: TC02 : When a POST (name, description) request with valid authorization information and incomplete missing
                       data (description) is sent to the api/categories/add endpoint, the returned status code should be 203,
                       and the remark in the request body should be verified as "failed"
@@ -22,7 +22,7 @@ Feature: API_US013 : As an administrator, I want to create a new category record
       Then The API user verifies that the status code is 203
       And The API user verifies that the remark information in the response body is "failed"
 
-  @api
+
     Scenario: TC03 : When a POST request with valid authorization information and no data (name, description)
                     is sent to the api/categories/add endpoint, the returned status code should be 203, and the remark
                     in the request body should be verified as "failed"

@@ -1,6 +1,6 @@
-Feature: List all records in the "Users" table with "lastname" in reverse order and "firstname" in reverse order. The first lastname of the list is verified
+Feature: DB_US019List all records in the "Users" table with "lastname" in reverse order and "firstname" in reverse order. The first lastname of the list is verified
   @db
-  Scenario: List all records in the "Users" table with "lastname" in reverse order and "firstname" in reverse order. The first lastname of the list is verified
+  Scenario: TC01: List all records in the "Users" table with "lastname" in reverse order and "firstname" in reverse order. The first lastname of the list is verified
 
 
     * Retrieve users in reverse order by lastname and firstname

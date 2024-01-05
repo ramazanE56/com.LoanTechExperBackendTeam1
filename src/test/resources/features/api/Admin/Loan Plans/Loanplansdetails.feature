@@ -1,5 +1,6 @@
-@api
+
 Feature: US_18 As an administrator, I want to access the loan plan details of a user with a specified ID via API connection.
+  @api
   Scenario Outline: TC_01 When a GET request with valid authorization information and correct data
   (id) is sent to the api/loanplans/details/{{id}} endpoint, the returned status code should be 200, and the request remark should be verified as "success"
 
@@ -11,7 +12,7 @@ Feature: US_18 As an administrator, I want to access the loan plan details of a 
       | id |
       | 139|
 
-
+  @api
     Scenario: TC_02 api/loanplans/details/{{id}} endpoint'ine gecerli authorization bilgileri ve (id) icermeyen bir
     GET request gönderildiginde dönen status code'un 203 oldugu ve request message bilgisinin "No id" oldugu dogrulanmali
 
@@ -19,7 +20,7 @@ Feature: US_18 As an administrator, I want to access the loan plan details of a 
      * The API adminuser saves the response from the loanplans details endpoint with valid authorization information
      * The API user verifies that the status code is 203
      * The API adminuser verifies that the message information in the response body is "No id"
-
+  @api
   Scenario Outline: TC_03 When a GET request with valid authorization information and no 'id' is sent to the
   api/loanplans/details/{{id}} endpoint, the returned status code should be 203, and the request message should be verified as "No id"
 

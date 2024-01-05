@@ -74,7 +74,7 @@
         | id |
         | 158  |
 
-    @api
+
     Scenario Outline: TC_06 The update of the desired loanplans record through the API should be verified.
       This can be confirmed by sending a GET request to the api/loanplans/details/{{id}} endpoint with the
       Updated loan plan id returned in the request body to ensure that the record has been successfully updated.

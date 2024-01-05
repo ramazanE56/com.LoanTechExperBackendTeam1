@@ -49,7 +49,7 @@ Feature: API_US004 : As a user, I want to be able to update the close informatio
 
     Examples:
       | id  |
-      | 123 |
+      | 125 |
 
 
   @api
@@ -64,4 +64,4 @@ Feature: API_US004 : As a user, I want to be able to update the close informatio
 
     Examples:
   |id|status|
-  |160|3    |
+  |125|3    |

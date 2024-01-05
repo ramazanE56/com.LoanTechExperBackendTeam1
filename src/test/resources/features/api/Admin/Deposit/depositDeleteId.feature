@@ -14,7 +14,7 @@ Feature: APi_US052 :As an administrator, I should be able to delete a deposit re
     Examples:
       | id |
       | 653 |
-
+@api
   Scenario: TC02 : When a valid DELETE request is sent to the 'api/deposit/delete/{{id}}' endpoint with proper authorization information but without including the required (id), the expected behavior
   is that the status code in the request is 203. Additionally, the message information in the request body should be confirmed as "No id"
 
@@ -25,7 +25,7 @@ Feature: APi_US052 :As an administrator, I should be able to delete a deposit re
     And The API User verifies that the message information in the response body is "No id"
 
 
-
+  @api
   Scenario Outline: TC03:
 
 
@@ -37,7 +37,7 @@ Feature: APi_US052 :As an administrator, I should be able to delete a deposit re
       | id |
       |889 |
 
-
+  @api
   Scenario Outline:   When an invalid DELETE request with unauthorized authorization information is sent to the 'api/deposit/delete/{{id}}' endpoint, the expected behavior
   is that the status code in the request is 401. Furthermore, the error information in the request body should be confirmed as "Unauthorized request"
 

@@ -1,6 +1,6 @@
-@api
-Feature: API_US024: As an administrator, I want to access the subscriber details of a user with a specified ID via API connection.
 
+Feature: API_US024: As an administrator, I want to access the subscriber details of a user with a specified ID via API connection.
+  @api
   Scenario Outline: TC01:When a valid GET request with appropriate authorization credentials and
   correct data (id) is sent to the 'api/subscriber/details/{{id}}' endpoint,
   it should return a status code of 200, and the request remark should be "success"
@@ -15,14 +15,14 @@ Feature: API_US024: As an administrator, I want to access the subscriber details
       | 34 |
 
 
-
+  @api
   Scenario: TC02:When a GET request without the required data (id) and with valid authorization credentials is sent to the 'api/subscriber/details/{{id}}' endpoint, it should return a status code of 203, and the request message should be "No id"
     Given The API user sets "api/subscriber/details" path parameters
     Then The API adminuser saves the response from the admin subscriber list endpoint with valid authorization information
     Then The API user verifies that the status code is 203
     And The API User verifies that the message information in the response body is "No id"
 
-
+  @api
   Scenario Outline: TC03:When a GET request with valid authorization credentials and an (id)
   that does not correspond to an existing record is sent to the 'api/subscriber/details/{{id}}' endpoint,
   it should return a status code of 203, and the request message should be "No subscriber "
@@ -44,7 +44,7 @@ Feature: API_US024: As an administrator, I want to access the subscriber details
       | id |
       | 34 |
 
-
+  @api
   Scenario Outline: TC05 :The contents of data (id, email, created_at, updated_at) in the request body should be verified
     Given The API user sets "api/subscriber/details/<id>" path parameters
     Then The API adminuser saves the response from the admin subscriber list endpoint with valid authorization information

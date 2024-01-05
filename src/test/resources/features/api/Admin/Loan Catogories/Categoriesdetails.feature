@@ -35,7 +35,7 @@ Feature: US_12 As an administrator, I want to access the category details of a u
     Examples:
       | id  |
       | 777 |
-  @api
+
   Scenario: TC_04:When a GET request with invalid authorization information is sent to the
   api/categories/details/{{id}} endpoint, the returned status code should be 401,
   and the error message in the request body should be verified as "Unauthorized request"

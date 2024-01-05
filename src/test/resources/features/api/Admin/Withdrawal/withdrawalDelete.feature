@@ -32,7 +32,7 @@ Feature: API_US060: As an administrator, I should be able to delete a withdrawal
     Examples:
       | id  |
       | 18225 |
-  @api
+
   Scenario Outline: TC004:When an invalid DELETE request with unauthorized authorization information is sent to the 'api/withdrawal/delete/{{id}}' endpoint,
   the expected behavior is that the status code in the request is 401.
   Furthermore, the error information in the request body should be confirmed as "Unauthorized request"

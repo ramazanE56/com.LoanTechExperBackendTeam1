@@ -1,5 +1,5 @@
 Feature: API_US014:As an administrator, I want to update the existing category information via API connection.
-
+  @api
   Scenario: TC01 When a POST request with valid authorization information, correct 'id', and valid data (name)
   is sent to the api/categories/update/{{id}} endpoint, the returned status code should be 200, and the
   message in the request body should be verified as "Category updated successfully"
@@ -12,7 +12,7 @@ Feature: API_US014:As an administrator, I want to update the existing category i
     Then The API user verifies that the status code is 200
     And The API admin verifies that the message information in the response body is "Category updated successfully"
     #Api kullanicisi response bodydeki message bilgisinin "Category added successfully" oldugunu doğrular
-
+  @api
   Scenario: TC02 When a POST request with valid authorization information, correct 'id', and valid data (name)
   is sent to the api/categories/update/{{id}} endpoint, the returned status code should be 200, and the message
   n the request body should be verified as "Category updated successfully"
@@ -39,7 +39,7 @@ Feature: API_US014:As an administrator, I want to update the existing category i
     And The API user verifies that the remark information in the response body is "failed"
     #Api kullanicisi response bodydeki remark bilgisinin "failed" oldugunu dogrular
 
-
+  @api
   Scenario: TC04 When a POST request with valid authorization information and no 'id' is sent to the
   api/categories/update/{{id}} endpoint with a POST body containing data (name, description), the returned status
   code should be 203, and the message in the request body should be verified as "No id."
@@ -52,7 +52,7 @@ Feature: API_US014:As an administrator, I want to update the existing category i
     Then The API user verifies that the status code is 203
     And The API admin verifies that the message information in the response body is "No id."
 
-
+  @api
   Scenario: TC05 When a POST request with valid authorization information and a non-existent 'id' is sent to the
   api/categories/update/{{id}} endpoint with a POST body containing data (name, description), the returned status
   code should be 203, and the message in the request body should be verified as "There is no category with this id to
@@ -67,7 +67,7 @@ Feature: API_US014:As an administrator, I want to update the existing category i
     And The API admin verifies that the message information in the response body is "There is no category with this id to be updated"
 
 
-
+  @api
   Scenario: TC06 When a POST request with invalid authorization information, correct 'id', and a POST body
   (name, description) is sent to the api/categories/update/{{id}} endpoint, the returned status code should be 401,
   and the error message in the request body should be verified as "Unauthorized request"
@@ -80,7 +80,7 @@ Feature: API_US014:As an administrator, I want to update the existing category i
     And The API user verifies that the error information in the response body is "Unauthorized request"
     #Api kullanicisi response bodydeki error bilgisinin "Unauthorized request" oldugunu dogrular
 
-
+  @api
   Scenario: TC07 The update of the desired category record through the API should be verified. This can be confirmed by
   sending a GET request to the api/categories/details/{{id}} endpoint with the Updated Category Id returned in the
   request body to ensure that the record has been successfully updated
